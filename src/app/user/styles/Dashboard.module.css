@@ -1,0 +1,117 @@
+/* Import Poppins Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* General Dashboard Container */
+.dashboardContainer {
+  font-family: 'Poppins', sans-serif;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+/* Title Styles */
+.dashboardTitle {
+  font-size: 1.875rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Card Layout */
+.cardGrid4 {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 15px;
+}
+
+.cardGrid2 {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 15px;
+  font-size: 15px;
+}
+
+/* Card Styles */
+.card {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+/* Card Titles */
+.cardTitle {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+/* Metrics Section */
+.metricValue {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.metricLabel {
+  color: #6b7280;
+}
+
+.metricChangePositive {
+  color: #10b981;
+}
+
+.metricChangeNegative {
+  color: #ef4444;
+}
+
+/* Table Styles */
+.tableWrapper {
+  overflow-x: auto; /* Allow horizontal scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling for mobile devices */
+}
+
+.tableWrapper .table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.tableWrapper .table th, .tableWrapper .table td {
+  padding: 10px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tableWrapper .table th {
+  background-color: #f3f4f6;
+  font-weight: 500;
+}
+
+.tableWrapper .table tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+.tableWrapper .table tr:hover {
+  background-color: #f1f5f9;
+}
+
+.tableWrapper .table .link {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.tableWrapper .table .link:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 640px) {
+  .cardGrid2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cardGrid4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

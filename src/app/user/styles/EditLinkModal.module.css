@@ -1,0 +1,164 @@
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      /* transform: scale(0.9); */
+    }
+    to {
+      opacity: 1;
+      /* transform: scale(1); */
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      /* transform: scale(1); */
+    }
+    to {
+      opacity: 0;
+      /* transform: scale(0.9); */
+    }
+  }
+  
+  .modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.5s forwards;
+  }
+  
+  .modalOverlay.fadeOut {
+    animation: fadeOut 0.5s forwards;
+  }
+  
+  .modal {
+    background: white;
+    border-radius: 0.5rem;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .modalHeader h2 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+  
+  .closeButton {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
+  .closeButton:hover{
+    color: #6C8AE5;
+  }
+  
+  .modalForm {
+    padding: 1.5rem;
+  }
+  
+  .formGroup {
+    margin-bottom: 1.5rem;
+  }
+  
+  .formGroup label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  .formGroup input[type="text"],
+  .formGroup input[type="url"],
+  .formGroup input[type="number"],
+  .formGroup textarea,
+  .formGroup select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    appearance: none; 
+  }
+
+  .formGroup:hover {
+    border-color: #87A2FF;
+  }
+  
+  .radioGroup {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .radioGroup label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: normal;
+  }
+  
+  .mediaUpload {
+    border: 2px dashed #e5e7eb;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    text-align: center;
+  }
+  
+  .mediaPreview {
+    max-width: 100%;
+    max-height: 200px;
+    margin-top: 1rem;
+    border-radius: 0.375rem;
+  }
+  
+  .modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .cancelButton {
+    padding: 0.75rem 1.5rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    cursor: pointer;
+  }
+
+  .cancelButton:hover{
+    color: #6C8AE5;
+    border: 1px solid #6C8AE5;
+  }
+  
+  .submitButton {
+    padding: 0.75rem 1.5rem;
+    background: #87A2FF;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+  }
+  
+  .submitButton:hover {
+    background: #6C8AE5;
+  }
+  

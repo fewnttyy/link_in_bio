@@ -1,0 +1,107 @@
+.header {
+    background-color: white;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 1rem;
+  }
+  
+  .headerContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .headerActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .hamburger {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 1rem;
+  }  
+  
+  .avatar {
+    width: 32px;
+    height: 32px;
+    background-color: #e5e5e5;
+    border-radius: 50%;
+  }
+
+  .profileContainer {
+    position: relative;
+  }
+  
+  .avatar {
+    width: 32px;
+    height: 32px;
+    background-color: #e5e5e5;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .avatar:hover {
+    background-color: #d5d5d5;
+  }
+  
+  .profileDropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    z-index: 1000;
+  }
+  
+  .profileHeader {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .profileInfo {
+    margin-left: 0.5rem;
+  }
+  
+  .profileName {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+  }
+  
+  .profileEmail {
+    font-size: 0.85rem;
+    color: #666;
+  }
+  
+  .profileDropdown ul {
+    list-style: none;
+    padding: 0.5rem 0;
+  }
+  
+  .profileDropdown .dropdownItem {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.5s ease;
+  }
+  
+  .profileDropdown .dropdownItem:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .profileDropdown .dropdownItem span {
+    margin-right: 0.5rem;
+  }

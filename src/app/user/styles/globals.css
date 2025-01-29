@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #f5f7fb;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  transition: all 0.3s ease; /* Smooth transition for layout changes */
+}
+
+/* Main Content Default */
+.main-content {
+  flex: 1;
+  margin-left: 280px; /* Default margin when sidebar is visible */
+  transition: margin-left 0.3s ease;
+}
+
+/* Sidebar Hidden - Main Content Fills Entire Space */
+.app-container.sidebar-hidden .main-content {
+  margin-left: 0;
+}
+
+/* Responsive Styles for Smaller Screens */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column; /* Make the layout stack on smaller screens */
+  }
+
+  .main-content {
+    width: 100%;
+    margin-left: 0; /* Main content should fill the available space */
+    transition: width 0.3s ease;
+  }
+
+  .app-container.sidebar-visible .main-content {
+    margin-left: 280px; /* Adjust content to align when sidebar is open */
+  }
+}
