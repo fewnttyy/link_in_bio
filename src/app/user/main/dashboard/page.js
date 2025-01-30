@@ -47,7 +47,7 @@ export default function DashboardPage() {
         </div>
         <div className={styles.card}>
           <p className={styles.metricValue}>{data[data.length - 1].newOrders.toLocaleString()}</p>
-          <p className={styles.metricLabel}>View Count</p>
+          <p className={styles.metricLabel}>Page Views</p>
           <p className={styles.metricChangePositive}>+10%</p>
         </div>
       </div>
@@ -55,7 +55,7 @@ export default function DashboardPage() {
       {/* Charts Section */}
       <div className={styles.cardGrid2}>
         <div className={styles.card}>
-          <h3 className={styles.cardTitle}>View Count</h3>
+          <h3 className={styles.cardTitle}>Page Views</h3>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={data}>
               <XAxis dataKey="month" />
@@ -87,39 +87,39 @@ export default function DashboardPage() {
 
       {/* My Top Links Section */}
       <div className={styles.card} style={{ marginTop: '20px' }}>
-  <h3 className={styles.cardTitle}>My Top Links</h3>
-  <div className={styles.tableWrapper}>
-    <table className={styles.table}>
-      <thead>
-        <tr>
-          <th>Link</th>
-          <th>Clicks</th>
-          <th>Revenue</th>
-          <th>CTR</th>
-        </tr>
-      </thead>
-      <tbody>
-        {tableData.map((row, index) => (
-          <tr key={index}>
-            <td>
-              <a
-                href={row.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.link}
-              >
-                {row.link}
-              </a>
-            </td>
-            <td>{row.clicks}</td>
-            <td>{row.revenue}</td>
-            <td>{row.ctr}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</div>
+        <h3 className={styles.cardTitle}>My Top Links</h3>
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>Link</th>
+                <th>Clicks</th>
+                <th>Revenue</th>
+                <th>CTR</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableData.map((row, index) => (
+                <tr key={index}>
+                  <td>
+                    <a
+                      href={row.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.link}
+                    >
+                      {row.link}
+                    </a>
+                  </td>
+                  <td>{row.clicks}</td>
+                  <td>{row.revenue}</td>
+                  <td>{row.ctr}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
     </div>
   );
