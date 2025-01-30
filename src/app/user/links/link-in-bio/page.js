@@ -544,7 +544,7 @@ export default function Page() {
                     <label className={styles.switch}>
                       <input type="checkbox" defaultChecked />
                       <span className={styles.slider}></span>
-                  </label>
+                    </label>
                   </div>
                 </div>
                 <div className={styles.blockHeader}>
@@ -611,6 +611,10 @@ export default function Page() {
               <div className={styles.linkToggle}>
                   <button className={styles.editButton} onClick={openEditBanner}>✏️</button>
                   <button className={styles.deleteButton} onClick={() => deleteBanner()}>🗑️</button>
+                  <label className={styles.switch}>
+                    <input type="checkbox" defaultChecked />
+                    <span className={styles.slider}></span>
+                  </label>
                 </div>
             </div>    
             <div className={styles.linkItem}>
@@ -635,6 +639,10 @@ export default function Page() {
               <div className={styles.linkToggle}>
                 <button className={styles.editButton}>✏️</button>
                 <button className={styles.deleteButton}>🗑️</button>
+                <label className={styles.switch}>
+                  <input type="checkbox" defaultChecked />
+                  <span className={styles.slider}></span>
+                </label>
               </div>
             </div>    
           </div>
