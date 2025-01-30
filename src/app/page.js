@@ -33,7 +33,7 @@ export default function Page() {
           <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`}>
             <a href="#home" onClick={(e) => handleNavigation('home', e)}>Home</a>
             <a href="#info" onClick={(e) => handleNavigation('info', e)}>Info</a>
-            <a href="#login">Login</a>
+            <a href="/login">Login</a>
           </nav>
         </header>
 

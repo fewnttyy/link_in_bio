@@ -1,0 +1,87 @@
+.forget-password-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #bedaff;
+  }
+  
+.forget{
+    width: 500px;
+    height: 300px;
+    background-color: #fff;
+    border-radius: 3.3rem;
+    box-shadow: 0 60px 40px -30px rgba(0, 0, 0, 0.27);
+    padding: 20px;
+}
+
+.forget h2{
+    font-size: 20px;
+}
+
+.forget h2 p{
+    margin-bottom: 20px;
+}
+
+.input-wrap{
+    position: relative;
+    height: 37px;
+    margin-bottom: 2rem;
+    margin-top: 30px;
+}
+.input-field {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #bbb;
+    padding: 0;
+    font-size: 0.95rem;
+    color: #151111;
+    transition: 0.4s;
+  }
+  
+  label {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.95rem;
+    color: #bbb;
+    pointer-events: none;
+    transition: 0.4s;
+  }
+  button{
+    display: inline-block;
+    width: 100%;
+    height: 43px;
+    background-color: #151111;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.8rem;
+    font-size: 0.8rem;
+    margin-bottom: 2rem;
+    transition: 0.3s;
+  }
+  button:hover {
+    background-color: #bedaff;
+  }
+  .back-to-login a{
+    background-color: transparent;
+    color: blue;
+    border: none;
+    text-decoration: none;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+  .input-field:focus + label,
+  .input-field:not(:placeholder-shown) + label {
+    top: -0.75rem;
+    font-size: 0.75rem;
+    color: #007bff;
+  }

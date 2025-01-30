@@ -2,9 +2,12 @@
 import styles from '@/app/user/styles/Preview.module.css'
 import { useState, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
+import DetailModal from '@/app/user/components/DetailModal'
 
 export default function PreviewPage() {
   const pathname = usePathname()
+
+  const [showDetailModal, setShowDetailModal] = useState(false);
 
   const [currentSlide, setCurrentSlide] = useState(0);
     
@@ -94,62 +97,32 @@ export default function PreviewPage() {
             <div className={styles.previewLink}>
               <div className={styles.previewLinkIcon} style={{ backgroundColor: '#FFB800' }}>🔗</div>
               <span>My website</span>
-              <span className={styles.previewArrow}>→</span>
+              <span className={styles.previewArrow} onClick={() => setShowDetailModal(true)}>ⓘ</span>
             </div>
             <div className={styles.previewLink}>
               <div className={styles.previewLinkIcon} style={{ backgroundColor: '#86A788' }}>🔗</div>
               <span>My Instagram</span>
-              <span className={styles.previewArrow}>→</span>
+              <span className={styles.previewArrow}>ⓘ</span>
             </div>
             <div className={styles.previewLink}>
               <div className={styles.previewLinkIcon} style={{ backgroundColor: '#FFB800' }}>🔗</div>
               <span>My Twitter</span>
-              <span className={styles.previewArrow}>→</span>
+              <span className={styles.previewArrow}>ⓘ</span>
             </div>
             <div className={styles.previewLink}>
               <div className={styles.previewLinkIcon} style={{ backgroundColor: '#FFB800' }}>🔗</div>
               <span>My website</span>
-              <span className={styles.previewArrow}>→</span>
+              <span className={styles.previewArrow}>ⓘ</span>
             </div>
             <div className={styles.previewLink}>
               <div className={styles.previewLinkIcon} style={{ backgroundColor: '#86A788' }}>🔗</div>
               <span>My Instagram</span>
-              <span className={styles.previewArrow}>→</span>
+              <span className={styles.previewArrow}>ⓘ</span>
             </div>
             <div className={styles.previewLink}>
               <div className={styles.previewLinkIcon} style={{ backgroundColor: '#FFB800' }}>🔗</div>
               <span>My Twitter</span>
-              <span className={styles.previewArrow}>→</span>
-            </div>
-            <div className={styles.previewLink}>
-              <div className={styles.previewLinkIcon} style={{ backgroundColor: '#FFB800' }}>🔗</div>
-              <span>My website</span>
-              <span className={styles.previewArrow}>→</span>
-            </div>
-            <div className={styles.previewLink}>
-              <div className={styles.previewLinkIcon} style={{ backgroundColor: '#86A788' }}>🔗</div>
-              <span>My Instagram</span>
-              <span className={styles.previewArrow}>→</span>
-            </div>
-            <div className={styles.previewLink}>
-              <div className={styles.previewLinkIcon} style={{ backgroundColor: '#FFB800' }}>🔗</div>
-              <span>My Twitter</span>
-              <span className={styles.previewArrow}>→</span>
-            </div>
-            <div className={styles.previewLink}>
-              <div className={styles.previewLinkIcon} style={{ backgroundColor: '#FFB800' }}>🔗</div>
-              <span>My website</span>
-              <span className={styles.previewArrow}>→</span>
-            </div>
-            <div className={styles.previewLink}>
-              <div className={styles.previewLinkIcon} style={{ backgroundColor: '#86A788' }}>🔗</div>
-              <span>My Instagram</span>
-              <span className={styles.previewArrow}>→</span>
-            </div>
-            <div className={styles.previewLink}>
-              <div className={styles.previewLinkIcon} style={{ backgroundColor: '#FFB800' }}>🔗</div>
-              <span>My Twitter</span>
-              <span className={styles.previewArrow}>→</span>
+              <span className={styles.previewArrow}>ⓘ</span>
             </div>
           </div>
           
@@ -159,6 +132,12 @@ export default function PreviewPage() {
       <div className={styles.fixedLoginButton}>
         <button className={styles.loginButton}>baralynk.is/yourpage →</button>
       </div>
+
+      {showDetailModal && (
+        <DetailModal 
+          onClose={() => setShowDetailModal(false)}
+        />
+      )}
     </div>
   )
 }

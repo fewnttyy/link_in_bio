@@ -1,0 +1,97 @@
+/* Style untuk halaman verifikasi */
+.verification-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #bedaff;
+    font-family: Arial, sans-serif;
+  }
+  
+  .verification {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 3.3rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .verification h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  .verification p {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .verification-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .input-wrap {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  
+  .input-field {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 0 5px;
+    box-sizing: border-box;
+  }
+  
+  .input-field:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .input-field:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .submit-btn {
+    display: inline-block;
+    width: 100%;
+    height: 43px;
+    background-color: #151111;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.8rem;
+    font-size: 0.8rem;
+    margin-bottom: 2rem;
+    transition: 0.3s;
+  }
+  
+  .submit-btn:hover {
+    background-color: #bedaff;
+  }
+  
+  .back-to-forget {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .back-to-forget a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  
+  .back-to-forget a:hover {
+    text-decoration: underline;
+  }
+  
