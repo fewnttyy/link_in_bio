@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import axios from "axios";
 import "./login.css";
 import Link from 'next/link';
 
@@ -9,6 +10,17 @@ export default function Home() {
   const [activeInput, setActiveInput] = useState({});
   const [activeBullet, setActiveBullet] = useState(1);
   const textSliderRef = useRef(null);
+
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    phone: "",
+    password: "",
+    password_confirmation: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleInputFocus = (field) => {
     setActiveInput((prev) => ({ ...prev, [field]: true }));
@@ -22,6 +34,11 @@ export default function Home() {
 
   const toggleMode = () => {
     setIsSignUpMode((prev) => !prev);
+    setErrorMessage(null);
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const moveSlider = (index) => {
@@ -34,12 +51,55 @@ export default function Home() {
     }
   };
 
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrorMessage(null);
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/register",
+        formData
+      );
+      alert("Registration successful! Please check your email.");
+      console.log(response.data);
+    } catch (error) {
+      setErrorMessage(error.response?.data?.message || "Registration failed.");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrorMessage(null);
+
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/login", {
+        email: formData.email,
+        password: formData.password,
+      });
+
+      localStorage.setItem("token", response.data.token);
+      alert("Login successful!");
+      console.log(response.data);
+    } catch (error) {
+      setErrorMessage(error.response?.data?.message || "Login failed.");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <main className={isSignUpMode ? "sign-up-mode" : ""}>
       <div className="box">
         <div className="inner-box">
           <div className="forms-wrap">
-            <form action="index.html" autoComplete="off" className="sign-in-form">
+            {/* Form Login */}
+            <form onSubmit={handleLogin} className="sign-in-form">
               <div className="logo">
                 <h4>easyclass</h4>
               </div>
@@ -55,41 +115,43 @@ export default function Home() {
               <div className="actual-form">
                 <div className="input-wrap">
                   <input
-                    type="text"
-                    minLength="4"
-                    className={`input-field ${activeInput.name ? "active" : ""}`}
+                    type="email"
+                    name="email"
+                    className="input-field"
                     autoComplete="off"
                     required
-                    onFocus={() => handleInputFocus("name")}
-                    onBlur={(e) => handleInputBlur("name", e.target.value)}
+                    onChange={handleChange}
                   />
-                  <label>Name</label>
+                  <label>Email</label>
                 </div>
 
                 <div className="input-wrap">
                   <input
                     type="password"
-                    minLength="4"
-                    className={`input-field ${activeInput.password ? "active" : ""}`}
+                    name="password"
+                    className="input-field"
                     autoComplete="off"
                     required
-                    onFocus={() => handleInputFocus("password")}
-                    onBlur={(e) => handleInputBlur("password", e.target.value)}
+                    onChange={handleChange}
                   />
                   <label>Password</label>
                 </div>
 
-                <input type="submit" value="Sign In" className="sign-btn" />
+                {errorMessage && <p className="error">{errorMessage}</p>}
+                <button type="submit" className="sign-btn" disabled={loading}>
+                  {loading ? "Signing in..." : "Sign In"}
+                </button>
 
                 <p className="text">
-                  Forgotten your password or your login details?
+                  Forgotten your password?
                   <Link href="/login/forgetpassword">Get help</Link>
                   signing in
                 </p>
               </div>
             </form>
 
-            <form action="index.html" autoComplete="off" className="sign-up-form">
+            {/* Form Register */}
+            <form onSubmit={handleRegister} className="sign-up-form">
               <div className="logo">
                 <h4>easyclass</h4>
               </div>
@@ -106,42 +168,67 @@ export default function Home() {
                 <div className="input-wrap">
                   <input
                     type="text"
-                    minLength="4"
-                    className={`input-field ${activeInput.signupName ? "active" : ""}`}
+                    name="username"
+                    className="input-field"
                     autoComplete="off"
                     required
-                    onFocus={() => handleInputFocus("signupName")}
-                    onBlur={(e) => handleInputBlur("signupName", e.target.value)}
+                    onChange={handleChange}
                   />
-                  <label>Name</label>
+                  <label>Username</label>
                 </div>
 
                 <div className="input-wrap">
                   <input
                     type="email"
-                    className={`input-field ${activeInput.email ? "active" : ""}`}
+                    name="email"
+                    className="input-field"
                     autoComplete="off"
                     required
-                    onFocus={() => handleInputFocus("email")}
-                    onBlur={(e) => handleInputBlur("email", e.target.value)}
+                    onChange={handleChange}
                   />
                   <label>Email</label>
                 </div>
 
                 <div className="input-wrap">
                   <input
-                    type="password"
-                    minLength="4"
-                    className={`input-field ${activeInput.signupPassword ? "active" : ""}`}
+                    type="text"
+                    name="phone"
+                    className="input-field"
                     autoComplete="off"
                     required
-                    onFocus={() => handleInputFocus("signupPassword")}
-                    onBlur={(e) => handleInputBlur("signupPassword", e.target.value)}
+                    onChange={handleChange}
+                  />
+                  <label>Phone</label>
+                </div>
+
+                <div className="input-wrap">
+                  <input
+                    type="password"
+                    name="password"
+                    className="input-field"
+                    autoComplete="off"
+                    required
+                    onChange={handleChange}
                   />
                   <label>Password</label>
                 </div>
 
-                <input type="submit" value="Sign Up" className="sign-btn" />
+                <div className="input-wrap">
+                  <input
+                    type="password"
+                    name="password_confirmation"
+                    className="input-field"
+                    autoComplete="off"
+                    required
+                    onChange={handleChange}
+                  />
+                  <label>Confirm Password</label>
+                </div>
+
+                {errorMessage && <p className="error">{errorMessage}</p>}
+                <button type="submit" className="sign-btn" disabled={loading}>
+                  {loading ? "Signing up..." : "Sign Up"}
+                </button>
 
                 <p className="text">
                   By signing up, I agree to the
