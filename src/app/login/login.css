@@ -146,11 +146,11 @@ label {
   transition: 0.4s;
 }
 
-.input-field.active {
+.input-field:focus {
   border-bottom-color: #151111;
 }
 
-.input-field.active + label {
+.input-field:focus + label {
   font-size: 0.75rem;
   top: -2px;
 }

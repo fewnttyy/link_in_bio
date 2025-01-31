@@ -9,6 +9,8 @@ import CustomizeUrl from '@/app/user/components/CustomizeUrl'
 import Swipeable from '@/app/user/components/Swipeable'
 import Swal from 'sweetalert2';
 
+import Categories from '@/app/user/crud/Categories'
+
 export default function Page() {
   const router = useRouter()
   const pathname = usePathname()
@@ -90,9 +92,8 @@ export default function Page() {
   // =========================================================== SWIPE EDITOR SECTION =========================================================== //
 
 
-  // =========================================================== CATEGORY MODAL =========================================================== //
+  // =========================================================== AFFILIATE URL MODAL =========================================================== //
    const [isCustomizeOpen, setIsCustomizeOpen] = useState(false);
-  //  const [customizeData, setCustomizeData] = useState({});
    const [customize, setCustomize] = useState([]);
 
    const [customizeData, setCustomizeData] = useState({
@@ -106,7 +107,7 @@ export default function Page() {
    const closeCustomize = () => {
      setIsCustomizeOpen(false);
    };
-   // =========================================================== CATEGORY MODAL =========================================================== //
+   // =========================================================== AFFILIATE URL MODAL =========================================================== //
 
 
   // =========================================================== BANNER SLIDER =========================================================== //
@@ -651,86 +652,7 @@ export default function Page() {
         return (
           <div className={getTabClassName('Categories')} style={{ padding: '2rem', maxHeight: '600px', overflow: 'auto' }}>
             {/* Category Input Section */}
-            <div className={styles.linkInputSection}>
-              <div className={styles.linkInputContainer}>
-                <div className={styles.linkInput}>
-                  <img src="/images/logo-fix.jpg" alt="Health" className={styles.linkTypeIcon} />
-                  <input
-                    type="text"
-                    placeholder="Create new category"
-                    className={styles.urlInput}
-                  />
-                </div>
-                <button className={styles.addLinkButton}>
-                  + Add New Category
-                </button>
-              </div>
-
-              <br></br>
-              <h2 className={styles.sectionTitle}>Categories</h2>
-
-              <div className={styles.searchContainer}>
-                <div className={styles.search}>
-                  <span className={styles.searchIcon}>🔍</span>
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    className={styles.urlInput}
-                  />
-                </div>
-                <button className={styles.searchButton}>
-                  Search
-                </button>
-              </div>
-
-              {/* Categories Item */}
-              <div className={styles.linkItem}>
-                <div className={styles.linkItemLeft}>
-                  <span className={styles.menuIcon}>⋮</span>
-                  <div className={styles.linkIcon}>📦</div>
-                  <div className={styles.linkDetails}>
-                    <span className={styles.linkTitle}>Social Media</span>
-                    {/* <span className={styles.linkUrl}>https://www.instagram.com/fewnttyy?igsh=dGJscmU4aDhkMmxu</span> */}
-                  </div>
-                </div>
-                <div className={styles.linkToggle}>
-                  <div className={styles.blockActions}>
-                      <button onClick={openEditCategory}>✏️</button>
-                      <button onClick={() => deleteCategory()}>🗑️</button>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.linkItem}>
-                <div className={styles.linkItemLeft}>
-                  <span className={styles.menuIcon}>⋮</span>
-                  <div className={styles.linkIcon}>📦</div>
-                  <div className={styles.linkDetails}>
-                    <span className={styles.linkTitle}>Fashion</span>
-                  </div>
-                </div>
-                <div className={styles.linkToggle}>
-                  <div className={styles.blockActions}>
-                      <button>✏️</button>
-                      <button>🗑️</button>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.linkItem}>
-                <div className={styles.linkItemLeft}>
-                  <span className={styles.menuIcon}>⋮</span>
-                  <div className={styles.linkIcon}>📦</div>
-                  <div className={styles.linkDetails}>
-                    <span className={styles.linkTitle}>Beauty</span>
-                  </div>
-                </div>
-                <div className={styles.linkToggle}>
-                  <div className={styles.blockActions}>
-                      <button>✏️</button>
-                      <button>🗑️</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Categories />
           </div>
         )
         case 'Profile':
