@@ -314,7 +314,7 @@ main.sign-up-mode .carousel {
   border-radius: 1rem;
 }
 
-button{
+button {
   background-color: transparent;
   color: blue;
   border: none;
@@ -409,4 +409,8 @@ button{
   form {
     padding: 1rem 2rem 1.5rem;
   }
+}
+
+.rtk {
+  padding-right: 2px;
 }

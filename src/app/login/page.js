@@ -106,7 +106,7 @@ export default function Home() {
 
               <div className="heading">
                 <h2>Welcome Back</h2>
-                <h6>Not registered yet?</h6>
+                <h6 className="rtk">Not registered yet?</h6>
                 <button type="button" className="toggle" onClick={toggleMode}>
                   Sign up
                 </button>
