@@ -16,45 +16,15 @@ const EditCategoryModal = ({ isOpen, onClose, formData, setFormData, onSave }) =
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave();
-    setFormData({
-      category_name: ''
-    });
-    setPreview(null);
-    onClose();
+    onSave(formData);
   };
 
-  // const saveEdit = async () => {
-  //   try {
-  //     // Kirim data yang telah diedit ke server melalui API
-  //     await fetch(`/api/links/${editFormData.id}`, {
-  //       method: 'PUT', // Gunakan PUT atau PATCH sesuai kebutuhan
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify(editFormData),
-  //     });
-
-  //     // Perbarui daftar link di UI setelah berhasil disimpan
-  //     fetchLinks();
-  //     closeEditModal();
-  //   } catch (error) {
-  //     console.error('Error saving link:', error);
-  //   }
-  // };
-  
-  // Ambil data link dari API saat komponen dimuat
-  // useEffect(() => {
-  //   fetchLinks();
-  // }, []);
-
-  // const fetchLinks = async () => {
-  //   try {
-  //     const response = await fetch('/api/links'); // Ganti endpoint sesuai API Anda
-  //     const data = await response.json();
-  //     setLinks(data); // Data yang diterima harus berupa array
-  //   } catch (error) {
-  //     console.error('Error fetching links:', error);
-  //   }
-  // };
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
   if (!isVisible) return null;
 
@@ -73,7 +43,7 @@ const EditCategoryModal = ({ isOpen, onClose, formData, setFormData, onSave }) =
               id="category_name"
               name="category_name"
               value={formData.category_name}
-              onChange={(e) => setFormData({ ...formData, category_name: e.target.value })}
+              onChange={handleChange}
               required
             />
           </div>

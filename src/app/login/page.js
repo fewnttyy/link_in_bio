@@ -82,7 +82,12 @@ export default function Home() {
         password: formData.password,
       });
 
+      //simpan token ke local storage
       localStorage.setItem("token", response.data.token);
+
+      // Simpan data user ke localStorage
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
       alert("Login successful!");
       console.log(response.data);
     } catch (error) {
