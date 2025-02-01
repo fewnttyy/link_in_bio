@@ -1,7 +1,7 @@
 'use client'
-import api from "@/app/api";
+import api from "../../api";
 import React, { useState, useRef, useEffect } from 'react'
-import styles from '@/app/user/styles/Header.module.css'
+import styles from '../styles/Header.module.css'
 import { Poppins } from 'next/font/google';
 
 const poppins = Poppins({

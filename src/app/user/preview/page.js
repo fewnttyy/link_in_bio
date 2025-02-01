@@ -1,8 +1,8 @@
 'use client'
-import styles from '@/app/user/styles/Preview.module.css'
+import styles from '../styles/Preview.module.css'
 import { useState, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
-import DetailModal from '@/app/user/components/DetailModal'
+import DetailModal from '../components/DetailModal'
 
 export default function PreviewPage() {
   const pathname = usePathname()

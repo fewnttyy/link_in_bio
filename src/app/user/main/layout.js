@@ -1,8 +1,8 @@
 'use client'
 
-import '@/app/user/styles/globals.css'
-import Sidebar from '@/app/user/components/Sidebar'
-import Header from '@/app/user/components/Header'
+import '../styles/globals.css'
+import Sidebar from '../components/Sidebar'
+import Header from '../components/Header'
 import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'

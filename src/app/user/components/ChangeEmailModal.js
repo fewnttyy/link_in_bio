@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import styles from '@/app/user/styles/ModalSettings.module.css';
-import VerificationCodeModal from '@/app/user/components/VerificationModal';
+import styles from '../styles/ModalSettings.module.css';
+import VerificationCodeModal from '../components/VerificationModal';
 
 export default function ChangeEmailModal({ onClose, currentEmail }) {
   const [showVerification, setShowVerification] = useState(false);

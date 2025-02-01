@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { useRouter, usePathname } from 'next/navigation'
-import styles from '@/app/user/styles/Sidebar.module.css'
+import styles from '../styles/Sidebar.module.css'
 
 export default function Sidebar({ isVisible }) {
   const router = useRouter()
