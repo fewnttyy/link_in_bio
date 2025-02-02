@@ -1,15 +1,15 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
-import styles from '@/app/user/styles/Page.module.css'
-import EditLinkModal from '@/app/user/components/EditLinkModal'
-import EditCategoryModal from '@/app/user/components/EditCategoryModal'
-import EditBannerModal from '@/app/user/components/EditBannerModal'
-import CustomizeUrl from '@/app/user/components/CustomizeUrl'
-import Swipeable from '@/app/user/components/Swipeable'
+import styles from '../../styles/Page.module.css'
+import EditLinkModal from '../../components/EditLinkModal'
+import EditCategoryModal from '../../components/EditCategoryModal'
+import EditBannerModal from '../../components/EditBannerModal'
+import CustomizeUrl from '../../components/CustomizeUrl'
+import Swipeable from '../../components/Swipeable'
 import Swal from 'sweetalert2';
 
-import Categories from '@/app/user/crud/Categories'
+import { fetchCategories, addCategory, editCategory, deleteCategory } from "../../../api/category/Category";
 
 export default function Page() {
   const router = useRouter()
@@ -20,6 +20,56 @@ export default function Page() {
   const navigateToPage = (path) => {
     window.open(path, '_blank');
   };
+
+
+  // =========================================================== CATEGORY =========================================================== //
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+    const [newCategoryName, setNewCategoryName] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const [isEditCategoryOpen, setIsEditCategoryOpen] = useState(false);
+    const [editCategoryData, setEditCategoryData] = useState({ id: null, category_name: "" });
+
+    useEffect(() => {
+      fetchCategories(setCategories, setLoading, setError);
+    }, []);
+
+    const refreshCategories = () => fetchCategories(setCategories, setLoading, setError);
+
+    const handleAddCategory = (e) => {
+      e.preventDefault();
+      addCategory(newCategoryName, () => fetchCategories(setCategories, setLoading, setError));
+      setNewCategoryName("");
+    };
+
+    const handleEditCategory = (formData) => {
+      editCategory(formData, () => fetchCategories(setCategories, setLoading, setError), closeEditCategory);
+    };
+
+    const handleDeleteCategory = (id) => {
+      deleteCategory(id, () => fetchCategories(setCategories, setLoading, setError));
+    };
+
+    const openEditCategory = (category) => {
+      setEditCategoryData({ id: category.id, category_name: category.category_name });
+      setIsEditCategoryOpen(true);
+    };
+
+    const closeEditCategory = () => {
+      setIsEditCategoryOpen(false);
+      setEditCategoryData({ id: null, category_name: "" });
+    };
+
+    const handleSearchChange = (e) => {
+      setSearchQuery(e.target.value);
+    };
+
+    const filteredCategories = categories.filter((category) =>
+      category.category_name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  // =========================================================== CATEGORY =========================================================== //
 
 
   // =========================================================== SWIPE EDITOR SECTION =========================================================== //
@@ -134,30 +184,6 @@ export default function Page() {
   const deleteLinks = () => {
     Swal.fire({
       title: 'Are you sure want to delete this Links?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Lakukan penghapusan
-        // console.log(`Item with id ${id} deleted`);
-        // Tambahkan logika API untuk menghapus item di sini
-  
-        Swal.fire(
-          'Deleted!',
-          'Your item has been deleted.',
-          'success'
-        );
-      }
-    });
-  };
-
-  const deleteCategory = () => {
-    Swal.fire({
-      title: 'Are you sure want to delete this Category?',
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
@@ -352,22 +378,6 @@ export default function Page() {
   // =========================================================== LINKS MODAL =========================================================== //
 
 
-  // =========================================================== CATEGORY MODAL =========================================================== //
-  const [isEditCategoryOpen, setIsEditCategoryOpen] = useState(false);
-  const [editCategoryData, setEditCategoryData] = useState({});
-  const [category, setCategory] = useState([]);
-
-  const openEditCategory = () => {
-    // setEditFormData(linkData);
-    setIsEditCategoryOpen(true);
-  };
-
-  const closeEditCategory = () => {
-    setIsEditCategoryOpen(false);
-  };
-  // =========================================================== CATEGORY MODAL =========================================================== //
-
-
   // =========================================================== BANNER MODAL =========================================================== //
   const [isBannerOpen, setIsBannerOpen] = useState(false)
   const [isBannerClosing, setIsBannerClosing] = useState(false)
@@ -500,9 +510,17 @@ export default function Page() {
                     required
                   >
                     <option value="">Select a category</option>
-                    <option value="Social Media">Social Media</option>
-                    <option value="Fashion">Fashion</option>
-                    <option value="Beauty">Beauty</option>
+                    {loading ? (
+                      <option disabled>Loading...</option>
+                    ) : error ? (
+                      <option disabled>{error}</option>
+                    ) : (
+                      categories.map((category) => (
+                        <option key={category.id} value={category.category_name}>
+                          {category.category_name}
+                        </option>
+                      ))
+                    )}
                   </select>
                 </div>
               </div>
@@ -651,8 +669,71 @@ export default function Page() {
       case 'Categories':
         return (
           <div className={getTabClassName('Categories')} style={{ padding: '2rem', maxHeight: '600px', overflow: 'auto' }}>
-            {/* Category Input Section */}
-            <Categories />
+            <div className={styles.linkInputSection}>
+              <div className={styles.linkInputContainer}>
+                <div className={styles.linkInput}>
+                    <img src="/images/logo-fix.jpg" alt="Health" className={styles.linkTypeIcon} />
+                    <input
+                        type="text"
+                        placeholder="Create new category"
+                        className={styles.urlInput}
+                        value={newCategoryName}
+                        onChange={(e) => setNewCategoryName(e.target.value)}
+                    />
+                </div>
+                <button className={styles.addLinkButton} onClick={handleAddCategory}>
+                    + Add New Category
+                </button>
+              </div>
+
+              <h2 className={styles.sectionTitle}>Categories</h2>
+
+              <div className={styles.searchContainer}>
+                <div className={styles.search}>
+                    <span className={styles.searchIcon}>🔍</span>
+                    <input
+                      type="text"
+                      placeholder="Search"
+                      className={styles.urlInput}
+                      value={searchQuery}
+                      onChange={handleSearchChange}
+                    />
+                </div>
+                {/* <button className={styles.searchButton}>
+                    Search
+                </button> */}
+              </div>
+
+              {loading ? (
+                <p>Loading...</p>
+                ) : error ? (
+                <p style={{ color: "red", marginTop: "40px", textAlign: "center" }}>{error}</p>
+                ) : (
+                <div>
+                    {filteredCategories.length === 0 ? (
+                    <p style={{ textAlign: "center", marginTop: "20px" }}>Tidak ada kategori.</p>
+                    ) : (
+                      filteredCategories.map((category) => (
+                        <div key={category.id} className={styles.linkItem}>
+                        <div className={styles.linkItemLeft}>
+                            <span className={styles.menuIcon}>⋮</span>
+                            <div className={styles.linkIcon}>📦</div>
+                            <div className={styles.linkDetails}>
+                            <span className={styles.linkTitle}>{category.category_name}</span>
+                            </div>
+                        </div>
+                        <div className={styles.linkToggle}>
+                            <div className={styles.blockActions}>
+                            <button onClick={() => openEditCategory(category)}>✏️</button>
+                            <button onClick={() => handleDeleteCategory(category.id, refreshCategories)}>🗑️</button>
+                            </div>
+                        </div>
+                        </div>
+                    ))
+                    )}
+                </div>
+              )}
+            </div>
           </div>
         )
         case 'Profile':
@@ -842,14 +923,28 @@ export default function Page() {
             </div>
 
             <div className={styles.previewLinks} style={{marginTop: '-15px'}}>
-              <div className={styles.selectContainer}>
+            <div className={styles.searchContainer}>
                 <div className={styles.search}>
                   <span className={styles.searchIcon}>📦</span>
-                  <select className={styles.urlInput}>
+                  <select
+                    id="category"
+                    value={formData.category}
+                    className={styles.urlInput}
+                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                    required
+                  >
                     <option value="">Select a category</option>
-                    <option value="option1">Social Media</option>
-                    <option value="option2">Fashion</option>
-                    <option value="option3">Beauty</option>
+                    {loading ? (
+                      <option disabled>Loading...</option>
+                    ) : error ? (
+                      <option disabled>{error}</option>
+                    ) : (
+                      categories.map((category) => (
+                        <option key={category.id} value={category.category_name}>
+                          {category.category_name}
+                        </option>
+                      ))
+                    )}
                   </select>
                 </div>
               </div>
@@ -1231,7 +1326,7 @@ export default function Page() {
           onClose={closeEditCategory}
           formData={editCategoryData}
           setFormData={setEditCategoryData}
-          // onSave={saveEdit}
+          onSave={handleEditCategory}
         />
       )}
 

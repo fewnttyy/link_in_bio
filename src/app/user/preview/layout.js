@@ -1,4 +1,4 @@
-import '@/app/user/styles/Preview.module.css'
+import '../styles/Preview.module.css'
 
 export default function PreviewLayout({ children }) {
     return (

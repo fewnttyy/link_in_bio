@@ -1,5 +1,5 @@
 'use client'
-import styles from '@/app/user/styles/Dashboard.module.css';
+import styles from '../../styles/Dashboard.module.css';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
 export default function DashboardPage() {

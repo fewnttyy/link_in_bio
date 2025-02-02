@@ -1,5 +1,5 @@
 'use client'
-import styles from '@/app/user/styles/ModalSettings.module.css'
+import styles from '../styles/ModalSettings.module.css'
 
 export default function DetailModal({ onClose }) {
   // Sample media type - in real implementation this would come from props

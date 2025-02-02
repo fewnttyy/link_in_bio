@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import styles from '@/app/user/styles/ModalSettings.module.css';
+import styles from '../styles/ModalSettings.module.css';
 
 export default function DeleteAccountModal({ onClose }) {
   const [deleteText, setDeleteText] = useState('');

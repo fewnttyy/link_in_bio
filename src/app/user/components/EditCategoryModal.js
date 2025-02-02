@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from '@/app/user/styles/EditLinkModal.module.css';
+import styles from '../styles/EditLinkModal.module.css';
 
 const EditCategoryModal = ({ isOpen, onClose, formData, setFormData, onSave }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -33,7 +33,7 @@ const EditCategoryModal = ({ isOpen, onClose, formData, setFormData, onSave }) =
       <div className={styles.modal}>
         <div className={styles.modalHeader}>
           <h2>Edit Category</h2>
-          <button onClick={onClose} className={styles.closeButton}>✕</button>
+          <button onClick={onClose} className={styles.closeButton}>×</button>
         </div>
         <form onSubmit={handleSubmit} className={styles.modalForm}>
           <div className={styles.formGroup}>
