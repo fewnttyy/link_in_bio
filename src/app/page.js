@@ -1,7 +1,10 @@
 'use client'
 import { useState } from 'react'
 import Layout from './layout'
-import styles from '@/app/user/styles/Home.module.css'
+// import styles from '../../styles/Home.module.css'
+import styles from '../app/user/styles/Home.module.css'
+
+// import styles from '@/app/user/styles/Home.module.css'
 
 export default function Page() {
   const [currentPage, setCurrentPage] = useState('home')
