@@ -31,20 +31,20 @@ export default function Home() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [role, setRole] = useState(null);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      // Baca role dari cookies setelah login
-      const userRole = Cookies.get("role");
-      setRole(userRole);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     // Baca role dari cookies setelah login
+  //     const userRole = Cookies.get("role");
+  //     setRole(userRole);
 
-      // Redirect jika role sudah ada
-      if (userRole === "user") {
-        router.push("/user/main/dashboard");
-      } else if (userRole === "super_admin") {
-        router.push("/super_admin/main/dashboard");
-      }
-    }
-  }, []);
+  //     // Redirect jika role sudah ada
+  //     if (userRole === "user") {
+  //       router.push("/user/main/dashboard");
+  //     } else if (userRole === "super_admin") {
+  //       router.push("/super_admin/main/dashboard");
+  //     }
+  //   }
+  // }, []);
 
   const handleInputFocus = (field) => {
     setActiveInput((prev) => ({ ...prev, [field]: true }));
@@ -116,11 +116,17 @@ export default function Home() {
       const response = await loginUser(formData.email, formData.password);
       toast.success("Login berhasil! Selamat datang 👋");
 
-      Cookies.set("role", response.user.role, { expires: 1 }); // Simpan role dengan masa berlaku 1 hari
+      // ✅ Simpan token dan role dengan aman di cookies
+      Cookies.set("token", response.token, { expires: 1, secure: true, sameSite: "Strict" });
+      Cookies.set("role", response.user.role, { expires: 1, secure: true, sameSite: "Strict" });
 
-      // Ambil role dari cookies
+      // ✅ Pastikan token tersimpan
+      const token = Cookies.get("token");
       const userRole = Cookies.get("role");
-      console.log(userRole);
+
+      console.log("Token:", token); // Debugging
+      console.log("Role:", userRole); // Debugging
+
       // Redirect berdasarkan role
       if (userRole === "user") {
         router.push("/user/main/dashboard")

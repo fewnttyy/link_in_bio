@@ -3,28 +3,32 @@ import api from "../../api";
 import React, { useState, useRef, useEffect } from 'react'
 import styles from '../styles/Header.module.css'
 import { Poppins } from 'next/font/google';
+import logoutUser from '../../api/auth/logout';
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 const poppins = Poppins({
   subsets: ['latin'],
   weight: ['400', '700'],
 });
 
-const handleLogout = async () => {
-  try {
-      const response = await api.post("/logout");
+// const handleLogout = async () => {
+//   try {
+//     const response = await logoutUser();
 
-      if (response.data.success) {
-          alert("Logout berhasil!");
-          localStorage.removeItem("token"); // Hapus token dari localStorage
-          window.location.href = "/login"; // Redirect ke halaman login
-      } else {
-          alert("Logout gagal: " + response.data.message);
-      }
-  } catch (error) {
-      console.error("Error:", error);
-      alert("Terjadi kesalahan saat logout");
-  }
-};
+//     if (response.data.success) {
+//       Cookies.remove("role");
+//       toast.success("Logout berhasil!");
+
+//       route.push("/login");
+//     } else {
+//       toast.error(error.message || "Terjadi kesalahan saat logout.");
+//     }
+//   } catch (error) {
+//     console.error("Error:", error);
+//     alert("Terjadi kesalahan saat logout");
+//   }
+// };
 
 export default function Header({ toggleSidebar }) {
   const [isProfileOpen, setIsProfileOpen] = useState(false)
@@ -50,9 +54,9 @@ export default function Header({ toggleSidebar }) {
         {/* <h2>Dashboard</h2> */}
         <div className={styles.headerActions}>
           <div className={styles.profileContainer} ref={dropdownRef}>
-            <img 
-              src="/images/avatar.jpg" 
-              alt="Profile" 
+            <img
+              src="/images/avatar.jpg"
+              alt="Profile"
               className={styles.avatar}
               onClick={() => setIsProfileOpen(!isProfileOpen)}
             />

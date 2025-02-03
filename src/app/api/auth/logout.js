@@ -1,10 +1,18 @@
 import apiClient from "../apiClient";
 
-export const logout = async () => {
+const logoutUser = async () => {
     try {
-        const response = await apiClient.post("logout");
+        await apiClient.get("/sanctum/csrf-cookie");
+
+        const response = await apiClient.post("/logout", {}, { withCredentials: true });
         return response.data;
     } catch (error) {
-        throw error.response ? error.response.data : error;
+        // throw error.response ? error.response.data : error;
+        return {
+            success: false,
+            message: error.response?.data?.message || "Gagal logout",
+        };
     }
 }
+
+export default logoutUser;
