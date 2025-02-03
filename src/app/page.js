@@ -17,10 +17,6 @@ export default function Page() {
     setIsMenuOpen(!isMenuOpen)
   }
 
-  // useEffect(() => {
-  //   setCurrentPage(true);
-  // }, [])
-
   return (
     <Layout>
       <div className={styles.container}>

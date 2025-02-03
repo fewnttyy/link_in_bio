@@ -95,11 +95,9 @@ export default function Home() {
       toast.success("Registrasi berhasil! Silakan cek email untuk verifikasi.");
       setIsSignUpMode(false);
       console.log("User Terdaftar:", response.user);
-
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Terjadi kesalahan saat registrasi.";
-      toast.error(errorMessage);
-      console.error("Full error:", error);
+
+      console.log("Full error:", error);
 
     } finally {
       setLoading(false);
@@ -117,9 +115,11 @@ export default function Home() {
       const response = await loginUser(formData.email, formData.password);
       toast.success("Login berhasil! Selamat datang 👋");
 
+      // ✅ Simpan token dan role dengan aman di cookies
       Cookies.set("token", response.token, { expires: 1, secure: true, sameSite: "Strict" });
       Cookies.set("role", response.user.role, { expires: 1, secure: true, sameSite: "Strict" });
 
+      // ✅ Pastikan token tersimpan
       const token = Cookies.get("token");
       const userRole = Cookies.get("role");
 
@@ -128,7 +128,7 @@ export default function Home() {
 
       // Redirect berdasarkan role
       if (userRole === "user") {
-        router.push("/user/links/link-in-bio")
+        router.push("/user/main/dashboard")
       } else if (userRole === "super_admin") {
         router.push("/super_admin/main/dashboard");
       } else {
