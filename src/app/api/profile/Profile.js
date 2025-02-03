@@ -1,4 +1,4 @@
-import api from "../../api";
+import apiClient from "../apiClient";
 import Swal from "sweetalert2";
 
 // Fungsi untuk menampilkan pesan dengan SweetAlert
@@ -13,7 +13,7 @@ const showAlert = (status, message) => {
 // Fungsi untuk mengambil data profile user yang sedang login
 export const getProfile = async () => {
   try {
-    const response = await api.get("/profiles");
+    const response = await apiClient.get("/profiles");
     if (response.data.status) {
       return response.data;
     } else {
@@ -30,7 +30,7 @@ export const getProfile = async () => {
 // Fungsi untuk memperbarui data profile user
 export const updateProfile = async (id, formData) => {
   try {
-    const response = await api.post(`/profiles/update/${id}`, formData, {
+    const response = await apiClient.post(`/profiles/update/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data", // Untuk menangani file upload
       },

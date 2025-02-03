@@ -1,9 +1,9 @@
-import api from "../../api";
+import apiClient from "../apiClient";
 import Swal from "sweetalert2";
 
 export const fetchCategories = async (setCategories, setLoading, setError) => {
   try {
-    const response = await api.get("/categories");
+    const response = await apiClient.get("/categories");
     if (response.data.status) {
       setCategories(response.data.categories);
     } else {
@@ -36,7 +36,7 @@ export const addCategory = async (categoryName, refreshCategories) => {
       return;
     }
 
-    const response = await api.post("/categories/add", {
+    const response = await apiClient.post("/categories/add", {
       category_name: categoryName,
       id_user: user.id,
     });
@@ -55,7 +55,7 @@ export const addCategory = async (categoryName, refreshCategories) => {
 
 export const editCategory = async (formData, refreshCategories, closeModal) => {
   try {
-    const response = await api.put(`/categories/update/${formData.id}`, {
+    const response = await apiClient.put(`/categories/update/${formData.id}`, {
       category_name: formData.category_name,
     });
 
@@ -73,24 +73,24 @@ export const editCategory = async (formData, refreshCategories, closeModal) => {
 };
 
 export const deleteCategory = async (id, refreshCategories) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await api.delete(`/categories/delete/${id}`);
-          Swal.fire("Deleted!", "Category has been deleted.", "success");
-          refreshCategories(); // 🔥 Pastikan fetchCategories() dipanggil setelah delete
-        } catch (error) {
-          Swal.fire("Error!", "Failed to delete category!", "error");
-          console.error(error);
-        }
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, delete it!",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        await apiClient.delete(`/categories/delete/${id}`);
+        Swal.fire("Deleted!", "Category has been deleted.", "success");
+        refreshCategories(); // 🔥 Pastikan fetchCategories() dipanggil setelah delete
+      } catch (error) {
+        Swal.fire("Error!", "Failed to delete category!", "error");
+        console.error(error);
       }
-    });
-  };  
+    }
+  });
+};  
