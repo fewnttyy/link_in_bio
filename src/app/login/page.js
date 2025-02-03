@@ -130,7 +130,7 @@ export default function Home() {
 
       // Redirect berdasarkan role
       if (userRole === "user") {
-        router.push("/user/main/dashboard")
+        router.push("/user/main2/dashboard")
       } else if (userRole === "super_admin") {
         router.push("/super_admin/main/dashboard");
       } else {
@@ -150,7 +150,7 @@ export default function Home() {
   };
 
   return (
-    <main className={isSignUpMode ? "sign-up-mode" : ""}>
+    <main className={`loginContainer ${isSignUpMode ? "sign-up-mode" : ""}`}>
       <ToastContainer />
       <div className="box">
         <div className="inner-box">

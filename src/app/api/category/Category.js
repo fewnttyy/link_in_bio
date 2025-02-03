@@ -86,7 +86,7 @@ export const deleteCategory = async (id, refreshCategories) => {
       try {
         await apiClient.delete(`/categories/delete/${id}`);
         Swal.fire("Deleted!", "Category has been deleted.", "success");
-        refreshCategories(); // 🔥 Pastikan fetchCategories() dipanggil setelah delete
+        refreshCategories();
       } catch (error) {
         Swal.fire("Error!", "Failed to delete category!", "error");
         console.error(error);

@@ -25,8 +25,8 @@ export default function Sidebar({ isVisible }) {
             <li>
               <a
                 href="#"
-                onClick={() => navigateToPage('/user/main/dashboard')}
-                className={`${styles.menuItem} ${pathname === '/user/main/dashboard' ? styles.active : ''}`}
+                onClick={() => navigateToPage('/user/main2/dashboard')}
+                className={`${styles.menuItem} ${pathname === '/user/main2/dashboard' ? styles.active : ''}`}
               >
                 <span className={styles.icon}>🏠</span>
                 Dashboard
@@ -51,8 +51,8 @@ export default function Sidebar({ isVisible }) {
             <li>
               <a
                 href="#"
-                onClick={() => navigateToPage('/user/links/link-in-bio')}
-                className={`${styles.menuItem} ${pathname === '/user/links/link-in-bio' ? styles.active : ''}`}
+                onClick={() => navigateToPage('/user/main2/link-in-bio')}
+                className={`${styles.menuItem} ${pathname === '/user/main2/link-in-bio' ? styles.active : ''}`}
               >
                 <span className={styles.icon}>🔗</span>
                 Link In Bio
@@ -66,8 +66,8 @@ export default function Sidebar({ isVisible }) {
             <li>
               <a
                 href="#"
-                onClick={() => navigateToPage('/user/settings')}
-                className={`${styles.menuItem} ${pathname === '/user/settings' ? styles.active : ''}`}
+                onClick={() => navigateToPage('/user/main2/settings')}
+                className={`${styles.menuItem} ${pathname === '/user/main2/settings' ? styles.active : ''}`}
               >
                 <span className={styles.icon}>⚙️</span>
                 Settings
@@ -81,8 +81,8 @@ export default function Sidebar({ isVisible }) {
             <li>
               <a
                 href="#"
-                onClick={() => navigateToPage('/user/messages')}
-                className={`${styles.menuItem} ${pathname === '/user/messages' ? styles.active : ''}`}
+                onClick={() => navigateToPage('/user/main2/messages')}
+                className={`${styles.menuItem} ${pathname === '/user/main2/messages' ? styles.active : ''}`}
               >
                 <span className={styles.icon}>💌</span>
                 Messages

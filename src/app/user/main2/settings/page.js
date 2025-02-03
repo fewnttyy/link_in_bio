@@ -1,9 +1,9 @@
 'use client'
 import { useState } from 'react';
 import styles from '../styles/Settings.module.css'
-import ChangeEmailModal from '../components/ChangeEmailModal'
-import ChangePasswordModal from '../components/ChangePasswordModal'
-import DeleteAccountModal from '../components/DeleteAccountModal'
+import ChangeEmailModal from '../../components/ChangeEmailModal'
+import ChangePasswordModal from '../../components/ChangePasswordModal'
+import DeleteAccountModal from '../../components/DeleteAccountModal'
 
 export default function PersonalInfo() {
   const [showEmailModal, setShowEmailModal] = useState(false);
