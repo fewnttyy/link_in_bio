@@ -2,7 +2,7 @@
 import styles from '../styles/Preview.module.css'
 import { useState, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
-import DetailModal from '../components/DetailModal'
+import DetailModal from '../components/modal/DetailModal'
 
 export default function PreviewPage() {
   const pathname = usePathname()

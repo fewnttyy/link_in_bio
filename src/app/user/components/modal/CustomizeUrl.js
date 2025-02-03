@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../styles/EditLinkModal.module.css';
+import styles from '../../styles/EditLinkModal.module.css';
 
 const CustomizeUrl = ({ isOpen, onClose, formData, setFormData, onSave }) => {
   const [isVisible, setIsVisible] = useState(false);

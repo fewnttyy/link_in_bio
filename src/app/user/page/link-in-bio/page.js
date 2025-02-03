@@ -2,10 +2,10 @@
 import { useState, useRef, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import styles from '../../styles/Page.module.css'
-import EditLinkModal from '../../components/EditLinkModal'
-import EditCategoryModal from '../../components/EditCategoryModal'
-import EditBannerModal from '../../components/EditBannerModal'
-import CustomizeUrl from '../../components/CustomizeUrl'
+import EditLinkModal from '../../components/modal/EditLinkModal'
+import EditCategoryModal from '../../components/modal/EditCategoryModal'
+import EditBannerModal from '../../components/modal/EditBannerModal'
+import CustomizeUrl from '../../components/modal/CustomizeUrl'
 import Swal from 'sweetalert2';
 
 import { fetchCategories, addCategory, editCategory, deleteCategory } from "../../../api/category/Category";
@@ -410,21 +410,6 @@ export default function Page() {
   const [editFormData, setEditFormData] = useState({});
   const [links, setLinks] = useState([]);
 
-  // Ambil data link dari API saat komponen dimuat
-  // useEffect(() => {
-  //   fetchLinks();
-  // }, []);
-
-  // const fetchLinks = async () => {
-  //   try {
-  //     const response = await fetch('/api/links'); // Ganti endpoint sesuai API Anda
-  //     const data = await response.json();
-  //     setLinks(data); // Data yang diterima harus berupa array
-  //   } catch (error) {
-  //     console.error('Error fetching links:', error);
-  //   }
-  // };
-
   const openEditModal = () => {
     // setEditFormData(linkData);
     setIsEditModalOpen(true);
@@ -433,23 +418,6 @@ export default function Page() {
   const closeEditModal = () => {
     setIsEditModalOpen(false);
   };
-
-  // const saveEdit = async () => {
-  //   try {
-  //     // Kirim data yang telah diedit ke server melalui API
-  //     await fetch(`/api/links/${editFormData.id}`, {
-  //       method: 'PUT', // Gunakan PUT atau PATCH sesuai kebutuhan
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify(editFormData),
-  //     });
-
-  //     // Perbarui daftar link di UI setelah berhasil disimpan
-  //     fetchLinks();
-  //     closeEditModal();
-  //   } catch (error) {
-  //     console.error('Error saving link:', error);
-  //   }
-  // };
   // =========================================================== LINKS MODAL =========================================================== //
 
 
@@ -477,15 +445,6 @@ export default function Page() {
       setIsBannerOpen(false) // Tutup modal setelah animasi selesai
     }, 300) // Waktu sesuai durasi animasi (0.3s)
   }
-
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0]
-  //   if (file) {
-  //     setFormData({ ...formData, mediaFile: file })
-  //     const url = URL.createObjectURL(file)
-  //     setPreview(url)
-  //   }
-  // }
 
   const bannerSubmit = (e) => {
     e.preventDefault()
@@ -865,18 +824,6 @@ export default function Page() {
                     </p>
                   </div>
                 </div>
-
-                {/* <div className={styles.card}>
-                    <div className={styles.formGroup}>
-                      <label className={styles.label}>
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        className={styles.input}
-                      />
-                    </div>
-                  </div> */}
 
                 <div className={styles.card}>
                   <div className={styles.formGroup}>

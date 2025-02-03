@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../styles/EditLinkModal.module.css';
+import styles from '../../styles/EditLinkModal.module.css';
 
-const EditBannerModal = ({ isOpen, onClose, formData, setFormData, onSave }) => {
+const EditLinkModal = ({ isOpen, onClose, formData, setFormData, onSave }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [preview, setPreview] = useState(null);
 
@@ -16,26 +16,78 @@ const EditBannerModal = ({ isOpen, onClose, formData, setFormData, onSave }) => 
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    
     if (file) {
+      // Check if media type is video and file is a video
+      if (formData.mediaType === 'video') {
+        if (!file.type.startsWith('video/')) {
+          alert('Please upload a video file');
+          e.target.value = ''; // Clear the file input
+          return;
+        }
+      }
+      
+      // Check if media type is image and file is an image
+      if (formData.mediaType === 'image') {
+        if (!file.type.startsWith('image/')) {
+          alert('Please upload an image file');
+          e.target.value = ''; // Clear the file input
+          return;
+        }
+      }
+      
       setFormData({ ...formData, mediaFile: file });
-      const url = URL.createObjectURL(file);
-      setPreview(url);
+      
+      // Only create preview for images
+      if (formData.mediaType === 'image') {
+        const url = URL.createObjectURL(file);
+        setPreview(url);
+      } else {
+        setPreview(null);
+      }
     }
   };
 
+  const handleMediaTypeChange = (e) => {
+    const newMediaType = e.target.value
+    
+    // If "No Media" is selected, clear the media file and preview
+    if (newMediaType === 'noMedia') {
+      setFormData({
+        ...formData,
+        mediaType: newMediaType,
+        mediaFile: null
+      })
+      // Clear the preview and revoke the object URL to prevent memory leaks
+      if (preview) {
+        URL.revokeObjectURL(preview)
+        setPreview(null)
+      }
+    } else {
+      setFormData({
+        ...formData,
+        mediaType: newMediaType
+      })
+    }
+  }
+  
   const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave();
+    e.preventDefault()
+    console.log(formData)
+    setIsModalOpen(false)
     setFormData({
       title: '',
       mediaType: 'image',
       mediaFile: null,
       link: '',
-      description: '',
-    });
-    setPreview(null);
-    onClose();
-  };
+      description: ''
+    })
+    // Clean up preview URL when form is submitted
+    if (preview) {
+      URL.revokeObjectURL(preview)
+      setPreview(null)
+    }
+  }
 
   // const saveEdit = async () => {
   //   try {
@@ -75,7 +127,7 @@ const EditBannerModal = ({ isOpen, onClose, formData, setFormData, onSave }) => 
     <div className={`${styles.modalOverlay} ${isOpen ? styles.fadeIn : styles.fadeOut}`}>
       <div className={styles.modal}>
         <div className={styles.modalHeader}>
-          <h2>Edit Banner</h2>
+          <h2>Edit Link</h2>
           <button onClick={onClose} className={styles.closeButton}>×</button>
         </div>
         <form onSubmit={handleSubmit} className={styles.modalForm}>
@@ -91,6 +143,23 @@ const EditBannerModal = ({ isOpen, onClose, formData, setFormData, onSave }) => 
             />
           </div>
 
+          {/* Category Select */}
+          <div className={styles.formGroup}>
+            <label htmlFor="category">Category</label>
+            <select
+              id="category"
+              value={formData.category}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+              required
+            >
+              <option value="">Select a category</option>
+              <option value="Education">Education</option>
+              <option value="Technology">Technology</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Health">Health</option>
+            </select>
+          </div>
+
           {/* Media Type */}
           <div className={styles.formGroup}>
             <label>Media Type</label>
@@ -101,27 +170,54 @@ const EditBannerModal = ({ isOpen, onClose, formData, setFormData, onSave }) => 
                   name="mediaType"
                   value="image"
                   checked={formData.mediaType === 'image'}
-                  onChange={(e) => setFormData({ ...formData, mediaType: e.target.value })}
+                  onChange={handleMediaTypeChange}
                 />
                 Image
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="mediaType"
+                  value="video"
+                  checked={formData.mediaType === 'video'}
+                  onChange={handleMediaTypeChange}
+                />
+                Video
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="mediaType"
+                  value="noMedia"
+                  checked={formData.mediaType === 'noMedia'}
+                  onChange={handleMediaTypeChange}
+                />
+                Delete Media
               </label>
             </div>
           </div>
 
-          {/* Upload Media */}
-          <div className={styles.formGroup}>
-            <label>Upload Media</label>
-            <div className={styles.mediaUpload}>
-              <input
-                type="file"
-                accept={formData.mediaType === 'image' ? 'image/*' : 'video/*'}
-                onChange={handleFileChange}
-              />
-              {preview && formData.mediaType === 'image' && (
-                <img src={preview} alt="Preview" className={styles.mediaPreview} />
-              )}
+          {formData.mediaType !== 'noMedia' && (
+            <div className={styles.formGroup}>
+              <label>Upload Media</label>
+              <div className={styles.mediaUpload}>
+                <input
+                  type="file"
+                  accept={formData.mediaType === 'image' ? 'image/*' : 'video/*'}
+                  onChange={handleFileChange}
+                />
+                {preview && formData.mediaType === 'image' && (
+                  <img src={preview} alt="Preview" className={styles.mediaPreview} />
+                )}
+                {formData.mediaType === 'video' && formData.mediaFile && (
+                  <div className={styles.videoInfo}>
+                    <p>Video selected: {formData.mediaFile.name}</p>
+                    <p>Size: {(formData.mediaFile.size / (1024 * 1024)).toFixed(2)} MB</p>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Link Input */}
           <div className={styles.formGroup}>
@@ -163,4 +259,4 @@ const EditBannerModal = ({ isOpen, onClose, formData, setFormData, onSave }) => 
   );
 };
 
-export default EditBannerModal;
+export default EditLinkModal;

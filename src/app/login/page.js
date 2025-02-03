@@ -129,7 +129,7 @@ export default function Home() {
 
       // Redirect berdasarkan role
       if (userRole === "user") {
-        router.push("/user/main2/dashboard")
+        router.push("/user/page/dashboard")
       } else if (userRole === "super_admin") {
         router.push("/super_admin/main/dashboard");
       } else {
@@ -184,6 +184,7 @@ export default function Home() {
                     name="email"
                     className={styles["input-field"]}
                     autoComplete="off"
+                    placeholder=" "
                     required
                     onChange={handleChange}
                   />
@@ -195,6 +196,7 @@ export default function Home() {
                     name="password"
                     className={styles["input-field"]}
                     autoComplete="off"
+                    placeholder=" "
                     required
                     onChange={handleChange}
                   />
@@ -233,6 +235,7 @@ export default function Home() {
                     name="username"
                     className={styles["input-field"]}
                     autoComplete="off"
+                    placeholder=" "
                     required
                     onChange={handleChange}
                   />
@@ -244,6 +247,7 @@ export default function Home() {
                     name="email"
                     className={styles["input-field"]}
                     autoComplete="off"
+                    placeholder=" "
                     required
                     onChange={handleChange}
                   />
@@ -255,6 +259,7 @@ export default function Home() {
                     name="phone"
                     className={styles["input-field"]}
                     autoComplete="off"
+                    placeholder=" "
                     required
                     onChange={handleChange}
                   />
@@ -266,6 +271,7 @@ export default function Home() {
                     name="password"
                     className={styles["input-field"]}
                     autoComplete="off"
+                    placeholder=" "
                     required
                     onChange={handleChange}
                   />
@@ -277,6 +283,7 @@ export default function Home() {
                     name="password_confirmation"
                     className={styles["input-field"]}
                     autoComplete="off"
+                    placeholder=" "
                     required
                     onChange={handleChange}
                   />

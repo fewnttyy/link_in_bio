@@ -136,6 +136,7 @@
     border-bottom-color: #151111;
   }
   
+  .input-field:not(:placeholder-shown) + .label-login,
   .input-field:focus + .label-login {
     font-size: 0.75rem;
     top: -2px;

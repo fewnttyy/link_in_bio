@@ -1,4 +1,4 @@
-import styles from '../styles/ModalSettings.module.css';
+import styles from '../../styles/ModalSettings.module.css';
 
 export default function VerificationCodeModal({ onClose, newEmail }) {
   const handleSubmit = (e) => {

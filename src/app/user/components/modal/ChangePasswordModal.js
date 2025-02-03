@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import styles from '../styles/ModalSettings.module.css'
+import styles from '../../styles/ModalSettings.module.css'
 
 export default function ChangePasswordModal({ onClose }) {
   const [passwords, setPasswords] = useState({
