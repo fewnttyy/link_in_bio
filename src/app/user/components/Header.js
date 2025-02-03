@@ -13,8 +13,6 @@ const poppins = Poppins({
   weight: ['400', '700'],
 });
 
-
-
 export default function Header({ toggleSidebar }) {
   const router = useRouter();
 

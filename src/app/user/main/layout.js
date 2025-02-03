@@ -39,9 +39,8 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <div
-          className={`app-container ${
-            isSidebarVisible ? 'sidebar-visible' : 'sidebar-hidden'
-          }`}
+          className={`app-container ${isSidebarVisible ? 'sidebar-visible' : 'sidebar-hidden'
+            }`}
         >
           <Sidebar isVisible={isSidebarVisible} />
           <main className="main-content">
