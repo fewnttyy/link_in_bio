@@ -6,10 +6,10 @@ import EditLinkModal from '../../components/EditLinkModal'
 import EditCategoryModal from '../../components/EditCategoryModal'
 import EditBannerModal from '../../components/EditBannerModal'
 import CustomizeUrl from '../../components/CustomizeUrl'
-import Swipeable from '../../components/Swipeable'
 import Swal from 'sweetalert2';
 
 import { fetchCategories, addCategory, editCategory, deleteCategory } from "../../../api/category/Category";
+import { getProfile, updateProfile } from "../../../api/profile/Profile";
 
 export default function Page() {
   const router = useRouter()
@@ -20,6 +20,81 @@ export default function Page() {
   const navigateToPage = (path) => {
     window.open(path, '_blank');
   };
+
+
+  // =========================================================== PROFILE =========================================================== //
+  const [profile, setProfile] = useState({
+    username: "",
+    name: "",
+    bio: "",
+    phone: "",
+    province: "",
+    city: "",
+    subdistrict: "",
+    avatar: ""
+  });  
+
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewAvatar, setPreviewAvatar] = useState("");
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const data = await getProfile();
+      if (data && data.status) {
+        setProfile(data.profile[0]);
+        if (data.profile[0].avatar) {
+          setPreviewAvatar(data.profile[0].avatar);
+        }
+      }
+    };
+    fetchProfile();
+  }, []);
+  
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProfile((prevProfile) => ({
+      ...prevProfile,
+      [name]: value === "" ? null : value,  // Kirim null jika kosong
+    }));
+  };  
+  
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setPreviewAvatar(URL.createObjectURL(file));
+    }
+  };
+
+  const handleDeleteAvatar = () => {
+    setSelectedFile(null);
+    setPreviewAvatar(""); // Revert to default avatar
+    setProfile((prevProfile) => ({
+      ...prevProfile,
+      avatar: null, // Indikasikan bahwa avatar dihapus
+    }));
+  };
+  
+  const handleEditProfile = async (e) => {
+    e.preventDefault();
+    if (!profile.username || !profile.phone) {
+      Swal.fire("Error", "Username and phone is required", "error");
+      return;
+    }
+    const formData = new FormData();
+    Object.keys(profile).forEach((key) => {
+      if (key !== "avatar") {
+        formData.append(key, profile[key] || "");  // Pastikan field kosong tetap dikirim
+      }
+    });
+    if (selectedFile) {
+      formData.append("avatar", selectedFile);
+    } else if (profile.avatar === null) {
+      formData.append("delete_avatar", "true"); // Kirim sinyal untuk hapus avatar
+    }
+    await updateProfile(profile.id, formData);
+  };  
+  // =========================================================== PROFILE =========================================================== //
 
 
   // =========================================================== CATEGORY =========================================================== //
@@ -707,7 +782,7 @@ export default function Page() {
               {loading ? (
                 <p>Loading...</p>
                 ) : error ? (
-                <p style={{ color: "red", marginTop: "40px", textAlign: "center" }}>{error}</p>
+                <p style={{ color: "red", marginTop: "20px" }}>{error}</p>
                 ) : (
                 <div>
                     {filteredCategories.length === 0 ? (
@@ -741,132 +816,151 @@ export default function Page() {
           <div className={getTabClassName('Profile')} style={{ padding: '2rem', maxHeight: '600px', overflow: 'auto' }}>
             <div className={styles.profileContainer}>
               <h2 className={styles.sectionTitle}>Profile</h2>
-              
-              <div className={styles.card}>
-                <h3 className={styles.label}>Avatar</h3>
-                <div className={styles.profilePhotoSection}>
-                  <img
-                    src="/images/avatar.jpg"
-                    alt="Profile"
-                    className={styles.profilePhoto}
-                  />
-                  <div className={styles.photoInfo}>
-                    <p className={styles.photoHelperText}>
-                      For best results, upload a photo that's 130 x 130 pixels.
-                      Larger photos will be resized.
-                    </p>
-                    <button className={styles.uploadButton}>
-                      Upload Photo
+                <form onSubmit={handleEditProfile}>
+                  <div className={styles.card}>
+                  <h3 className={styles.label}>Avatar</h3>
+                  <div className={styles.profilePhotoSection}>
+                    <img
+                      src={previewAvatar || "/images/avatar.jpg"}
+                      alt="Profile"
+                      className={styles.profilePhoto}
+                    />
+                    <div className={styles.photoInfo}>
+                      <p className={styles.photoHelperText}>
+                        For best results, upload a photo that's 130 x 130 pixels.
+                      </p>
+
+                      {/* Custom File Input */}
+                      <label className={styles.uploadButton}>
+                        Choose
+                        <input
+                          type="file"
+                          onChange={handleAvatarChange}
+                          style={{ display: "none" }} // Hide the default file input
+                        />
+                      </label>
+
+                      {/* Hapus Avatar */}
+                      {previewAvatar && (
+                        <button type="button" onClick={handleDeleteAvatar} className={styles.deleteButton}>
+                          Delete
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  </div>
+
+                  <div className={styles.card}>
+                    <div className={styles.formGroup}>
+                      <label className={styles.label}>
+                        Username
+                      </label>
+                      <input
+                        type="text"
+                        name="username" value={profile.username || ""} onChange={handleChange}
+                        className={styles.input}
+                      />
+                      <p className={styles.helperText}>
+                        If you change your username, it won't change your link or your profile name.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* <div className={styles.card}>
+                    <div className={styles.formGroup}>
+                      <label className={styles.label}>
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        className={styles.input}
+                      />
+                    </div>
+                  </div> */}
+
+                  <div className={styles.card}>
+                    <div className={styles.formGroup}>
+                      <label className={styles.label}>
+                        Name
+                      </label>
+                      <input
+                        type="text"
+                        name="name" value={profile.name || ""} onChange={handleChange}
+                        className={styles.input}
+                      />
+                    </div>
+                  </div>
+
+                  <div className={styles.card}>
+                    <div className={styles.formGroup}>
+                      <label className={styles.label}>
+                        Bio
+                      </label>
+                      <textarea
+                        name="bio" value={profile.bio || ""} onChange={handleChange}
+                        className={styles.input}
+                      />
+                    </div>
+                  </div>
+
+                  <div className={styles.card}>
+                    <div className={styles.formGroup}>
+                      <label className={styles.label}>
+                        Phone
+                      </label>
+                      <input
+                        type="text"
+                        name="phone" value={profile.phone || ""} onChange={handleChange}
+                        className={styles.input}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className={styles.card}>
+                    <div className={styles.formGroup}>
+                      <label className={styles.label}>
+                        Province
+                      </label>
+                      <input
+                        type="text"
+                        name="province" value={profile.province || ""} onChange={handleChange}
+                        className={styles.input}
+                      />
+                    </div>
+                  </div>
+
+                  <div className={styles.card}>
+                    <div className={styles.formGroup}>
+                      <label className={styles.label}>
+                        City
+                      </label>
+                      <input
+                        type="text"
+                        name="city" value={profile.city || ""} onChange={handleChange}
+                        className={styles.input}
+                      />
+                    </div>
+                  </div>
+
+                  <div className={styles.card}>
+                    <div className={styles.formGroup}>
+                      <label className={styles.label}>
+                        Subdistrict
+                      </label>
+                      <input
+                        type="text"
+                        name="subdistrict" value={profile.subdistrict || ""} onChange={handleChange}
+                        className={styles.input}
+                      />
+                    </div>
+                  </div>
+
+                  <div className={styles.actionButtons}>
+                    <button className={styles.submitButton} type="submit">
+                      Save Changes
                     </button>
                   </div>
-                </div>
-              </div>
-
-              <div className={styles.card}>
-                <div className={styles.formGroup}>
-                  <label className={styles.label}>
-                    Username
-                  </label>
-                  <input
-                    type="text"
-                    defaultValue="Fenty Solihah"
-                    className={styles.input}
-                  />
-                  <p className={styles.helperText}>
-                    If you change your username, it won't change your link or your profile name.
-                  </p>
-                </div>
-              </div>
-
-              {/* <div className={styles.card}>
-                <div className={styles.formGroup}>
-                  <label className={styles.label}>
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    className={styles.input}
-                  />
-                </div>
-              </div> */}
-
-              <div className={styles.card}>
-                <div className={styles.formGroup}>
-                  <label className={styles.label}>
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    className={styles.input}
-                  />
-                </div>
-              </div>
-
-              <div className={styles.card}>
-                <div className={styles.formGroup}>
-                  <label className={styles.label}>
-                    Bio
-                  </label>
-                  <textarea
-                   defaultValue="Backend Developer"
-                    className={styles.input}
-                  />
-                </div>
-              </div>
-
-              <div className={styles.card}>
-                <div className={styles.formGroup}>
-                  <label className={styles.label}>
-                    Phone
-                  </label>
-                  <input
-                    type="text"
-                    className={styles.input}
-                  />
-                </div>
-              </div>
-              
-              <div className={styles.card}>
-                <div className={styles.formGroup}>
-                  <label className={styles.label}>
-                    Province
-                  </label>
-                  <input
-                    type="text"
-                    className={styles.input}
-                  />
-                </div>
-              </div>
-
-              <div className={styles.card}>
-                <div className={styles.formGroup}>
-                  <label className={styles.label}>
-                    City
-                  </label>
-                  <input
-                    type="text"
-                    className={styles.input}
-                  />
-                </div>
-              </div>
-
-              <div className={styles.card}>
-                <div className={styles.formGroup}>
-                  <label className={styles.label}>
-                    Subdistrict
-                  </label>
-                  <input
-                    type="text"
-                    className={styles.input}
-                  />
-                </div>
-              </div>
-
-              <div className={styles.actionButtons}>
-                <button className={styles.submitButton}>
-                  Save Changes
-                </button>
-              </div>
+                </form>
             </div>
           </div>
         )
@@ -890,11 +984,11 @@ export default function Page() {
         <div className={styles.phone}>
           <div className={styles.phoneContent}>
             <div className={styles.previewBanner}>
-              <img src="/images/avatar.jpg" alt="Profile" className={styles.previewAvatar} />
+              <img src={previewAvatar || "/images/avatar.jpg"} alt="Profile" className={styles.previewAvatar} />
             </div>
             <div className={styles.previewProfile}>
               <h3>Fenty Solihah</h3>
-              <p>Backend Developer</p>
+              <p>{profile.bio || ""}</p>
             </div>
 
             {/* Banner Slider */}

@@ -43,9 +43,9 @@ export default function Page() {
             {/* Home Page */}
             <main className={styles.main}>
               <div className={styles.content}>
-                <h1 className={styles.title}>Customer Service</h1>
+                <h1 className={styles.title}>Maximize Your Link</h1>
                 <p className={styles.description}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Combine all your important links in one simple, easy-to-share link. Fast, efficient, and effortless with Baralynk.id.
                 </p>
                 <button className={styles.button}>Get Started</button>
               </div>

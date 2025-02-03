@@ -1058,6 +1058,23 @@
   .uploadButton:hover {
     background: #f2f2f2;
   }
+
+  .deleteButton {
+    padding: 0.5rem 1rem;
+    background: #f77a7a;
+    border: 1px solid #f77a7a;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.5s ease;
+  }
+  
+  .deleteButton:hover {
+    background: #fa6161;
+    border-color: #fa6161;
+    color: white;
+  }
   
   .formGroup {
     margin-bottom: 1rem;
