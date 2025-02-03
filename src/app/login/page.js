@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
-import "./login.css";
+import "../user/styles/globals.css";
 import Link from 'next/link';
 import loginUser from '../api/auth/login';
 import registerUser from '../api/auth/register';
@@ -148,181 +148,183 @@ export default function Home() {
   };
 
   return (
-    <main className={`loginContainer ${isSignUpMode ? "sign-up-mode" : ""}`}>
-      <ToastContainer />
-      <div className="box">
-        <div className="inner-box">
-          <div className="forms-wrap">
-            {/* Form Login */}
-            <form onSubmit={handleLogin} className="sign-in-form">
-              <div className="logo">
-                <h4>easyclass</h4>
-              </div>
-
-              <div className="heading">
-                <h2>Welcome Back</h2>
-                <h6 className="rtk">Not registered yet?</h6>
-                <button type="button" className="toggle" onClick={toggleMode}>
-                  Sign up
-                </button>
-              </div>
-
-              <div className="actual-form">
-                <div className="input-wrap">
-                  <input
-                    type="email"
-                    name="email"
-                    className="input-field"
-                    autoComplete="off"
-                    required
-                    onChange={handleChange}
-                  />
-                  <label>Email</label>
+    <div className="global-reset global-font">
+      <main className={`main-container ${isSignUpMode ? "sign-up-mode" : ""}`}>
+        <ToastContainer />
+        <div className="box">
+          <div className="inner-box">
+            <div className="forms-wrap">
+              {/* Form Login */}
+              <form onSubmit={handleLogin} className="sign-in-form">
+                <div className="logo">
+                  <h4>easyclass</h4>
                 </div>
-
-                <div className="input-wrap">
-                  <input
-                    type="password"
-                    name="password"
-                    className="input-field"
-                    autoComplete="off"
-                    required
-                    onChange={handleChange}
-                  />
-                  <label>Password</label>
+  
+                <div className="heading">
+                  <h2>Welcome Back</h2>
+                  <h6 className="rtk">Not registered yet? </h6>
+                  <button type="button" className="button-login toggle" onClick={toggleMode}>
+                    Sign up
+                  </button>
                 </div>
-
-                {errorMessage && <p className="error">{errorMessage}</p>}
-                <button type="submit" className="sign-btn" disabled={loading}>
-                  {loading ? "Signing in..." : "Sign In"}
-                </button>
-
-                <p className="text">
-                  Forgotten your password?
-                  <Link href="/login/forgetpassword">Get help</Link>
-                  signing in
-                </p>
-              </div>
-            </form>
-
-            {/* Form Register */}
-            <form onSubmit={handleRegister} className="sign-up-form">
-              <div className="logo">
-                <h4>easyclass</h4>
-              </div>
-
-              <div className="heading">
-                <h2>Get Started</h2>
-                <h6>Already have an account?</h6>
-                <button type="button" className="toggle" onClick={toggleMode}>
-                  Sign in
-                </button>
-              </div>
-
-              <div className="actual-form">
-                <div className="input-wrap">
-                  <input
-                    type="text"
-                    name="username"
-                    className="input-field"
-                    autoComplete="off"
-                    required
-                    onChange={handleChange}
-                  />
-                  <label>Username</label>
+  
+                <div className="actual-form">
+                  <div className="input-wrap">
+                    <input
+                      type="email"
+                      name="email"
+                      className="input-field"
+                      autoComplete="off"
+                      required
+                      onChange={handleChange}
+                    />
+                    <label>Email</label>
+                  </div>
+  
+                  <div className="input-wrap">
+                    <input
+                      type="password"
+                      name="password"
+                      className="input-field"
+                      autoComplete="off"
+                      required
+                      onChange={handleChange}
+                    />
+                    <label>Password</label>
+                  </div>
+  
+                  {errorMessage && <p className="error">{errorMessage}</p>}
+                  <button type="submit" className="sign-btn" disabled={loading}>
+                    {loading ? "Signing in..." : "Sign In"}
+                  </button>
+  
+                  <p className="text">
+                    Forgotten your password?
+                    <Link href="/login/forgetpassword">Get help</Link>
+                    signing in
+                  </p>
                 </div>
-
-                <div className="input-wrap">
-                  <input
-                    type="email"
-                    name="email"
-                    className="input-field"
-                    autoComplete="off"
-                    required
-                    onChange={handleChange}
-                  />
-                  <label>Email</label>
+              </form>
+  
+              {/* Form Register */}
+              <form onSubmit={handleRegister} className="sign-up-form">
+                <div className="logo">
+                  <h4>easyclass</h4>
                 </div>
-
-                <div className="input-wrap">
-                  <input
-                    type="text"
-                    name="phone"
-                    className="input-field"
-                    autoComplete="off"
-                    required
-                    onChange={handleChange}
-                  />
-                  <label>Phone</label>
+  
+                <div className="heading">
+                  <h2>Get Started</h2>
+                  <h6>Already have an account?</h6>
+                  <button type="button" className="button-login toggle" onClick={toggleMode}>
+                    Sign in
+                  </button>
                 </div>
-
-                <div className="input-wrap">
-                  <input
-                    type="password"
-                    name="password"
-                    className="input-field"
-                    autoComplete="off"
-                    required
-                    onChange={handleChange}
-                  />
-                  <label>Password</label>
+  
+                <div className="actual-form">
+                  <div className="input-wrap">
+                    <input
+                      type="text"
+                      name="username"
+                      className="input-field"
+                      autoComplete="off"
+                      required
+                      onChange={handleChange}
+                    />
+                    <label>Username</label>
+                  </div>
+  
+                  <div className="input-wrap">
+                    <input
+                      type="email"
+                      name="email"
+                      className="input-field"
+                      autoComplete="off"
+                      required
+                      onChange={handleChange}
+                    />
+                    <label>Email</label>
+                  </div>
+  
+                  <div className="input-wrap">
+                    <input
+                      type="text"
+                      name="phone"
+                      className="input-field"
+                      autoComplete="off"
+                      required
+                      onChange={handleChange}
+                    />
+                    <label>Phone</label>
+                  </div>
+  
+                  <div className="input-wrap">
+                    <input
+                      type="password"
+                      name="password"
+                      className="input-field"
+                      autoComplete="off"
+                      required
+                      onChange={handleChange}
+                    />
+                    <label>Password</label>
+                  </div>
+  
+                  <div className="input-wrap">
+                    <input
+                      type="password"
+                      name="password_confirmation"
+                      className="input-field"
+                      autoComplete="off"
+                      required
+                      onChange={handleChange}
+                    />
+                    <label>Confirm Password</label>
+                  </div>
+  
+                  {errorMessage && <p className="error">{errorMessage}</p>}
+                  <button type="submit" className="sign-btn" disabled={loading}>
+                    {loading ? "Signing up..." : "Sign Up"}
+                  </button>
+  
+                  <p className="text">
+                    By signing up, I agree to the
+                    <a href="#">Terms of Services</a> and
+                    <a href="#">Privacy Policy</a>
+                  </p>
                 </div>
-
-                <div className="input-wrap">
-                  <input
-                    type="password"
-                    name="password_confirmation"
-                    className="input-field"
-                    autoComplete="off"
-                    required
-                    onChange={handleChange}
-                  />
-                  <label>Confirm Password</label>
-                </div>
-
-                {errorMessage && <p className="error">{errorMessage}</p>}
-                <button type="submit" className="sign-btn" disabled={loading}>
-                  {loading ? "Signing up..." : "Sign Up"}
-                </button>
-
-                <p className="text">
-                  By signing up, I agree to the
-                  <a href="#">Terms of Services</a> and
-                  <a href="#">Privacy Policy</a>
-                </p>
-              </div>
-            </form>
-          </div>
-
-          <div className="carousel">
-            <div className="images-wrapper">
-              <img src="/images/podcast.png" className={`image img-1 ${activeBullet === 1 ? "show" : ""}`} alt="Podcast Image" />
-              <img src="/images/shopping.png" className={`image img-2 ${activeBullet === 2 ? "show" : ""}`} alt="Podcast Image" />
-              <img src="/images/social.png" className={`image img-3 ${activeBullet === 3 ? "show" : ""}`} alt="Podcast Image" />
+              </form>
             </div>
-
-            <div className="text-slider">
-              <div className="text-wrap">
-                <div className="text-group" ref={textSliderRef}>
-                  <h2>Flexible Links for Your Digital Life!</h2>
-                  <h2>Sell & Share with Just One Link!</h2>
-                  <h2>Boost Your Social & Sales in One Click!</h2>
-                </div>
+  
+            <div className="carousel">
+              <div className="images-wrapper">
+                <img src="/images/podcast.png" className={`image img-1 ${activeBullet === 1 ? "show" : ""}`} alt="Podcast Image" />
+                <img src="/images/shopping.png" className={`image img-2 ${activeBullet === 2 ? "show" : ""}`} alt="Shopping Image" />
+                <img src="/images/social.png" className={`image img-3 ${activeBullet === 3 ? "show" : ""}`} alt="Social Image" />
               </div>
-
-              <div className="bullets">
-                {[1, 2, 3].map((index) => (
-                  <span
-                    key={index}
-                    className={activeBullet === index ? "active" : ""}
-                    onClick={() => moveSlider(index)}
-                  ></span>
-                ))}
+  
+              <div className="text-slider">
+                <div className="text-wrap">
+                  <div className="text-group" ref={textSliderRef}>
+                    <h2>Flexible Links for Your Digital Life!</h2>
+                    <h2>Sell & Share with Just One Link!</h2>
+                    <h2>Boost Your Social & Sales in One Click!</h2>
+                  </div>
+                </div>
+  
+                <div className="bullets">
+                  {[1, 2, 3].map((index) => (
+                    <span
+                      key={index}
+                      className={activeBullet === index ? "active" : ""}
+                      onClick={() => moveSlider(index)}
+                    ></span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
