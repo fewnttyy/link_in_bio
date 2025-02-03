@@ -1,14 +1,19 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import "./login.css";
 import Link from 'next/link';
 import loginUser from '../api/auth/login';
 import registerUser from '../api/auth/register';
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { type } from "os";
 // import { getCsrfCookie } from "../api/apiClient";
 
 export default function Home() {
+  const router = useRouter();
+
   const [isSignUpMode, setIsSignUpMode] = useState(false);
   const [activeInput, setActiveInput] = useState({});
   const [activeBullet, setActiveBullet] = useState(1);
@@ -24,6 +29,22 @@ export default function Home() {
 
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [role, setRole] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Baca role dari cookies setelah login
+      const userRole = Cookies.get("role");
+      setRole(userRole);
+
+      // Redirect jika role sudah ada
+      if (userRole === "user") {
+        router.push("/user/main/dashboard");
+      } else if (userRole === "super_admin") {
+        router.push("/super_admin/main/dashboard");
+      }
+    }
+  }, []);
 
   const handleInputFocus = (field) => {
     setActiveInput((prev) => ({ ...prev, [field]: true }));
@@ -94,6 +115,21 @@ export default function Home() {
     try {
       const response = await loginUser(formData.email, formData.password);
       toast.success("Login berhasil! Selamat datang 👋");
+
+      Cookies.set("role", response.user.role, { expires: 1 }); // Simpan role dengan masa berlaku 1 hari
+
+      // Ambil role dari cookies
+      const userRole = Cookies.get("role");
+      console.log(userRole);
+      // Redirect berdasarkan role
+      if (userRole === "user") {
+        router.push("/user/main/dashboard")
+      } else if (userRole === "super_admin") {
+        router.push("/super_admin/main/dashboard");
+      } else {
+        toast.error("Role tidak dikenali!");
+      }
+
       console.log(response.user);
     } catch (error) {
       const errorMessage = error.message || "Terjadi kesalahan saat login.";
