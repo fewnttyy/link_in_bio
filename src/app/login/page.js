@@ -159,7 +159,7 @@ export default function Home() {
                 <div className="logo">
                   <h4>easyclass</h4>
                 </div>
-  
+
                 <div className="heading">
                   <h2>Welcome Back</h2>
                   <h6 className="rtk">Not registered yet? </h6>
@@ -167,7 +167,7 @@ export default function Home() {
                     Sign up
                   </button>
                 </div>
-  
+
                 <div className="actual-form">
                   <div className="input-wrap">
                     <input
@@ -180,7 +180,7 @@ export default function Home() {
                     />
                     <label>Email</label>
                   </div>
-  
+
                   <div className="input-wrap">
                     <input
                       type="password"
@@ -192,12 +192,12 @@ export default function Home() {
                     />
                     <label>Password</label>
                   </div>
-  
+
                   {errorMessage && <p className="error">{errorMessage}</p>}
                   <button type="submit" className="sign-btn" disabled={loading}>
                     {loading ? "Signing in..." : "Sign In"}
                   </button>
-  
+
                   <p className="text">
                     Forgotten your password?
                     <Link href="/login/forgetpassword">Get help</Link>
@@ -205,21 +205,21 @@ export default function Home() {
                   </p>
                 </div>
               </form>
-  
+
               {/* Form Register */}
               <form onSubmit={handleRegister} className="sign-up-form">
                 <div className="logo">
                   <h4>easyclass</h4>
                 </div>
-  
+
                 <div className="heading">
                   <h2>Get Started</h2>
-                  <h6>Already have an account? </h6>
+                  <h6>Already have an account?</h6>
                   <button type="button" className="button-login toggle" onClick={toggleMode}>
                     Sign in
                   </button>
                 </div>
-  
+
                 <div className="actual-form">
                   <div className="input-wrap">
                     <input
@@ -232,7 +232,7 @@ export default function Home() {
                     />
                     <label>Username</label>
                   </div>
-  
+
                   <div className="input-wrap">
                     <input
                       type="email"
@@ -244,7 +244,7 @@ export default function Home() {
                     />
                     <label>Email</label>
                   </div>
-  
+
                   <div className="input-wrap">
                     <input
                       type="text"
@@ -256,7 +256,7 @@ export default function Home() {
                     />
                     <label>Phone</label>
                   </div>
-  
+
                   <div className="input-wrap">
                     <input
                       type="password"
@@ -268,7 +268,7 @@ export default function Home() {
                     />
                     <label>Password</label>
                   </div>
-  
+
                   <div className="input-wrap">
                     <input
                       type="password"
@@ -280,12 +280,12 @@ export default function Home() {
                     />
                     <label>Confirm Password</label>
                   </div>
-  
+
                   {errorMessage && <p className="error">{errorMessage}</p>}
                   <button type="submit" className="sign-btn" disabled={loading}>
                     {loading ? "Signing up..." : "Sign Up"}
                   </button>
-  
+
                   <p className="text">
                     By signing up, I agree to the
                     <a href="#">Terms of Services</a> and
@@ -294,14 +294,14 @@ export default function Home() {
                 </div>
               </form>
             </div>
-  
+
             <div className="carousel">
               <div className="images-wrapper">
                 <img src="/images/podcast.png" className={`image img-1 ${activeBullet === 1 ? "show" : ""}`} alt="Podcast Image" />
                 <img src="/images/shopping.png" className={`image img-2 ${activeBullet === 2 ? "show" : ""}`} alt="Shopping Image" />
                 <img src="/images/social.png" className={`image img-3 ${activeBullet === 3 ? "show" : ""}`} alt="Social Image" />
               </div>
-  
+
               <div className="text-slider">
                 <div className="text-wrap">
                   <div className="text-group" ref={textSliderRef}>
@@ -310,7 +310,7 @@ export default function Home() {
                     <h2>Boost Your Social & Sales in One Click!</h2>
                   </div>
                 </div>
-  
+
                 <div className="bullets">
                   {[1, 2, 3].map((index) => (
                     <span
