@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import "../user/styles/globals.css";
+import styles from '../user/styles/login.module.css';
 import Link from 'next/link';
 import loginUser from '../api/auth/login';
 import registerUser from '../api/auth/register';
@@ -148,32 +149,31 @@ export default function Home() {
   };
 
   return (
-    <div className="global-reset global-font">
-      <main className={`main-container ${isSignUpMode ? "sign-up-mode" : ""}`}>
+    <main className={`${styles.main} ${styles["main-container"]} ${ isSignUpMode ? styles["sign-up-mode"] : "" }`}>
         <ToastContainer />
-        <div className="box">
-          <div className="inner-box">
-            <div className="forms-wrap">
+        <div className={styles.box}>
+          <div className={styles["inner-box"]}>
+            <div className={styles["forms-wrap"]}>
               {/* Form Login */}
-              <form onSubmit={handleLogin} className="sign-in-form">
-                <div className="logo">
+              <form onSubmit={handleLogin} className={`${styles["form-login"]} ${styles["sign-in-form"]}`}>
+                <div className={styles.logo}>
                   <h4>easyclass</h4>
                 </div>
   
-                <div className="heading">
+                <div className={styles.heading}>
                   <h2>Welcome Back</h2>
-                  <h6 className="rtk">Not registered yet? </h6>
-                  <button type="button" className="button-login toggle" onClick={toggleMode}>
+                  <h6 className={styles.rtk}>Not registered yet? </h6>
+                  <button type="button" className={`${styles["button-login"]} ${styles.toggle}`} onClick={toggleMode}>
                     Sign up
                   </button>
                 </div>
   
-                <div className="actual-form">
-                  <div className="input-wrap">
+                <div className={styles["actual-form"]}>
+                  <div className={styles["input-wrap"]}>
                     <input
                       type="email"
                       name="email"
-                      className="input-field"
+                      className={styles["input-field"]}
                       autoComplete="off"
                       required
                       onChange={handleChange}
@@ -181,11 +181,11 @@ export default function Home() {
                     <label>Email</label>
                   </div>
   
-                  <div className="input-wrap">
+                  <div className={styles["input-wrap"]}>
                     <input
                       type="password"
                       name="password"
-                      className="input-field"
+                      className={styles["input-field"]}
                       autoComplete="off"
                       required
                       onChange={handleChange}
@@ -193,12 +193,12 @@ export default function Home() {
                     <label>Password</label>
                   </div>
   
-                  {errorMessage && <p className="error">{errorMessage}</p>}
-                  <button type="submit" className="sign-btn" disabled={loading}>
+                  {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+                  <button type="submit" className={styles["sign-btn"]} disabled={loading}>
                     {loading ? "Signing in..." : "Sign In"}
                   </button>
   
-                  <p className="text">
+                  <p className={styles.text}>
                     Forgotten your password?
                     <Link href="/login/forgetpassword">Get help</Link>
                     signing in
@@ -207,25 +207,25 @@ export default function Home() {
               </form>
   
               {/* Form Register */}
-              <form onSubmit={handleRegister} className="sign-up-form">
-                <div className="logo">
+              <form onSubmit={handleRegister} className={`${styles["form-login"]} ${styles["sign-up-form"]}`}>
+                <div className={styles.logo}>
                   <h4>easyclass</h4>
                 </div>
   
-                <div className="heading">
+                <div className={styles.heading}>
                   <h2>Get Started</h2>
                   <h6>Already have an account? </h6>
-                  <button type="button" className="button-login toggle" onClick={toggleMode}>
+                  <button type="button" className={styles["button-login"] + " " + styles.toggle} onClick={toggleMode}>
                     Sign in
                   </button>
                 </div>
   
-                <div className="actual-form">
-                  <div className="input-wrap">
+                <div className={styles["actual-form"]}>
+                  <div className={styles["input-wrap"]}>
                     <input
                       type="text"
                       name="username"
-                      className="input-field"
+                      className={styles["input-field"]}
                       autoComplete="off"
                       required
                       onChange={handleChange}
@@ -233,11 +233,11 @@ export default function Home() {
                     <label>Username</label>
                   </div>
   
-                  <div className="input-wrap">
+                  <div className={styles["input-wrap"]}>
                     <input
                       type="email"
                       name="email"
-                      className="input-field"
+                      className={styles["input-field"]}
                       autoComplete="off"
                       required
                       onChange={handleChange}
@@ -245,11 +245,11 @@ export default function Home() {
                     <label>Email</label>
                   </div>
   
-                  <div className="input-wrap">
+                  <div className={styles["input-wrap"]}>
                     <input
                       type="text"
                       name="phone"
-                      className="input-field"
+                      className={styles["input-field"]}
                       autoComplete="off"
                       required
                       onChange={handleChange}
@@ -257,11 +257,11 @@ export default function Home() {
                     <label>Phone</label>
                   </div>
   
-                  <div className="input-wrap">
+                  <div className={styles["input-wrap"]}>
                     <input
                       type="password"
                       name="password"
-                      className="input-field"
+                      className={styles["input-field"]}
                       autoComplete="off"
                       required
                       onChange={handleChange}
@@ -269,11 +269,11 @@ export default function Home() {
                     <label>Password</label>
                   </div>
   
-                  <div className="input-wrap">
+                  <div className={styles["input-wrap"]}>
                     <input
                       type="password"
                       name="password_confirmation"
-                      className="input-field"
+                      className={styles["input-field"]}
                       autoComplete="off"
                       required
                       onChange={handleChange}
@@ -281,12 +281,12 @@ export default function Home() {
                     <label>Confirm Password</label>
                   </div>
   
-                  {errorMessage && <p className="error">{errorMessage}</p>}
-                  <button type="submit" className="sign-btn" disabled={loading}>
+                  {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+                  <button type="submit" className={styles["sign-btn"]} disabled={loading}>
                     {loading ? "Signing up..." : "Sign Up"}
                   </button>
   
-                  <p className="text">
+                  <p className={styles.text}>
                     By signing up, I agree to the
                     <a href="#">Terms of Services</a> and
                     <a href="#">Privacy Policy</a>
@@ -295,27 +295,27 @@ export default function Home() {
               </form>
             </div>
   
-            <div className="carousel">
-              <div className="images-wrapper">
-                <img src="/images/podcast.png" className={`image img-1 ${activeBullet === 1 ? "show" : ""}`} alt="Podcast Image" />
-                <img src="/images/shopping.png" className={`image img-2 ${activeBullet === 2 ? "show" : ""}`} alt="Shopping Image" />
-                <img src="/images/social.png" className={`image img-3 ${activeBullet === 3 ? "show" : ""}`} alt="Social Image" />
+            <div className={styles.carousel}>
+              <div className={styles["images-wrapper"]}>
+                <img src="/images/podcast.png" className={`${styles.image} ${styles["img-1"]} ${activeBullet === 1 ? styles.show : ""}`} alt="Podcast Image" />
+                <img src="/images/shopping.png" className={`${styles.image} ${styles["img-2"]} ${activeBullet === 2 ? styles.show : ""}`} alt="Shopping Image" />
+                <img src="/images/social.png" className={`${styles.image} ${styles["img-3"]} ${activeBullet === 3 ? styles.show : ""}`} alt="Social Image" />
               </div>
   
-              <div className="text-slider">
-                <div className="text-wrap">
-                  <div className="text-group" ref={textSliderRef}>
+              <div className={styles["text-slider"]}>
+                <div className={styles["text-wrap"]}>
+                  <div className={styles["text-group"]} ref={textSliderRef}>
                     <h2>Flexible Links for Your Digital Life!</h2>
                     <h2>Sell & Share with Just One Link!</h2>
                     <h2>Boost Your Social & Sales in One Click!</h2>
                   </div>
                 </div>
   
-                <div className="bullets">
+                <div className={styles.bullets}>
                   {[1, 2, 3].map((index) => (
                     <span
                       key={index}
-                      className={activeBullet === index ? "active" : ""}
+                      className={activeBullet === index ? styles.active : ""}
                       onClick={() => moveSlider(index)}
                     ></span>
                   ))}
@@ -325,6 +325,5 @@ export default function Home() {
           </div>
         </div>
       </main>
-    </div>
   );
 }
