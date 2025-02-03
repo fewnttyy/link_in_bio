@@ -148,38 +148,6 @@ export default function Home() {
   };
 
   return (
-<<<<<<< HEAD
-    <main className={`loginContainer ${isSignUpMode ? "sign-up-mode" : ""}`}>
-      <ToastContainer />
-      <div className="box">
-        <div className="inner-box">
-          <div className="forms-wrap">
-            {/* Form Login */}
-            <form onSubmit={handleLogin} className="sign-in-form">
-              <div className="logo">
-                <h4>easyclass</h4>
-              </div>
-
-              <div className="heading">
-                <h2>Welcome Back</h2>
-                <h6 className="rtk">Not registered yet?</h6>
-                <button type="button" className="button-login toggle" onClick={toggleMode}>
-                  Sign up
-                </button>
-              </div>
-
-              <div className="actual-form">
-                <div className="input-wrap">
-                  <input
-                    type="email"
-                    name="email"
-                    className="input-field"
-                    autoComplete="off"
-                    required
-                    onChange={handleChange}
-                  />
-                  <label>Email</label>
-=======
     <div className="global-reset global-font">
       <main className={`main-container ${isSignUpMode ? "sign-up-mode" : ""}`}>
         <ToastContainer />
@@ -190,7 +158,6 @@ export default function Home() {
               <form onSubmit={handleLogin} className="sign-in-form">
                 <div className="logo">
                   <h4>easyclass</h4>
->>>>>>> e1b0ad5547a76464aacecb6cf1ebf25f40425bae
                 </div>
   
                 <div className="heading">
