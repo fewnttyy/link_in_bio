@@ -93,10 +93,11 @@ export default function Home() {
 
     try {
       const response = await loginUser(formData.email, formData.password);
-      alert("Login successful!");
+      toast.success("Login berhasil! Selamat datang 👋");
       console.log(response.user);
     } catch (error) {
-      toast.error("testing");
+      const errorMessage = error.message || "Terjadi kesalahan saat login.";
+      toast.error(`${errorMessage}`);
       console.log("Full error:", error);
       console.log("Error response:", error.message);
 
