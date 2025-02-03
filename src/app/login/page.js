@@ -214,7 +214,7 @@ export default function Home() {
   
                 <div className="heading">
                   <h2>Get Started</h2>
-                  <h6>Already have an account?</h6>
+                  <h6>Already have an account? </h6>
                   <button type="button" className="button-login toggle" onClick={toggleMode}>
                     Sign in
                   </button>
