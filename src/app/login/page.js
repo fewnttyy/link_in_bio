@@ -83,8 +83,6 @@ export default function Home() {
     try {
       // console.log("Password:", formData.password);
       // console.log("Password Confirmation:", formData.password_confirmation);
-
-
       // console.log(formData.username, formData.email, formData.phone, formData.password, formData.password_confirmation);
       const response = await registerUser(
         formData.username,
@@ -93,12 +91,15 @@ export default function Home() {
         formData.password,
         formData.password_confirmation
       );
-      alert("Registration successful! Please check your email.");
-      setIsSignUpMode(false);
-      console.log(response.user);
-    } catch (error) {
 
-      console.log("Full error:", error);
+      toast.success("Registrasi berhasil! Silakan cek email untuk verifikasi.");
+      setIsSignUpMode(false);
+      console.log("User Terdaftar:", response.user);
+
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || "Terjadi kesalahan saat registrasi.";
+      toast.error(errorMessage);
+      console.error("Full error:", error);
 
     } finally {
       setLoading(false);
