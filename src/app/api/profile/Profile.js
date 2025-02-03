@@ -20,6 +20,7 @@ export const getProfile = async () => {
       showAlert(false, response.data.message);
       return null;
     }
+
   } catch (error) {
     console.error("Error fetching profile:", error);
     showAlert(false, error.response?.data?.message || "Failed to fetching profile data");

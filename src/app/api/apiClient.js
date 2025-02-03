@@ -18,6 +18,7 @@ apiClient.interceptors.request.use(
         if (typeof window !== "undefined") { // ✅ Cegah error saat di server-side (Next.js)
             const token = Cookies.get("token"); // ✅ Ambil token dari Cookies hanya di client-side
             if (token) {
+                // return Promise.reject(new Error("Token tidak ditemukan. Silakan login."));
                 config.headers.Authorization = `Bearer ${token}`;
             }
         }

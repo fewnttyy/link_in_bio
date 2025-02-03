@@ -32,7 +32,7 @@ export default function Page() {
     city: "",
     subdistrict: "",
     avatar: ""
-  });  
+  });
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewAvatar, setPreviewAvatar] = useState("");
@@ -49,15 +49,15 @@ export default function Page() {
     };
     fetchProfile();
   }, []);
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProfile((prevProfile) => ({
       ...prevProfile,
       [name]: value === "" ? null : value,  // Kirim null jika kosong
     }));
-  };  
-  
+  };
+
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -74,7 +74,7 @@ export default function Page() {
       avatar: null, // Indikasikan bahwa avatar dihapus
     }));
   };
-  
+
   const handleEditProfile = async (e) => {
     e.preventDefault();
     if (!profile.username || !profile.phone) {
@@ -93,57 +93,57 @@ export default function Page() {
       formData.append("delete_avatar", "true"); // Kirim sinyal untuk hapus avatar
     }
     await updateProfile(profile.id, formData);
-  };  
+  };
   // =========================================================== PROFILE =========================================================== //
 
 
   // =========================================================== CATEGORY =========================================================== //
-    const [categories, setCategories] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
-    const [newCategoryName, setNewCategoryName] = useState("");
-    const [searchQuery, setSearchQuery] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
-    const [isEditCategoryOpen, setIsEditCategoryOpen] = useState(false);
-    const [editCategoryData, setEditCategoryData] = useState({ id: null, category_name: "" });
+  const [isEditCategoryOpen, setIsEditCategoryOpen] = useState(false);
+  const [editCategoryData, setEditCategoryData] = useState({ id: null, category_name: "" });
 
-    useEffect(() => {
-      fetchCategories(setCategories, setLoading, setError);
-    }, []);
+  useEffect(() => {
+    fetchCategories(setCategories, setLoading, setError);
+  }, []);
 
-    const refreshCategories = () => fetchCategories(setCategories, setLoading, setError);
+  const refreshCategories = () => fetchCategories(setCategories, setLoading, setError);
 
-    const handleAddCategory = (e) => {
-      e.preventDefault();
-      addCategory(newCategoryName, () => fetchCategories(setCategories, setLoading, setError));
-      setNewCategoryName("");
-    };
+  const handleAddCategory = (e) => {
+    e.preventDefault();
+    addCategory(newCategoryName, () => fetchCategories(setCategories, setLoading, setError));
+    setNewCategoryName("");
+  };
 
-    const handleEditCategory = (formData) => {
-      editCategory(formData, () => fetchCategories(setCategories, setLoading, setError), closeEditCategory);
-    };
+  const handleEditCategory = (formData) => {
+    editCategory(formData, () => fetchCategories(setCategories, setLoading, setError), closeEditCategory);
+  };
 
-    const handleDeleteCategory = (id) => {
-      deleteCategory(id, () => fetchCategories(setCategories, setLoading, setError));
-    };
+  const handleDeleteCategory = (id) => {
+    deleteCategory(id, () => fetchCategories(setCategories, setLoading, setError));
+  };
 
-    const openEditCategory = (category) => {
-      setEditCategoryData({ id: category.id, category_name: category.category_name });
-      setIsEditCategoryOpen(true);
-    };
+  const openEditCategory = (category) => {
+    setEditCategoryData({ id: category.id, category_name: category.category_name });
+    setIsEditCategoryOpen(true);
+  };
 
-    const closeEditCategory = () => {
-      setIsEditCategoryOpen(false);
-      setEditCategoryData({ id: null, category_name: "" });
-    };
+  const closeEditCategory = () => {
+    setIsEditCategoryOpen(false);
+    setEditCategoryData({ id: null, category_name: "" });
+  };
 
-    const handleSearchChange = (e) => {
-      setSearchQuery(e.target.value);
-    };
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
-    const filteredCategories = categories.filter((category) =>
-      category.category_name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+  const filteredCategories = categories.filter((category) =>
+    category.category_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   // =========================================================== CATEGORY =========================================================== //
 
 
@@ -160,10 +160,10 @@ export default function Page() {
 
   const handleTouchMove = (e) => {
     if (!dragStartRef.current) return;
-    
+
     const currentY = e.touches[0].clientY;
     const diff = currentY - dragStartRef.current;
-    
+
     if (diff < -50 && !isExpanded) {
       setIsExpanded(true);
     } else if (diff > 50 && isExpanded) {
@@ -183,10 +183,10 @@ export default function Page() {
 
   const handleMouseMove = (e) => {
     if (!isDraggingRef.current) return;
-    
+
     const currentY = e.clientY;
     const diff = currentY - dragStartRef.current;
-    
+
     if (diff < -50 && !isExpanded) {
       setIsExpanded(true);
     } else if (diff > 50 && isExpanded) {
@@ -208,7 +208,7 @@ export default function Page() {
   useEffect(() => {
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
-    
+
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
@@ -218,26 +218,26 @@ export default function Page() {
 
 
   // =========================================================== AFFILIATE URL MODAL =========================================================== //
-   const [isCustomizeOpen, setIsCustomizeOpen] = useState(false);
-   const [customize, setCustomize] = useState([]);
+  const [isCustomizeOpen, setIsCustomizeOpen] = useState(false);
+  const [customize, setCustomize] = useState([]);
 
-   const [customizeData, setCustomizeData] = useState({
+  const [customizeData, setCustomizeData] = useState({
     affiliate_url: 'https://baralynk.id/fenttyy'
   })
- 
-   const openCustomize = () => {
-     setIsCustomizeOpen(true);
-   };
- 
-   const closeCustomize = () => {
-     setIsCustomizeOpen(false);
-   };
-   // =========================================================== AFFILIATE URL MODAL =========================================================== //
+
+  const openCustomize = () => {
+    setIsCustomizeOpen(true);
+  };
+
+  const closeCustomize = () => {
+    setIsCustomizeOpen(false);
+  };
+  // =========================================================== AFFILIATE URL MODAL =========================================================== //
 
 
   // =========================================================== BANNER SLIDER =========================================================== //
   const [currentSlide, setCurrentSlide] = useState(0);
-  
+
   // Sample banner data - replace with your actual banner data
   const banners = [
     { id: 1, image: "/images/avatar-fix.jpg", alt: "Banner 1" },
@@ -270,7 +270,7 @@ export default function Page() {
         // Lakukan penghapusan
         // console.log(`Item with id ${id} deleted`);
         // Tambahkan logika API untuk menghapus item di sini
-  
+
         Swal.fire(
           'Deleted!',
           'Your item has been deleted.',
@@ -294,7 +294,7 @@ export default function Page() {
         // Lakukan penghapusan
         // console.log(`Item with id ${id} deleted`);
         // Tambahkan logika API untuk menghapus item di sini
-  
+
         Swal.fire(
           'Deleted!',
           'Your item has been deleted.',
@@ -333,7 +333,7 @@ export default function Page() {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    
+
     if (file) {
       // Check if media type is video and file is a video
       if (formData.mediaType === 'video') {
@@ -343,7 +343,7 @@ export default function Page() {
           return;
         }
       }
-      
+
       // Check if media type is image and file is an image
       if (formData.mediaType === 'image') {
         if (!file.type.startsWith('image/')) {
@@ -352,9 +352,9 @@ export default function Page() {
           return;
         }
       }
-      
+
       setFormData({ ...formData, mediaFile: file });
-      
+
       // Only create preview for images
       if (formData.mediaType === 'image') {
         const url = URL.createObjectURL(file);
@@ -367,7 +367,7 @@ export default function Page() {
 
   const handleMediaTypeChange = (e) => {
     const newMediaType = e.target.value
-    
+
     // If "No Media" is selected, clear the media file and preview
     if (newMediaType === 'noMedia') {
       setFormData({
@@ -387,7 +387,7 @@ export default function Page() {
       })
     }
   }
-  
+
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(formData)
@@ -523,14 +523,14 @@ export default function Page() {
   const [isAnimating, setIsAnimating] = useState(false)
 
   const tabs = ['Links', 'Banners', 'Categories', 'Profile']
-  
+
   const handleTabClick = (tabName) => {
     if (tabName !== activeTab && !isAnimating) {
       setIsAnimating(true)
       const currentIndex = tabs.indexOf(activeTab)
       const newIndex = tabs.indexOf(tabName)
       const newDirection = newIndex > currentIndex ? 'right' : 'left'
-      
+
       setDirection(newDirection)
       setPreviousTab(activeTab)
       setActiveTab(tabName)
@@ -651,7 +651,7 @@ export default function Page() {
                     <label className={styles.switch}>
                       <input type="checkbox" defaultChecked />
                       <span className={styles.slider}></span>
-                  </label>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -661,7 +661,7 @@ export default function Page() {
       case 'Banners':
         return (
           <div className={getTabClassName('Banners')} style={{ padding: '2rem', maxHeight: '600px', overflow: 'auto' }}>
-            <button className={styles.addBlock} onClick={openBanner} style={{marginTop: '-2px'}}>
+            <button className={styles.addBlock} onClick={openBanner} style={{ marginTop: '-2px' }}>
               + Add New Banners
             </button>
 
@@ -687,10 +687,10 @@ export default function Page() {
               <div className={styles.itemContent}>
                 <div className={styles.linkItemLeft}>
                   <span className={styles.menuIcon}>⋮</span>
-                  <img 
-                    src="/images/avatar-fix.jpg" 
-                    alt="Cat" 
-                    className={styles.bannerImage} 
+                  <img
+                    src="/images/avatar-fix.jpg"
+                    alt="Cat"
+                    className={styles.bannerImage}
                     style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px' }}
                   />
                   <div className={styles.linkDetails}>
@@ -698,27 +698,27 @@ export default function Page() {
                     <span className={styles.linkUrl}>very cute</span>
                   </div>
                 </div>
-                <div className={styles.statsRow} style={{ marginTop: '0.5rem'}}>
+                <div className={styles.statsRow} style={{ marginTop: '0.5rem' }}>
                   <span className={styles.clickStats}>0 clicks since Jan 21, 2025</span>
                 </div>
               </div>
               <div className={styles.linkToggle}>
-                  <button className={styles.editButton} onClick={openEditBanner}>✏️</button>
-                  <button className={styles.deleteButton} onClick={() => deleteBanner()}>🗑️</button>
-                  <label className={styles.switch}>
-                    <input type="checkbox" defaultChecked />
-                    <span className={styles.slider}></span>
-                  </label>
-                </div>
-            </div>    
+                <button className={styles.editButton} onClick={openEditBanner}>✏️</button>
+                <button className={styles.deleteButton} onClick={() => deleteBanner()}>🗑️</button>
+                <label className={styles.switch}>
+                  <input type="checkbox" defaultChecked />
+                  <span className={styles.slider}></span>
+                </label>
+              </div>
+            </div>
             <div className={styles.linkItem}>
               <div className={styles.itemContent}>
                 <div className={styles.linkItemLeft}>
                   <span className={styles.menuIcon}>⋮</span>
-                  <img 
-                    src="/images/banner-bg-fix.jpg" 
-                    alt="Cat" 
-                    className={styles.bannerImage} 
+                  <img
+                    src="/images/banner-bg-fix.jpg"
+                    alt="Cat"
+                    className={styles.bannerImage}
                     style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px' }}
                   />
                   <div className={styles.linkDetails}>
@@ -726,7 +726,7 @@ export default function Page() {
                     <span className={styles.linkUrl}>very yummy</span>
                   </div>
                 </div>
-                <div className={styles.statsRow} style={{ marginTop: '0.5rem'}}>
+                <div className={styles.statsRow} style={{ marginTop: '0.5rem' }}>
                   <span className={styles.clickStats}>0 clicks since Jan 21, 2025</span>
                 </div>
               </div>
@@ -738,7 +738,7 @@ export default function Page() {
                   <span className={styles.slider}></span>
                 </label>
               </div>
-            </div>    
+            </div>
           </div>
         )
       case 'Categories':
@@ -747,17 +747,17 @@ export default function Page() {
             <div className={styles.linkInputSection}>
               <div className={styles.linkInputContainer}>
                 <div className={styles.linkInput}>
-                    <img src="/images/logo-fix.jpg" alt="Health" className={styles.linkTypeIcon} />
-                    <input
-                        type="text"
-                        placeholder="Create new category"
-                        className={styles.urlInput}
-                        value={newCategoryName}
-                        onChange={(e) => setNewCategoryName(e.target.value)}
-                    />
+                  <img src="/images/logo-fix.jpg" alt="Health" className={styles.linkTypeIcon} />
+                  <input
+                    type="text"
+                    placeholder="Create new category"
+                    className={styles.urlInput}
+                    value={newCategoryName}
+                    onChange={(e) => setNewCategoryName(e.target.value)}
+                  />
                 </div>
                 <button className={styles.addLinkButton} onClick={handleAddCategory}>
-                    + Add New Category
+                  + Add New Category
                 </button>
               </div>
 
@@ -765,14 +765,14 @@ export default function Page() {
 
               <div className={styles.searchContainer}>
                 <div className={styles.search}>
-                    <span className={styles.searchIcon}>🔍</span>
-                    <input
-                      type="text"
-                      placeholder="Search"
-                      className={styles.urlInput}
-                      value={searchQuery}
-                      onChange={handleSearchChange}
-                    />
+                  <span className={styles.searchIcon}>🔍</span>
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    className={styles.urlInput}
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                  />
                 </div>
                 {/* <button className={styles.searchButton}>
                     Search
@@ -781,43 +781,43 @@ export default function Page() {
 
               {loading ? (
                 <p>Loading...</p>
-                ) : error ? (
+              ) : error ? (
                 <p style={{ color: "red", marginTop: "20px" }}>{error}</p>
-                ) : (
+              ) : (
                 <div>
-                    {filteredCategories.length === 0 ? (
+                  {filteredCategories.length === 0 ? (
                     <p style={{ textAlign: "center", marginTop: "20px" }}>Tidak ada kategori.</p>
-                    ) : (
-                      filteredCategories.map((category) => (
-                        <div key={category.id} className={styles.linkItem}>
+                  ) : (
+                    filteredCategories.map((category) => (
+                      <div key={category.id} className={styles.linkItem}>
                         <div className={styles.linkItemLeft}>
-                            <span className={styles.menuIcon}>⋮</span>
-                            <div className={styles.linkIcon}>📦</div>
-                            <div className={styles.linkDetails}>
+                          <span className={styles.menuIcon}>⋮</span>
+                          <div className={styles.linkIcon}>📦</div>
+                          <div className={styles.linkDetails}>
                             <span className={styles.linkTitle}>{category.category_name}</span>
-                            </div>
+                          </div>
                         </div>
                         <div className={styles.linkToggle}>
-                            <div className={styles.blockActions}>
+                          <div className={styles.blockActions}>
                             <button onClick={() => openEditCategory(category)}>✏️</button>
                             <button onClick={() => handleDeleteCategory(category.id, refreshCategories)}>🗑️</button>
-                            </div>
+                          </div>
                         </div>
-                        </div>
+                      </div>
                     ))
-                    )}
+                  )}
                 </div>
               )}
             </div>
           </div>
         )
-        case 'Profile':
+      case 'Profile':
         return (
           <div className={getTabClassName('Profile')} style={{ padding: '2rem', maxHeight: '600px', overflow: 'auto' }}>
             <div className={styles.profileContainer}>
               <h2 className={styles.sectionTitle}>Profile</h2>
-                <form onSubmit={handleEditProfile}>
-                  <div className={styles.card}>
+              <form onSubmit={handleEditProfile}>
+                <div className={styles.card}>
                   <h3 className={styles.label}>Avatar</h3>
                   <div className={styles.profilePhotoSection}>
                     <img
@@ -848,25 +848,25 @@ export default function Page() {
                       )}
                     </div>
                   </div>
-                  </div>
+                </div>
 
-                  <div className={styles.card}>
-                    <div className={styles.formGroup}>
-                      <label className={styles.label}>
-                        Username
-                      </label>
-                      <input
-                        type="text"
-                        name="username" value={profile.username || ""} onChange={handleChange}
-                        className={styles.input}
-                      />
-                      <p className={styles.helperText}>
-                        If you change your username, it won't change your link or your profile name.
-                      </p>
-                    </div>
+                <div className={styles.card}>
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>
+                      Username
+                    </label>
+                    <input
+                      type="text"
+                      name="username" value={profile.username || ""} onChange={handleChange}
+                      className={styles.input}
+                    />
+                    <p className={styles.helperText}>
+                      If you change your username, it won't change your link or your profile name.
+                    </p>
                   </div>
+                </div>
 
-                  {/* <div className={styles.card}>
+                {/* <div className={styles.card}>
                     <div className={styles.formGroup}>
                       <label className={styles.label}>
                         Email
@@ -878,89 +878,89 @@ export default function Page() {
                     </div>
                   </div> */}
 
-                  <div className={styles.card}>
-                    <div className={styles.formGroup}>
-                      <label className={styles.label}>
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        name="name" value={profile.name || ""} onChange={handleChange}
-                        className={styles.input}
-                      />
-                    </div>
+                <div className={styles.card}>
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      name="name" value={profile.name || ""} onChange={handleChange}
+                      className={styles.input}
+                    />
                   </div>
+                </div>
 
-                  <div className={styles.card}>
-                    <div className={styles.formGroup}>
-                      <label className={styles.label}>
-                        Bio
-                      </label>
-                      <textarea
-                        name="bio" value={profile.bio || ""} onChange={handleChange}
-                        className={styles.input}
-                      />
-                    </div>
+                <div className={styles.card}>
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>
+                      Bio
+                    </label>
+                    <textarea
+                      name="bio" value={profile.bio || ""} onChange={handleChange}
+                      className={styles.input}
+                    />
                   </div>
+                </div>
 
-                  <div className={styles.card}>
-                    <div className={styles.formGroup}>
-                      <label className={styles.label}>
-                        Phone
-                      </label>
-                      <input
-                        type="text"
-                        name="phone" value={profile.phone || ""} onChange={handleChange}
-                        className={styles.input}
-                      />
-                    </div>
+                <div className={styles.card}>
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>
+                      Phone
+                    </label>
+                    <input
+                      type="text"
+                      name="phone" value={profile.phone || ""} onChange={handleChange}
+                      className={styles.input}
+                    />
                   </div>
-                  
-                  <div className={styles.card}>
-                    <div className={styles.formGroup}>
-                      <label className={styles.label}>
-                        Province
-                      </label>
-                      <input
-                        type="text"
-                        name="province" value={profile.province || ""} onChange={handleChange}
-                        className={styles.input}
-                      />
-                    </div>
-                  </div>
+                </div>
 
-                  <div className={styles.card}>
-                    <div className={styles.formGroup}>
-                      <label className={styles.label}>
-                        City
-                      </label>
-                      <input
-                        type="text"
-                        name="city" value={profile.city || ""} onChange={handleChange}
-                        className={styles.input}
-                      />
-                    </div>
+                <div className={styles.card}>
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>
+                      Province
+                    </label>
+                    <input
+                      type="text"
+                      name="province" value={profile.province || ""} onChange={handleChange}
+                      className={styles.input}
+                    />
                   </div>
+                </div>
 
-                  <div className={styles.card}>
-                    <div className={styles.formGroup}>
-                      <label className={styles.label}>
-                        Subdistrict
-                      </label>
-                      <input
-                        type="text"
-                        name="subdistrict" value={profile.subdistrict || ""} onChange={handleChange}
-                        className={styles.input}
-                      />
-                    </div>
+                <div className={styles.card}>
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>
+                      City
+                    </label>
+                    <input
+                      type="text"
+                      name="city" value={profile.city || ""} onChange={handleChange}
+                      className={styles.input}
+                    />
                   </div>
+                </div>
 
-                  <div className={styles.actionButtons}>
-                    <button className={styles.submitButton} type="submit">
-                      Save Changes
-                    </button>
+                <div className={styles.card}>
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>
+                      Subdistrict
+                    </label>
+                    <input
+                      type="text"
+                      name="subdistrict" value={profile.subdistrict || ""} onChange={handleChange}
+                      className={styles.input}
+                    />
                   </div>
-                </form>
+                </div>
+
+                <div className={styles.actionButtons}>
+                  <button className={styles.submitButton} type="submit">
+                    Save Changes
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )
@@ -987,28 +987,28 @@ export default function Page() {
               <img src={previewAvatar || "/images/avatar.jpg"} alt="Profile" className={styles.previewAvatar} />
             </div>
             <div className={styles.previewProfile}>
-              <h3>Fenty Solihah</h3>
+              <h3>{profile.name || ""}</h3>
               <p>{profile.bio || ""}</p>
             </div>
 
             {/* Banner Slider */}
-            <div className={styles.bannerSlider} style={{marginTop: '-15px'}}>
-              <button 
-                className={styles.sliderButton} 
+            <div className={styles.bannerSlider} style={{ marginTop: '-15px' }}>
+              <button
+                className={styles.sliderButton}
                 onClick={prevSlide}
                 style={{ left: 0 }}
               >
                 ←
               </button>
               <div className={styles.bannerContainer}>
-                <img 
-                  src={banners[currentSlide].image} 
+                <img
+                  src={banners[currentSlide].image}
                   alt={banners[currentSlide].alt}
                   className={styles.bannerImage}
                 />
               </div>
-              <button 
-                className={styles.sliderButton} 
+              <button
+                className={styles.sliderButton}
                 onClick={nextSlide}
                 style={{ right: 0 }}
               >
@@ -1016,8 +1016,8 @@ export default function Page() {
               </button>
             </div>
 
-            <div className={styles.previewLinks} style={{marginTop: '-15px'}}>
-            <div className={styles.searchContainer}>
+            <div className={styles.previewLinks} style={{ marginTop: '-15px' }}>
+              <div className={styles.searchContainer}>
                 <div className={styles.search}>
                   <span className={styles.searchIcon}>📦</span>
                   <select
@@ -1094,18 +1094,18 @@ export default function Page() {
               <div className={styles.linkContent}>
                 <div className={styles.urlWrapper}>
                   <span className={styles.linkIcon}>🔗</span>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     readOnly
-                    value="https://baralynk.id/fenttyy" 
+                    value="https://baralynk.id/fenttyy"
                     className={styles.urlInput}
                   />
                 </div>
                 <button className={styles.shareButton}>
                   <span className={styles.shareIcon}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M22 2L11 13" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M22 2L11 13" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </span>
                   Share Url
@@ -1116,7 +1116,7 @@ export default function Page() {
         </div>
 
         <div className={styles.mainContent}>
-          <div 
+          <div
             className={`${styles.editorSection} ${isExpanded ? styles.expanded : ''}`}
             ref={editorRef}
             onTouchStart={handleTouchStart}
@@ -1303,7 +1303,7 @@ export default function Page() {
           <div className={styles.modal}>
             <div className={styles.modalHeader}>
               <h2>Add New Banner</h2>
-              <button 
+              <button
                 onClick={closeBanner}
                 className={styles.closeButton}
               >
@@ -1410,7 +1410,7 @@ export default function Page() {
           onClose={closeEditModal}
           formData={editFormData}
           setFormData={setEditFormData}
-          // onSave={saveEdit}
+        // onSave={saveEdit}
         />
       )}
 
@@ -1430,7 +1430,7 @@ export default function Page() {
           onClose={closeEditBanner}
           formData={editBannerData}
           setFormData={setEditBannerData}
-          // onSave={saveEdit}
+        // onSave={saveEdit}
         />
       )}
 
@@ -1440,7 +1440,7 @@ export default function Page() {
           onClose={closeCustomize}
           formData={customizeData}
           setFormData={setCustomizeData}
-          // onSave={saveEdit}
+        // onSave={saveEdit}
         />
       )}
 

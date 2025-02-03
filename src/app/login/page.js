@@ -149,181 +149,193 @@ export default function Home() {
   };
 
   return (
-    <main className={`${styles.main} ${styles["main-container"]} ${ isSignUpMode ? styles["sign-up-mode"] : "" }`}>
-        <ToastContainer />
-        <div className={styles.box}>
-          <div className={styles["inner-box"]}>
-            <div className={styles["forms-wrap"]}>
-              {/* Form Login */}
-              <form onSubmit={handleLogin} className={`${styles["form-login"]} ${styles["sign-in-form"]}`}>
-                <div className={styles.logo}>
-                  <h4>easyclass</h4>
-                </div>
-  
-                <div className={styles.heading}>
-                  <h2>Welcome Back</h2>
-                  <h6 className={styles.rtk}>Not registered yet? </h6>
-                  <button type="button" className={`${styles["button-login"]} ${styles.toggle}`} onClick={toggleMode}>
-                    Sign up
-                  </button>
-                </div>
-  
-                <div className={styles["actual-form"]}>
-                  <div className={styles["input-wrap"]}>
-                    <input
-                      type="email"
-                      name="email"
-                      className={styles["input-field"]}
-                      autoComplete="off"
-                      required
-                      onChange={handleChange}
-                    />
-                    <label>Email</label>
-                  </div>
-  
-                  <div className={styles["input-wrap"]}>
-                    <input
-                      type="password"
-                      name="password"
-                      className={styles["input-field"]}
-                      autoComplete="off"
-                      required
-                      onChange={handleChange}
-                    />
-                    <label>Password</label>
-                  </div>
-  
-                  {errorMessage && <p className={styles.error}>{errorMessage}</p>}
-                  <button type="submit" className={styles["sign-btn"]} disabled={loading}>
-                    {loading ? "Signing in..." : "Sign In"}
-                  </button>
-  
-                  <p className={styles.text}>
-                    Forgotten your password?
-                    <Link href="/login/forgetpassword">Get help</Link>
-                    signing in
-                  </p>
-                </div>
-              </form>
-  
-              {/* Form Register */}
-              <form onSubmit={handleRegister} className={`${styles["form-login"]} ${styles["sign-up-form"]}`}>
-                <div className={styles.logo}>
-                  <h4>easyclass</h4>
-                </div>
-  
-                <div className={styles.heading}>
-                  <h2>Get Started</h2>
-                  <h6>Already have an account? </h6>
-                  <button type="button" className={styles["button-login"] + " " + styles.toggle} onClick={toggleMode}>
-                    Sign in
-                  </button>
-                </div>
-  
-                <div className={styles["actual-form"]}>
-                  <div className={styles["input-wrap"]}>
-                    <input
-                      type="text"
-                      name="username"
-                      className={styles["input-field"]}
-                      autoComplete="off"
-                      required
-                      onChange={handleChange}
-                    />
-                    <label>Username</label>
-                  </div>
-  
-                  <div className={styles["input-wrap"]}>
-                    <input
-                      type="email"
-                      name="email"
-                      className={styles["input-field"]}
-                      autoComplete="off"
-                      required
-                      onChange={handleChange}
-                    />
-                    <label>Email</label>
-                  </div>
-  
-                  <div className={styles["input-wrap"]}>
-                    <input
-                      type="text"
-                      name="phone"
-                      className={styles["input-field"]}
-                      autoComplete="off"
-                      required
-                      onChange={handleChange}
-                    />
-                    <label>Phone</label>
-                  </div>
-  
-                  <div className={styles["input-wrap"]}>
-                    <input
-                      type="password"
-                      name="password"
-                      className={styles["input-field"]}
-                      autoComplete="off"
-                      required
-                      onChange={handleChange}
-                    />
-                    <label>Password</label>
-                  </div>
-  
-                  <div className={styles["input-wrap"]}>
-                    <input
-                      type="password"
-                      name="password_confirmation"
-                      className={styles["input-field"]}
-                      autoComplete="off"
-                      required
-                      onChange={handleChange}
-                    />
-                    <label>Confirm Password</label>
-                  </div>
-  
-                  {errorMessage && <p className={styles.error}>{errorMessage}</p>}
-                  <button type="submit" className={styles["sign-btn"]} disabled={loading}>
-                    {loading ? "Signing up..." : "Sign Up"}
-                  </button>
-  
-                  <p className={styles.text}>
-                    By signing up, I agree to the
-                    <a href="#">Terms of Services</a> and
-                    <a href="#">Privacy Policy</a>
-                  </p>
-                </div>
-              </form>
-            </div>
-  
-            <div className={styles.carousel}>
-              <div className={styles["images-wrapper"]}>
-                <img src="/images/podcast.png" className={`${styles.image} ${styles["img-1"]} ${activeBullet === 1 ? styles.show : ""}`} alt="Podcast Image" />
-                <img src="/images/shopping.png" className={`${styles.image} ${styles["img-2"]} ${activeBullet === 2 ? styles.show : ""}`} alt="Shopping Image" />
-                <img src="/images/social.png" className={`${styles.image} ${styles["img-3"]} ${activeBullet === 3 ? styles.show : ""}`} alt="Social Image" />
+    <main
+      className={`${styles.main} ${styles["main-container"]} ${
+        isSignUpMode ? styles["sign-up-mode"] : ""
+      }`}
+    >
+      <ToastContainer />
+      <div className={styles.box}>
+        <div className={styles["inner-box"]}>
+          <div className={styles["forms-wrap"]}>
+            {/* Login Form */}
+            <form
+              onSubmit={handleLogin}
+              className={`${styles["form-login"]} ${styles["sign-in-form"]}`}
+            >
+              <div className={styles.logo}>
+                <h4>easyclass</h4>
               </div>
-  
-              <div className={styles["text-slider"]}>
-                <div className={styles["text-wrap"]}>
-                  <div className={styles["text-group"]} ref={textSliderRef}>
-                    <h2>Flexible Links for Your Digital Life!</h2>
-                    <h2>Sell & Share with Just One Link!</h2>
-                    <h2>Boost Your Social & Sales in One Click!</h2>
-                  </div>
+              <div className={styles.heading}>
+                <h2>Welcome Back</h2>
+                <h6>Not registered yet? </h6>
+                <button
+                  type="button"
+                  className={`${styles["button-login"]} ${styles.toggle}`}
+                  onClick={toggleMode}
+                >
+                  Sign up
+                </button>
+              </div>
+              <div className={styles["actual-form"]}>
+                <div className={styles["input-wrap"]}>
+                  <input
+                    type="email"
+                    name="email"
+                    className={styles["input-field"]}
+                    autoComplete="off"
+                    required
+                    onChange={handleChange}
+                  />
+                  <label className={styles["label-login"]}>Email</label>
                 </div>
-  
-                <div className={styles.bullets}>
-                  {[1, 2, 3].map((index) => (
-                    <span
-                      key={index}
-                      className={activeBullet === index ? styles.active : ""}
-                      onClick={() => moveSlider(index)}
-                    ></span>
-                  ))}
+                <div className={styles["input-wrap"]}>
+                  <input
+                    type="password"
+                    name="password"
+                    className={styles["input-field"]}
+                    autoComplete="off"
+                    required
+                    onChange={handleChange}
+                  />
+                  <label className={styles["label-login"]}>Password</label>
                 </div>
+                {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+                <button type="submit" className={styles["sign-btn"]} disabled={loading}>
+                  {loading ? "Signing in..." : "Sign In"}
+                </button>
+              </div>
+            </form>
+
+            {/* Register Form */}
+            <form
+              onSubmit={handleRegister}
+              className={`${styles["form-login"]} ${styles["sign-up-form"]}`}
+            >
+              <div className={styles.logo}>
+                <h4>easyclass</h4>
+              </div>
+              <div className={styles.heading}>
+                <h2>Get Started</h2>
+                <h6>Already have an account? </h6>
+                <button
+                  type="button"
+                  className={`${styles["button-login"]} ${styles.toggle}`}
+                  onClick={toggleMode}
+                >
+                  Sign in
+                </button>
+              </div>
+              <div className={styles["actual-form"]}>
+                <div className={styles["input-wrap"]}>
+                  <input
+                    type="text"
+                    name="username"
+                    className={styles["input-field"]}
+                    autoComplete="off"
+                    required
+                    onChange={handleChange}
+                  />
+                  <label className={styles["label-login"]}>Username</label>
+                </div>
+                <div className={styles["input-wrap"]}>
+                  <input
+                    type="email"
+                    name="email"
+                    className={styles["input-field"]}
+                    autoComplete="off"
+                    required
+                    onChange={handleChange}
+                  />
+                  <label className={styles["label-login"]}>Email</label>
+                </div>
+                <div className={styles["input-wrap"]}>
+                  <input
+                    type="text"
+                    name="phone"
+                    className={styles["input-field"]}
+                    autoComplete="off"
+                    required
+                    onChange={handleChange}
+                  />
+                  <label className={styles["label-login"]}>Phone</label>
+                </div>
+                <div className={styles["input-wrap"]}>
+                  <input
+                    type="password"
+                    name="password"
+                    className={styles["input-field"]}
+                    autoComplete="off"
+                    required
+                    onChange={handleChange}
+                  />
+                  <label className={styles["label-login"]}>Password</label>
+                </div>
+                <div className={styles["input-wrap"]}>
+                  <input
+                    type="password"
+                    name="password_confirmation"
+                    className={styles["input-field"]}
+                    autoComplete="off"
+                    required
+                    onChange={handleChange}
+                  />
+                  <label className={styles["label-login"]}>Confirm Password</label>
+                </div>
+                {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+                <button type="submit" className={styles["sign-btn"]} disabled={loading}>
+                  {loading ? "Signing up..." : "Sign Up"}
+                </button>
+              </div>
+            </form>
+          </div>
+  
+          {/* Carousel */}
+          <div className={styles.carousel}>
+            <div className={styles["images-wrapper"]}>
+              <img
+                src="/images/podcast.png"
+                className={`${styles.image} ${styles["img-1"]} ${
+                  activeBullet === 1 ? styles.show : ""
+                }`}
+                alt="Podcast Image"
+              />
+              <img
+                src="/images/shopping.png"
+                className={`${styles.image} ${styles["img-2"]} ${
+                  activeBullet === 2 ? styles.show : ""
+                }`}
+                alt="Shopping Image"
+              />
+              <img
+                src="/images/social.png"
+                className={`${styles.image} ${styles["img-3"]} ${
+                  activeBullet === 3 ? styles.show : ""
+                }`}
+                alt="Social Image"
+              />
+            </div>
+            <div className={styles["text-slider"]}>
+              <div className={styles["text-wrap"]}>
+                <div className={styles["text-group"]} ref={textSliderRef}>
+                  <h2>Flexible Links for Your Digital Life!</h2>
+                  <h2>Sell & Share with Just One Link!</h2>
+                  <h2>Boost Your Social & Sales in One Click!</h2>
+                </div>
+              </div>
+              <div className={styles.bullets}>
+                {[1, 2, 3].map((index) => (
+                  <span
+                    key={index}
+                    className={activeBullet === index ? styles.active : ""}
+                    onClick={() => moveSlider(index)}
+                  ></span>
+                ))}
               </div>
             </div>
           </div>
         </div>
-      </main>
+      </div>
+    </main>
   );
 }
