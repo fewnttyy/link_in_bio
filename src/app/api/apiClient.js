@@ -1,7 +1,7 @@
 import axios from "axios";
-import { config } from "process";
 
 const API_URL = "http://127.0.0.1:8000/api";
+axios.defaults.withCredentials = true;
 
 const apiClient = axios.create({
     baseURL: API_URL,
@@ -11,6 +11,8 @@ const apiClient = axios.create({
     withCredentials: true,
 });
 
-
+// export const getCsrfCookie = async () => {
+//     await axios.get("http://127.0.0.1:8000/sanctum/csrf-cookie");
+// }
 
 export default apiClient;

@@ -1,14 +1,12 @@
 import apiClient from "../apiClient";
 
-export const login = async (email, password) => {
+const loginUser = async (email, password) => {
     try {
         await apiClient.get("/sanctum/csrf-cookie");
 
-        const response = await apiClient.post("login", {
+        const response = await apiClient.post("/login", {
             email: email,
             password: password,
-        }, {
-            withCredentials: true,
         });
 
         return response.data;
@@ -17,3 +15,5 @@ export const login = async (email, password) => {
         throw error.response ? error.response.data : error;
     }
 }
+
+export default loginUser;

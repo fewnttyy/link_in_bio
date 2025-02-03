@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
 import "./login.css";
 import Link from 'next/link';
+import loginUser from '../api/auth/login';
+import registerUser from '../api/auth/register';
+// import { getCsrfCookie } from "../api/apiClient";
 
 export default function Home() {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
@@ -57,42 +60,46 @@ export default function Home() {
     setErrorMessage(null);
 
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/register",
-        formData
+      // console.log("Password:", formData.password);
+      // console.log("Password Confirmation:", formData.password_confirmation);
+
+
+      // console.log(formData.username, formData.email, formData.phone, formData.password, formData.password_confirmation);
+      const response = await registerUser(
+        formData.username,
+        formData.email,
+        formData.phone,
+        formData.password,
+        formData.password_confirmation
       );
       alert("Registration successful! Please check your email.");
-      console.log(response.data);
+      setIsSignUpMode(false);
+      console.log(response.user);
     } catch (error) {
-      setErrorMessage(error.response?.data?.message || "Registration failed.");
-      console.error(error);
+
+      console.log("Full error:", error);
+
     } finally {
       setLoading(false);
     }
   };
 
+
   const handleLogin = async (e) => {
+    // await getCsrfCookie();
     e.preventDefault();
     setLoading(true);
     setErrorMessage(null);
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/login", {
-        email: formData.email,
-        password: formData.password,
-      });
-
-      //simpan token ke local storage
-      localStorage.setItem("token", response.data.token);
-
-      // Simpan data user ke localStorage
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-
+      const response = await loginUser(formData.email, formData.password);
       alert("Login successful!");
-      console.log(response.data);
+      console.log(response.user);
     } catch (error) {
-      setErrorMessage(error.response?.data?.message || "Login failed.");
-      console.error(error);
+      toast.error("testing");
+      console.log("Full error:", error);
+      console.log("Error response:", error.message);
+
     } finally {
       setLoading(false);
     }
@@ -100,6 +107,7 @@ export default function Home() {
 
   return (
     <main className={isSignUpMode ? "sign-up-mode" : ""}>
+      <ToastContainer />
       <div className="box">
         <div className="inner-box">
           <div className="forms-wrap">
