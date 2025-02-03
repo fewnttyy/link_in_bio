@@ -95,11 +95,9 @@ export default function Home() {
       toast.success("Registrasi berhasil! Silakan cek email untuk verifikasi.");
       setIsSignUpMode(false);
       console.log("User Terdaftar:", response.user);
-
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Terjadi kesalahan saat registrasi.";
-      toast.error(errorMessage);
-      console.error("Full error:", error);
+
+      console.log("Full error:", error);
 
     } finally {
       setLoading(false);
