@@ -1059,7 +1059,7 @@
     background: #f2f2f2;
   }
 
-  .deleteButton {
+  .delete_button {
     padding: 0.5rem 1rem;
     background: #f77a7a;
     border: 1px solid #f77a7a;
@@ -1068,9 +1068,10 @@
     cursor: pointer;
     color: white;
     transition: background-color 0.5s ease;
+    margin-left: 15px;
   }
   
-  .deleteButton:hover {
+  .delete_button:hover {
     background: #fa6161;
     border-color: #fa6161;
     color: white;

@@ -2,35 +2,6 @@ import apiClient from "../apiClient";
 import Swal from "sweetalert2";
 
 export const fetchCategories = async (setCategories, setLoading, setError) => {
-  // try {
-  //   setLoading(true);
-
-  //   const token = Cookies.get("token");
-  //   console.log(token);
-  //   if (!token) {
-  //     setError("Token tidak ditemukan. Harap login ulang.");
-  //     setLoading(false);
-  //     return;
-  //   }
-
-  //   const response = await apiClient.get("/categories", {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   });
-
-  //   console.log(response.data);
-  //   if (response.data.status) {
-  //     setCategories(response.data.categories);
-  //   } else {
-  //     setError(response.data.message);
-  //   }
-  // } catch (err) {
-  //   setError("Failed to fetch category data.");
-  //   console.error(err);
-  // } finally {
-  //   setLoading(false);
-  // }
 
   try {
     setLoading(true);

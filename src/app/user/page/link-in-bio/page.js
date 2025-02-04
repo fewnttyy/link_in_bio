@@ -2,6 +2,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import styles from '../../styles/Page.module.css'
+import AddLinksModal from '../../components/modal/AddLinksModal'
+import AddBannersModal from '../../components/modal/AddBanerModal'
 import EditLinkModal from '../../components/modal/EditLinkModal'
 import EditCategoryModal from '../../components/modal/EditCategoryModal'
 import EditBannerModal from '../../components/modal/EditBannerModal'
@@ -10,6 +12,7 @@ import Swal from 'sweetalert2';
 
 import { fetchCategories, addCategory, editCategory, deleteCategory } from "../../../api/category/Category";
 import { getProfile, updateProfile } from "../../../api/profile/Profile";
+import { getLinks, addLink, updateLink, updateLinkStatus, deleteLink } from '../../../api/links/Links';
 
 export default function Page() {
   const router = useRouter()
@@ -256,30 +259,6 @@ export default function Page() {
 
 
   // =========================================================== DELETE ALERT =========================================================== //
-  const deleteLinks = () => {
-    Swal.fire({
-      title: 'Are you sure want to delete this Links?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Lakukan penghapusan
-        // console.log(`Item with id ${id} deleted`);
-        // Tambahkan logika API untuk menghapus item di sini
-
-        Swal.fire(
-          'Deleted!',
-          'Your item has been deleted.',
-          'success'
-        );
-      }
-    });
-  };
-
   const deleteBanner = () => {
     Swal.fire({
       title: 'Are you sure want to delete this Banner?',
@@ -306,125 +285,82 @@ export default function Page() {
   // =========================================================== DELETE ALERT =========================================================== //
 
 
-  // =========================================================== LINKS MODAL =========================================================== //
+  // =========================================================== LINKS =========================================================== //
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isClosing, setIsClosing] = useState(false)
-  const [preview, setPreview] = useState(null)
+  const [allLinks, setAllLinks] = useState([]); // Menyimpan semua link
+  const [links, setLinks] = useState([]);       // Menyimpan hasil filter
+  const [formData, setFormData] = useState({ category: '', search: '' });
+  const [loadingLinks, setLoadingLinks] = useState(false);
+  const [errorLinks, setErrorLinks] = useState(null);
 
-  const [formData, setFormData] = useState({
-    title: '',
-    mediaType: 'image',
-    mediaFile: null,
-    link: '',
-    description: ''
-  })
+  useEffect(() => {
+    fetchLinks();
+  }, []);
+
+  const fetchLinks = async () => {
+    setLoadingLinks(true);
+    try {
+      const data = await getLinks();
+      setAllLinks(data);
+      setLinks(data);
+    } catch (err) {
+      setErrorLinks('Failed to load links');
+    } finally {
+      setLoadingLinks(false);
+    }
+  };   
+
+  const handleDelete = async (id) => {
+    await deleteLink(id);
+    fetchLinks();
+  };
+
+  const handleSearch = () => {
+    const filteredLinks = allLinks.filter(link =>
+      link.title.toLowerCase().includes(formData.search.toLowerCase())
+    );
+    setLinks(filteredLinks);
+  };  
+
+  const handleToggleActive = async (id, currentStatus) => {
+    try {
+      // Panggil fungsi untuk memperbarui status
+      await updateLinkStatus(id, currentStatus);
+  
+      // Refresh data setelah status diperbarui
+      fetchLinks();
+    } catch (error) {
+      console.error("Failed to toggle status:", error);
+    }
+  };   
 
   const openModal = () => {
     setIsModalOpen(true)
-    setIsClosing(false)
   }
 
   const closeModal = () => {
-    setIsClosing(true)
     setTimeout(() => {
       setIsModalOpen(false) // Tutup modal setelah animasi selesai
     }, 300) // Waktu sesuai durasi animasi (0.3s)
   }
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-
-    if (file) {
-      // Check if media type is video and file is a video
-      if (formData.mediaType === 'video') {
-        if (!file.type.startsWith('video/')) {
-          alert('Please upload a video file');
-          e.target.value = ''; // Clear the file input
-          return;
-        }
-      }
-
-      // Check if media type is image and file is an image
-      if (formData.mediaType === 'image') {
-        if (!file.type.startsWith('image/')) {
-          alert('Please upload an image file');
-          e.target.value = ''; // Clear the file input
-          return;
-        }
-      }
-
-      setFormData({ ...formData, mediaFile: file });
-
-      // Only create preview for images
-      if (formData.mediaType === 'image') {
-        const url = URL.createObjectURL(file);
-        setPreview(url);
-      } else {
-        setPreview(null);
-      }
-    }
-  };
-
-  const handleMediaTypeChange = (e) => {
-    const newMediaType = e.target.value
-
-    // If "No Media" is selected, clear the media file and preview
-    if (newMediaType === 'noMedia') {
-      setFormData({
-        ...formData,
-        mediaType: newMediaType,
-        mediaFile: null
-      })
-      // Clear the preview and revoke the object URL to prevent memory leaks
-      if (preview) {
-        URL.revokeObjectURL(preview)
-        setPreview(null)
-      }
-    } else {
-      setFormData({
-        ...formData,
-        mediaType: newMediaType
-      })
-    }
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log(formData)
-    setIsModalOpen(false)
-    setFormData({
-      title: '',
-      mediaType: 'image',
-      mediaFile: null,
-      link: '',
-      description: ''
-    })
-    // Clean up preview URL when form is submitted
-    if (preview) {
-      URL.revokeObjectURL(preview)
-      setPreview(null)
-    }
-  }
-
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editFormData, setEditFormData] = useState({});
-  const [links, setLinks] = useState([]);
 
-  const openEditModal = () => {
-    // setEditFormData(linkData);
+  const openEditModal = (link) => {
+    setEditFormData(link);
     setIsEditModalOpen(true);
   };
 
   const closeEditModal = () => {
     setIsEditModalOpen(false);
   };
-  // =========================================================== LINKS MODAL =========================================================== //
+  // =========================================================== LINKS =========================================================== //
 
 
   // =========================================================== BANNER MODAL =========================================================== //
   const [isBannerOpen, setIsBannerOpen] = useState(false)
   const [isBannerClosing, setIsBannerClosing] = useState(false)
-  // const [preview, setPreview] = useState(null)
 
   const [bannerData, setBannerData] = useState({
     title: '',
@@ -444,20 +380,6 @@ export default function Page() {
     setTimeout(() => {
       setIsBannerOpen(false) // Tutup modal setelah animasi selesai
     }, 300) // Waktu sesuai durasi animasi (0.3s)
-  }
-
-  const bannerSubmit = (e) => {
-    e.preventDefault()
-    console.log(bannerData)
-    setIsBannerOpen(false)
-    setBannerData({
-      title: '',
-      mediaType: 'image',
-      mediaFile: null,
-      link: '',
-      description: ''
-    })
-    setPreview(null)
   }
 
   const [isEditBannerOpen, setIsEditBannerOpen] = useState(false);
@@ -518,13 +440,6 @@ export default function Page() {
       case 'Links':
         return (
           <div className={getTabClassName('Links')} style={{ padding: '2rem', maxHeight: '600px', overflow: 'auto' }}>
-            {/* <h2 className={styles.sectionTitle}>Select Category</h2>
-            <div className={styles.pages}>
-              <button className={`${styles.pageButton} ${styles.active}`}>Social Media</button>
-              <button className={styles.pageButton}>Fashion</button>
-              <button className={styles.pageButton}>Beauty</button>
-            </div> */}
-
             <div className={styles.blockList}>
               <button className={styles.addBlock} onClick={openModal}>
                 + Add New Links
@@ -544,10 +459,10 @@ export default function Page() {
                     required
                   >
                     <option value="">Select a category</option>
-                    {loading ? (
+                    {loadingLinks ? (
                       <option disabled>Loading...</option>
-                    ) : error ? (
-                      <option disabled>{error}</option>
+                    ) : errorLinks ? (
+                      <option disabled>{errorLinks}</option>
                     ) : (
                       categories.map((category) => (
                         <option key={category.id} value={category.category_name}>
@@ -566,53 +481,44 @@ export default function Page() {
                     type="text"
                     placeholder="Search"
                     className={styles.urlInput}
+                    value={formData.search}
+                    onChange={(e) => setFormData({ ...formData, search: e.target.value })}
                   />
                 </div>
-                <button className={styles.searchButton}>
+                <button onClick={handleSearch} className={styles.searchButton}>
                   Search
                 </button>
               </div>
 
               <div className={styles.block}>
-                <div className={styles.blockHeader}>
-                  <span className={styles.dragButton}>⋮⋮</span>
-                  <div className={styles.blockIcon} style={{ backgroundColor: '#FFB800' }}>🔗</div>
-                  <span>My website</span>
-                  <div className={styles.blockActions}>
-                    <button onClick={openEditModal}>✏️</button>
-                    <button onClick={() => deleteLinks()}>🗑️</button>
-                    <label className={styles.switch}>
-                      <input type="checkbox" defaultChecked />
-                      <span className={styles.slider}></span>
-                    </label>
-                  </div>
-                </div>
-                <div className={styles.blockHeader}>
-                  <span className={styles.dragButton}>⋮⋮</span>
-                  <div className={styles.blockIcon} style={{ backgroundColor: '#86A788' }}>🔗</div>
-                  <span>My Instagram</span>
-                  <div className={styles.blockActions}>
-                    <button>✏️</button>
-                    <button>🗑️</button>
-                    <label className={styles.switch}>
-                      <input type="checkbox" defaultChecked />
-                      <span className={styles.slider}></span>
-                    </label>
-                  </div>
-                </div>
-                <div className={styles.blockHeader}>
-                  <span className={styles.dragButton}>⋮⋮</span>
-                  <div className={styles.blockIcon} style={{ backgroundColor: '#FFB800' }}>🔗</div>
-                  <span>My Twitter</span>
-                  <div className={styles.blockActions}>
-                    <button>✏️</button>
-                    <button>🗑️</button>
-                    <label className={styles.switch}>
-                      <input type="checkbox" defaultChecked />
-                      <span className={styles.slider}></span>
-                    </label>
-                  </div>
-                </div>
+                {loading ? (
+                    <p style={{ textAlign: "center", marginTop: "20px", marginBottom: "20px" }}>Loading...</p>
+                  ) : error ? (
+                    <p style={{ textAlign: "center", marginTop: "20px", marginBottom: "20px", color: "red" }}>{error}</p>
+                  ) : links.length === 0 ? (
+                    <p style={{ textAlign: "center", marginTop: "20px", marginBottom: "20px" }}>Tidak ada links.</p>
+                  ) : (
+                  links.map((link) => (
+                    <div key={link.id} className={styles.blockHeader}>
+                      <span className={styles.dragButton}>⋮⋮</span>
+                      <div className={styles.blockIcon} style={{ backgroundColor: '#FFB800' }}>🔗</div>
+                      <span>{link.title}</span>
+                      <div className={styles.blockActions}>
+                        <button onClick={() => openEditModal(link)}>✏️</button>
+                        <button onClick={() => handleDelete(link.id)}>🗑️</button>
+                        <label className={styles.switch}>
+                          <input
+                            type="checkbox"
+                            // Ubah status menjadi boolean: active -> true, non_active -> false
+                            checked={link.is_active === "active"}
+                            onChange={() => handleToggleActive(link.id, link.is_active)}
+                          />
+                          <span className={styles.slider}></span>
+                        </label>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </div>
@@ -801,7 +707,7 @@ export default function Page() {
 
                       {/* Hapus Avatar */}
                       {previewAvatar && (
-                        <button type="button" onClick={handleDeleteAvatar} className={styles.deleteButton}>
+                        <button type="button" onClick={handleDeleteAvatar} className={styles.delete_button}>
                           Delete
                         </button>
                       )}
@@ -1101,255 +1007,16 @@ export default function Page() {
         </div>
       </div>
 
+      <AddLinksModal
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        refreshLinks={fetchLinks}
+      />
 
-      {/* // =========================================================== LINKS MODAL (ADD) =========================================================== // */}
-      {isModalOpen && (
-        <div className={`${styles.modalOverlay} ${isClosing ? styles.fadeOut : ''}`}>
-          <div className={styles.modal}>
-            <div className={styles.modalHeader}>
-              <h2>Add New Link</h2>
-              <button
-                onClick={closeModal}
-                className={styles.closeButton}
-              >
-                ✕
-              </button>
-            </div>
-
-            <form onSubmit={handleSubmit} className={styles.modalForm}>
-              <div className={styles.formGroup}>
-                <label htmlFor="title">Title</label>
-                <input
-                  type="text"
-                  id="title"
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  required
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label htmlFor="category">Category</label>
-                <select
-                  id="category"
-                  value={formData.category}
-                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  required
-                >
-                  <option value="">Select a category</option>
-                  <option value="Education">Education</option>
-                  <option value="Technology">Technology</option>
-                  <option value="Entertainment">Entertainment</option>
-                  <option value="Health">Health</option>
-                </select>
-              </div>
-
-              <div className={styles.formGroup}>
-                <label>Media Type</label>
-                <div className={styles.radioGroup}>
-                  <label>
-                    <input
-                      type="radio"
-                      name="mediaType"
-                      value="image"
-                      checked={formData.mediaType === 'image'}
-                      onChange={handleMediaTypeChange}
-                    />
-                    Image
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="mediaType"
-                      value="video"
-                      checked={formData.mediaType === 'video'}
-                      onChange={handleMediaTypeChange}
-                    />
-                    Video
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="mediaType"
-                      value="noMedia"
-                      checked={formData.mediaType === 'noMedia'}
-                      onChange={handleMediaTypeChange}
-                    />
-                    Delete Media
-                  </label>
-                </div>
-              </div>
-
-              {formData.mediaType !== 'noMedia' && (
-                <div className={styles.formGroup}>
-                  <label>Upload Media</label>
-                  <div className={styles.mediaUpload}>
-                    <input
-                      type="file"
-                      accept={formData.mediaType === 'image' ? 'image/*' : 'video/*'}
-                      onChange={handleFileChange}
-                    />
-                    {preview && formData.mediaType === 'image' && (
-                      <img src={preview} alt="Preview" className={styles.mediaPreview} />
-                    )}
-                    {formData.mediaType === 'video' && formData.mediaFile && (
-                      <div className={styles.videoInfo}>
-                        <p>Video selected: {formData.mediaFile.name}</p>
-                        <p>Size: {(formData.mediaFile.size / (1024 * 1024)).toFixed(2)} MB</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              <div className={styles.formGroup}>
-                <label htmlFor="link">Link</label>
-                <input
-                  type="url"
-                  id="link"
-                  placeholder="Enter full URL (e.g., https://website.com)"
-                  value={formData.link}
-                  onChange={(e) => setFormData({ ...formData, link: e.target.value })}
-                  required
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label htmlFor="description">Description</label>
-                <textarea
-                  id="description"
-                  placeholder="Add a link description"
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  rows={4}
-                />
-              </div>
-
-              <div className={styles.modalActions}>
-                <button
-                  type="button"
-                  onClick={closeModal}
-                  className={styles.cancelButton}
-                >
-                  Cancel
-                </button>
-                <button type="submit" className={styles.submitButton}>
-                  Save
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-      {/* // =========================================================== LINKS MODAL (ADD) =========================================================== // */}
-
-
-      {/* // =========================================================== BANNERS MODAL (ADD) =========================================================== // */}
-      {isBannerOpen && (
-        <div className={`${styles.modalOverlay} ${isClosing ? styles.fadeOut : ''}`}>
-          <div className={styles.modal}>
-            <div className={styles.modalHeader}>
-              <h2>Add New Banner</h2>
-              <button
-                onClick={closeBanner}
-                className={styles.closeButton}
-              >
-                ✕
-              </button>
-            </div>
-
-            <form onSubmit={bannerSubmit} className={styles.modalForm}>
-              <div className={styles.formGroup}>
-                <label htmlFor="title">Title</label>
-                <input
-                  type="text"
-                  id="title"
-                  value={bannerData.title}
-                  onChange={(e) => setBannerData({ ...bannerData, title: e.target.value })}
-                  required
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label>Media Type</label>
-                <div className={styles.radioGroup}>
-                  <label>
-                    <input
-                      type="radio"
-                      name="mediaType"
-                      value="image"
-                      checked={bannerData.mediaType === 'image'}
-                      onChange={(e) => setBannerData({ ...bannerData, mediaType: e.target.value })}
-                    />
-                    Image
-                  </label>
-                  {/* <label>
-                    <input
-                      type="radio"
-                      name="mediaType"
-                      value="video"
-                      checked={bannerData.mediaType === 'video'}
-                      onChange={(e) => setBannerData({ ...bannerData, mediaType: e.target.value })}
-                    />
-                    Video
-                  </label> */}
-                </div>
-              </div>
-
-              <div className={styles.formGroup}>
-                <label>Upload Media</label>
-                <div className={styles.mediaUpload}>
-                  <input
-                    type="file"
-                    accept={bannerData.mediaType === 'image' ? 'image/*' : 'video/*'}
-                    onChange={handleFileChange}
-                  />
-                  {preview && bannerData.mediaType === 'image' && (
-                    <img src={preview} alt="Preview" className={styles.mediaPreview} />
-                  )}
-                </div>
-              </div>
-
-              <div className={styles.formGroup}>
-                <label htmlFor="link">Link</label>
-                <input
-                  type="url"
-                  id="link"
-                  placeholder="Enter full URL (e.g., https://website.com)"
-                  value={bannerData.link}
-                  onChange={(e) => setBannerData({ ...bannerData, link: e.target.value })}
-                  required
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label htmlFor="description">Description</label>
-                <textarea
-                  id="description"
-                  placeholder="Add a link description"
-                  value={bannerData.description}
-                  onChange={(e) => setBannerData({ ...bannerData, description: e.target.value })}
-                  rows={4}
-                />
-              </div>
-
-              <div className={styles.modalActions}>
-                <button
-                  type="button"
-                  onClick={closeBanner}
-                  className={styles.cancelButton}
-                >
-                  Cancel
-                </button>
-                <button type="submit" className={styles.submitButton}>
-                  Save
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-      {/* // =========================================================== BANNERS MODAL (ADD) =========================================================== // */}
+      <AddBannersModal
+        isBannerOpen={isBannerOpen}
+        closeBanner={closeBanner}
+      />
 
       {isEditModalOpen && (
         <EditLinkModal

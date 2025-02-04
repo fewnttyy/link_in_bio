@@ -3,7 +3,6 @@ import styles from '../../styles/EditLinkModal.module.css';
 
 const EditCategoryModal = ({ isOpen, onClose, formData, setFormData, onSave }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [preview, setPreview] = useState(null);
 
   useEffect(() => {
     if (isOpen) {
