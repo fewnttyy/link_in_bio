@@ -15,11 +15,14 @@ export const getProfile = async () => {
   try {
     const response = await apiClient.get("/profiles");
     if (response.data.status) {
+      // console.log(response);
       return response.data;
     } else {
+      console.log(response)
       showAlert(false, response.data.message);
       return null;
     }
+
 
   } catch (error) {
     console.error("Error fetching profile:", error);
@@ -37,8 +40,11 @@ export const updateProfile = async (id, formData) => {
       },
     });
     showAlert(response.data.status, response.data.message);
+    console.log(response)
     return response.data;
+
   } catch (error) {
+    console.log(response)
     console.error("Error updating profile:", error);
     showAlert(false, error.response?.data?.error || error.response?.data?.message || "Failed to update profile");
     return null;

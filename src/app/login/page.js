@@ -119,13 +119,16 @@ export default function Home() {
       // ✅ Simpan token dan role dengan aman di cookies
       Cookies.set("token", response.token, { expires: 1, secure: true, sameSite: "Strict" });
       Cookies.set("role", response.user.role, { expires: 1, secure: true, sameSite: "Strict" });
+      Cookies.set("id_user", response.user.id, { expires: 1, secure: true, sameSite: "Strict" });
 
       // ✅ Pastikan token tersimpan
       const token = Cookies.get("token");
       const userRole = Cookies.get("role");
+      const idUser = Cookies.get("id_user");
 
       console.log("Token:", token); // Debugging
       console.log("Role:", userRole); // Debugging
+      console.log("Id User:", idUser); // Debugging
 
       // Redirect berdasarkan role
       if (userRole === "user") {
@@ -150,9 +153,8 @@ export default function Home() {
 
   return (
     <main
-      className={`${styles.main} ${styles["main-container"]} ${
-        isSignUpMode ? styles["sign-up-mode"] : ""
-      }`}
+      className={`${styles.main} ${styles["main-container"]} ${isSignUpMode ? styles["sign-up-mode"] : ""
+        }`}
     >
       <ToastContainer />
       <div className={styles.box}>
@@ -296,29 +298,26 @@ export default function Home() {
               </div>
             </form>
           </div>
-  
+
           {/* Carousel */}
           <div className={styles.carousel}>
             <div className={styles["images-wrapper"]}>
               <img
                 src="/images/podcast.png"
-                className={`${styles.image} ${styles["img-1"]} ${
-                  activeBullet === 1 ? styles.show : ""
-                }`}
+                className={`${styles.image} ${styles["img-1"]} ${activeBullet === 1 ? styles.show : ""
+                  }`}
                 alt="Podcast Image"
               />
               <img
                 src="/images/shopping.png"
-                className={`${styles.image} ${styles["img-2"]} ${
-                  activeBullet === 2 ? styles.show : ""
-                }`}
+                className={`${styles.image} ${styles["img-2"]} ${activeBullet === 2 ? styles.show : ""
+                  }`}
                 alt="Shopping Image"
               />
               <img
                 src="/images/social.png"
-                className={`${styles.image} ${styles["img-3"]} ${
-                  activeBullet === 3 ? styles.show : ""
-                }`}
+                className={`${styles.image} ${styles["img-3"]} ${activeBullet === 3 ? styles.show : ""
+                  }`}
                 alt="Social Image"
               />
             </div>

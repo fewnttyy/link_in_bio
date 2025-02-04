@@ -10,6 +10,8 @@ import Swal from 'sweetalert2';
 
 import { fetchCategories, addCategory, editCategory, deleteCategory } from "../../../api/category/Category";
 import { getProfile, updateProfile } from "../../../api/profile/Profile";
+import { getAffiliateUrl } from '../../../api/affiliate/AffiliateUrl';
+import Cookies from "js-cookie";
 
 export default function Page() {
   const router = useRouter()
@@ -31,7 +33,13 @@ export default function Page() {
     province: "",
     city: "",
     subdistrict: "",
-    avatar: ""
+    avatar: "",
+    user: {
+      id: null,
+      username: "",
+      email: "",
+      phone: "",
+    },
   });
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -49,6 +57,17 @@ export default function Page() {
     };
     fetchProfile();
   }, []);
+
+  //REFRESH
+  const refreshProfile = async () => {
+    const data = await getProfile();
+    if (data && data.status) {
+      setProfile(data.profile[0]);
+      if (data.profile[0].avatar) {
+        setPreviewAvatar(data.profile[0].avatar);
+      }
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -93,6 +112,8 @@ export default function Page() {
       formData.append("delete_avatar", "true"); // Kirim sinyal untuk hapus avatar
     }
     await updateProfile(profile.id, formData);
+
+    refreshProfile();
   };
   // =========================================================== PROFILE =========================================================== //
 
@@ -220,10 +241,42 @@ export default function Page() {
   // =========================================================== AFFILIATE URL MODAL =========================================================== //
   const [isCustomizeOpen, setIsCustomizeOpen] = useState(false);
   const [customize, setCustomize] = useState([]);
+  const [loadingAffiliate, setLoadingAffiliate] = useState(false);  // Untuk handle loading
 
-  const [customizeData, setCustomizeData] = useState({
-    affiliate_url: 'https://baralynk.id/fenttyy'
-  })
+
+  const [affiliateData, setAffiliateData] = useState({
+    affiliate_name: "",
+    affiliate_url: ""
+  });
+
+  useEffect(() => {
+    const fetchAffiliateData = async () => {
+      setLoadingAffiliate(true);
+      const data = await getAffiliateUrl(setLoadingAffiliate);
+      if (data && data.affiliate?.length > 0) {
+        const affiliateInfo = data.affiliate[0];
+        setAffiliateData({
+          affiliate_url: affiliateInfo.affiliate_url || "",
+          affiliate_name: affiliateInfo.affiliate_name || "",
+        });
+      }
+      setLoadingAffiliate(false);
+    };
+    fetchAffiliateData();
+  }, []);
+
+  const refreshAffiliate = async () => {
+    setLoadingAffiliate(true);
+    const data = await getAffiliateUrl(setLoadingAffiliate);
+    if (data && data.affiliate?.length > 0) {
+      const affiliateInfo = data.affiliate[0];
+      setAffiliateData({
+        affiliate_url: affiliateInfo.affiliate_url || "",
+        affiliate_name: affiliateInfo.affiliate_name || "",
+      });
+    }
+    setLoadingAffiliate(false);
+  }
 
   const openCustomize = () => {
     setIsCustomizeOpen(true);
@@ -922,7 +975,7 @@ export default function Page() {
   const PreviewContent = () => (
     <div className={styles.previewWrapper}>
       <div className={styles.previewHeader}>
-        <button className={`${styles.previewButton} ${pathname === '/baralynk.id/'}`} onClick={() => navigateToPage('/user/preview')}>
+        <button className={`${styles.previewButton} ${pathname === '/baralynk.id/'}`} onClick={() => navigateToPage('/user/bara-link-aggregation')}>
           Preview
         </button>
         {/* <button className={styles.previewOptionsButton}>⋮</button> */}
@@ -1044,7 +1097,7 @@ export default function Page() {
                   <input
                     type="text"
                     readOnly
-                    value="https://baralynk.id/fenttyy"
+                    value={affiliateData.affiliate_url}
                     className={styles.urlInput}
                   />
                 </div>
@@ -1385,8 +1438,10 @@ export default function Page() {
         <CustomizeUrl
           isOpen={isCustomizeOpen}
           onClose={closeCustomize}
-          formData={customizeData}
-          setFormData={setCustomizeData}
+          formData={affiliateData}
+          setFormData={setAffiliateData}
+          userId={profile.user.id}
+          refreshAffiliate={refreshAffiliate}
         // onSave={saveEdit}
         />
       )}
