@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { toast } from 'react-toastify';
 import logoutUser from "../../api/auth/logout";
+import { useProfile } from "../context/ProfileContext"
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -15,6 +16,7 @@ const poppins = Poppins({
 
 export default function Header({ toggleSidebar }) {
   const router = useRouter();
+  const { profile, previewAvatar } = useProfile(); // Ambil data profile dari context
 
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   const dropdownRef = useRef(null)
@@ -72,7 +74,7 @@ export default function Header({ toggleSidebar }) {
         <div className={styles.headerActions}>
           <div className={styles.profileContainer} ref={dropdownRef}>
             <img
-              src="/images/avatar.jpg"
+              src={previewAvatar || "/images/avatar.jpg"}
               alt="Profile"
               className={styles.avatar}
               onClick={() => setIsProfileOpen(!isProfileOpen)}
@@ -81,8 +83,8 @@ export default function Header({ toggleSidebar }) {
               <div className={styles.profileDropdown}>
                 <div className={styles.profileHeader}>
                   <div className={styles.profileInfo}>
-                    <p className={styles.profileName}>Fenty Solihah</p>
-                    <p className={styles.profileEmail}>fenttyyaa@gmail.com</p>
+                    <p className={styles.profileName}>{profile.name}</p>
+                    <p className={styles.profileEmail}>{profile.user.username}</p>
                   </div>
                 </div>
                 <ul>

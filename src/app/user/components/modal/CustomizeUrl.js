@@ -1,7 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../../styles/EditLinkModal.module.css';
+import { updateAffiliateUrl } from '../../../api/affiliate/AffiliateUrl';
 
-const CustomizeUrl = ({ isOpen, onClose, formData, setFormData, onSave }) => {
+const CustomizeUrl = ({ isOpen, onClose, formData, setFormData, userId, refreshAffiliate }) => {
+  const baseUrl = "http://localhost:3000/user/bara-link-aggregation/";
+
+  const handleChange = (e) => {
+    let value = e.target.value;
+
+    if (!value.startsWith(baseUrl)) {
+      return;
+    }
+
+    // Ambil bagian nama yang bisa diedit
+    const updatedName = value.replace(baseUrl, "");
+
+    setFormData({
+      ...formData,
+      affiliate_name: updatedName,
+      // affiliate_url: `${baseUrl}${updatedName}`
+    });
+  }
+
   const [isVisible, setIsVisible] = useState(false);
   const [preview, setPreview] = useState(null);
 
@@ -14,15 +34,19 @@ const CustomizeUrl = ({ isOpen, onClose, formData, setFormData, onSave }) => {
     }
   }, [isOpen]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave();
-    setFormData({
-      affiliate_url: ''
-    });
-    setPreview(null);
-    onClose();
-  };
+
+    const updatedData = {
+      affiliate_name: formData.affiliate_name,
+    }
+
+    const response = await updateAffiliateUrl(userId, updatedData, refreshAffiliate);
+    if (response) {
+      onClose();
+    }
+
+  }
 
   if (!isVisible) return null;
 
@@ -40,12 +64,13 @@ const CustomizeUrl = ({ isOpen, onClose, formData, setFormData, onSave }) => {
               type="text"
               id="affiliate_url"
               name="affiliate_url"
-              value={formData.affiliate_url}
-              onChange={(e) => setFormData({ ...formData, affiliate_url: e.target.value })}
+              value={`${baseUrl}${formData.affiliate_name}`}
+              // onChange={(e) => setFormData({ ...formData, affiliate_url: e.target.value })}
+              onChange={handleChange}
               required
             />
           </div>
-          
+
           <div className={styles.modalActions}>
             <button type="button" onClick={onClose} className={styles.cancelButton}>
               Cancel
