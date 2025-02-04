@@ -84,7 +84,7 @@ export default function Header({ toggleSidebar }) {
                 <div className={styles.profileHeader}>
                   <div className={styles.profileInfo}>
                     <p className={styles.profileName}>{profile.name}</p>
-                    <p className={styles.profileEmail}>{profile.user.username}</p>
+                    <p className={styles.profileEmail}>{profile.user.email}</p>
                   </div>
                 </div>
                 <ul>
