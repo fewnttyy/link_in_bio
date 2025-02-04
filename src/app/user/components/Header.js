@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { toast } from 'react-toastify';
 import logoutUser from "../../api/auth/logout";
-import { getProfile } from "../../api/profile/Profile";
+import { useProfile } from "../context/ProfileContext"
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -16,6 +16,7 @@ const poppins = Poppins({
 
 export default function Header({ toggleSidebar }) {
   const router = useRouter();
+  const { profile, previewAvatar } = useProfile(); // Ambil data profile dari context
 
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   const dropdownRef = useRef(null)
@@ -63,35 +64,6 @@ export default function Header({ toggleSidebar }) {
     }
   };
 
-  const [profile, setProfile] = useState({
-    username: "",
-    name: "",
-    bio: "",
-    avatar: "",
-    user: {
-      id: null,
-      username: "",
-      email: "",
-      phone: "",
-    },
-  });
-  // console.log(profile.user);
-
-  const [previewAvatar, setPreviewAvatar] = useState("");
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const data = await getProfile();
-      if (data && data.status && data.profile.length > 0) {
-        setProfile(data.profile[0]);
-        if (data.profile[0].avatar) {
-          setPreviewAvatar(data.profile[0].avatar);
-        }
-      }
-    };
-    fetchProfile();
-  }, []);
-
   return (
     <header className={styles.header}>
       <div className={styles.headerContent}>
@@ -112,7 +84,7 @@ export default function Header({ toggleSidebar }) {
                 <div className={styles.profileHeader}>
                   <div className={styles.profileInfo}>
                     <p className={styles.profileName}>{profile.name}</p>
-                    <p className={styles.profileEmail}>{profile.user.email}</p>
+                    <p className={styles.profileEmail}>{profile.user.username}</p>
                   </div>
                 </div>
                 <ul>

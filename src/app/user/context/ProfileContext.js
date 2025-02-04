@@ -1,13 +1,13 @@
-import { getProfile } from '@/app/api/profile/Profile';
-import React, { createContext, useState, useContext } from 'react';
+import { getProfile } from '../../api/profile/Profile';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
-// Buat context
+//1. Buat context
 const ProfileContext = createContext();
 
 // Hook untuk menghapus context
 export const useProfile = () => useContext(ProfileContext);
 
-// Provider untuk membungkus komponen yang membutuhkan akses ke state profile
+// 2. Provider untuk membungkus komponen yang membutuhkan akses ke state profile
 export const ProfileProvider = ({ children }) => {
     const [profile, setProfile] = useState({
         username: "",
@@ -26,17 +26,35 @@ export const ProfileProvider = ({ children }) => {
         }
     });
 
+    const [previewAvatar, setPreviewAvatar] = useState(""); // menambahkan setPreviewAvatar
+    const [loadingProfile, setLoadingProfile] = useState(false);
+
+    // 3. Fungsi untuk mengambil data profile dari API
     const refreshProfile = async () => {
+        setLoadingProfile(true);
         const data = await getProfile();
         if (data && data.status && data.profile.length > 0) {
             setProfile(data.profile[0]); // update profile ke state
+
+            //update avatar
+            if (data.profile[0].avatar) {
+                setPreviewAvatar(data.profile[0].avatar);
+            }
         }
+        setLoadingProfile(false);
     };
 
+    // 4. Ambil data saat pertama kali aplikasi berjalan
+    useEffect(() => {
+        refreshProfile();
+    }, []);
+
     return (
-        <ProfileContext.Provide value={{ profile, refreshProfile }}>
+        <ProfileContext.Provider value={{ profile, previewAvatar, setPreviewAvatar, refreshProfile, setProfile }}>
             {children}
-        </ProfileContext.Provide>
+        </ProfileContext.Provider>
     )
 };
+
+
 

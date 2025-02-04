@@ -12,6 +12,7 @@ import { fetchCategories, addCategory, editCategory, deleteCategory } from "../.
 import { getProfile, updateProfile } from "../../../api/profile/Profile";
 import { getAffiliateUrl } from '../../../api/affiliate/AffiliateUrl';
 import Cookies from "js-cookie";
+import { useProfile } from '../../context/ProfileContext'
 
 export default function Page() {
   const router = useRouter()
@@ -25,49 +26,50 @@ export default function Page() {
 
 
   // =========================================================== PROFILE =========================================================== //
-  const [profile, setProfile] = useState({
-    username: "",
-    name: "",
-    bio: "",
-    phone: "",
-    province: "",
-    city: "",
-    subdistrict: "",
-    avatar: "",
-    user: {
-      id: null,
-      username: "",
-      email: "",
-      phone: "",
-    },
-  });
+  // const [profile, setProfile] = useState({
+  //   username: "",
+  //   name: "",
+  //   bio: "",
+  //   phone: "",
+  //   province: "",
+  //   city: "",
+  //   subdistrict: "",
+  //   avatar: "",
+  //   user: {
+  //     id: null,
+  //     username: "",
+  //     email: "",
+  //     phone: "",
+  //   },
+  // });
+  const { profile, setProfile, previewAvatar, setPreviewAvatar, refreshProfile } = useProfile(); // Gunakan context
 
   const [selectedFile, setSelectedFile] = useState(null);
-  const [previewAvatar, setPreviewAvatar] = useState("");
+  // const [previewAvatar, setPreviewAvatar] = useState("");
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const data = await getProfile();
-      if (data && data.status) {
-        setProfile(data.profile[0]);
-        if (data.profile[0].avatar) {
-          setPreviewAvatar(data.profile[0].avatar);
-        }
-      }
-    };
-    fetchProfile();
-  }, []);
+  // useEffect(() => {
+  //   const fetchProfile = async () => {
+  //     const data = await getProfile();
+  //     if (data && data.status) {
+  //       setProfile(data.profile[0]);
+  //       if (data.profile[0].avatar) {
+  //         setPreviewAvatar(data.profile[0].avatar);
+  //       }
+  //     }
+  //   };
+  //   fetchProfile();
+  // }, []);
 
   //REFRESH
-  const refreshProfile = async () => {
-    const data = await getProfile();
-    if (data && data.status) {
-      setProfile(data.profile[0]);
-      if (data.profile[0].avatar) {
-        setPreviewAvatar(data.profile[0].avatar);
-      }
-    }
-  };
+  // const refreshProfile = async () => {
+  //   const data = await getProfile();
+  //   if (data && data.status) {
+  //     setProfile(data.profile[0]);
+  //     if (data.profile[0].avatar) {
+  //       setPreviewAvatar(data.profile[0].avatar);
+  //     }
+  //   }
+  // };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
