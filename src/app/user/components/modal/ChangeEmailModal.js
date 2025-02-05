@@ -1,14 +1,45 @@
-import { useState } from 'react';
-import styles from '../../styles/EditLinkModal.module.css';
+import { useEffect, useState } from 'react';
+import styles from '../../styles/ModalSettings.module.css';
 import VerificationCodeModal from '../modal/VerificationModal';
+import { updateEmail } from '../../../api/settings_api/changeEmail'
 
 export default function ChangeEmailModal({ onClose, currentEmail }) {
   const [showVerification, setShowVerification] = useState(false);
+  const [email, setCurrentEmail] = useState('');
   const [newEmail, setNewEmail] = useState('');
+  const [loadingEmail, setLoadingEmail] = useState(false);
+  const [errorEmail, setErrorEmail] = useState("");
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    setCurrentEmail(currentEmail);
+  }, [currentEmail]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setShowVerification(true);
+    if (!newEmail) {
+      setErrorEmail("New email cannot be empty!");
+      return;
+    }
+
+
+    setLoadingEmail(true);
+    setErrorEmail("");
+
+    try {
+      const response = await updateEmail({ new_email: newEmail });
+
+      if (response) {
+        setShowVerification(true);
+      } else {
+        setErrorEmail("Failed to update email");
+      }
+
+    } catch (error) {
+      setError("An error occurred while updating the email.");
+    }
+
+    setLoadingEmail(false);
+
   };
 
   if (showVerification) {
@@ -20,7 +51,7 @@ export default function ChangeEmailModal({ onClose, currentEmail }) {
       <div className={styles.modalContent}>
         <div className={styles.modalHeader}>
           <h3>Change Email</h3>
-          <button 
+          <button
             className={styles.closeButton}
             onClick={onClose}
           >
@@ -31,9 +62,9 @@ export default function ChangeEmailModal({ onClose, currentEmail }) {
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
             <label>Email</label>
-            <input 
+            <input
               type="email"
-              defaultValue={currentEmail}
+              defaultValue={email}
               className={styles.input}
               readOnly
             />
@@ -41,7 +72,7 @@ export default function ChangeEmailModal({ onClose, currentEmail }) {
 
           <div className={styles.formGroup}>
             <label>New Email</label>
-            <input 
+            <input
               type="email"
               placeholder="Enter Email"
               className={styles.input}
@@ -51,19 +82,22 @@ export default function ChangeEmailModal({ onClose, currentEmail }) {
             />
           </div>
 
+          {errorEmail && <p className={styles.errorText}>{errorEmail}</p>}
+
           <div className={styles.buttonGroup}>
-            <button 
-              type="button" 
+            <button
+              type="button"
               className={styles.cancelButton}
               onClick={onClose}
             >
               Cancel
             </button>
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className={styles.submitButton}
+              disabled={loadingEmail}
             >
-              Change Email
+              {loadingEmail ? "Changing..." : "Change Email"}
             </button>
           </div>
         </form>

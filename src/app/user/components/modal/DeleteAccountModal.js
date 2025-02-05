@@ -19,14 +19,14 @@ export default function DeleteAccountModal({ onClose }) {
       <div className={styles.modalContent}>
         <div className={styles.modalHeader}>
           <h3>Is it something we said?</h3>
-          <button 
+          <button
             className={styles.closeButton}
             onClick={onClose}
           >
             ×
           </button>
         </div>
-        
+
         <p className={styles.modalText}>
           We're really sad to see you leave, and want you to know that you can come back anytime!
         </p>
@@ -85,8 +85,8 @@ export default function DeleteAccountModal({ onClose }) {
 
         <div className={styles.warningSection}>
           <p className={styles.warning}>
-            <strong>Important:</strong> If you delete your Baralynk account, all uploaded media, scheduled posts, 
-            and account data will be removed from Baralynk. Type in the word 'destroy' if you're absolutely sure you want to delete your account.
+            <strong>Important:</strong> If you delete your Baralynk account, all uploaded media, scheduled posts,
+            and account data will be removed from Baralynk. Type your <strong>password</strong> to confirm, if you're absolutely sure you want to delete your account.
           </p>
 
           <input
@@ -97,21 +97,21 @@ export default function DeleteAccountModal({ onClose }) {
           />
         </div>
         <div className={styles.buttonGroup}>
-            <button 
-                type="button" 
-                className={styles.cancelButton}
-                onClick={onClose}
-            >
-                Cancel
-            </button>
-            <button 
-                type="submit" 
-                className={styles.submitButton}
-                onClick={handleDelete}
-                disabled={deleteText.toLowerCase() !== 'destroy'}
-            >
-                Delete your account
-            </button>
+          <button
+            type="button"
+            className={styles.cancelButton}
+            onClick={onClose}
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className={styles.submitButton}
+            onClick={handleDelete}
+            disabled={deleteText.toLowerCase() !== 'destroy'}
+          >
+            Delete your account
+          </button>
         </div>
       </div>
     </div>
