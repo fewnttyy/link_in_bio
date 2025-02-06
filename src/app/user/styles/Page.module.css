@@ -1,1064 +1,1150 @@
-  .pageContent {
-    padding: 2rem;
-  }
-  
-  .profileHeader {
-    background: white;
-    border-radius: 1rem;
-    overflow: hidden;
-  }
-  
-  .profileBanner {
-    height: 200px;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-  }
-  
-  .profileImage {
-    position: absolute;
-    bottom: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 4px solid white;
-    overflow: hidden;
-    background: white;
-  }
-  
-  .profileImage img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.pageContent {
+  padding: 2rem;
+}
 
-  .profileInfo {
-    padding: 2rem;
-  }
-  
-  .linkSection {
-    width: 100%;
-    margin: 0 auto;
-  }
-  
-  .linkBox {
-    background: #fafafa;
-    padding: 1.5rem;
-    border-radius: 12px;
-  }
-  
-  .linkHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-  
-  .linkHeader span {
-    font-weight: 500;
-    color: #333;
-  }
-  
-  .customizeLink {
-    color: #87A2FF;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.5s ease;
-  }
+.profileHeader {
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+}
 
-  .customizeLink:hover {
-    color: #6C8AE5;
-  }
-  
-  .linkContent {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
-  
-  .urlWrapper {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    background: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 0.5rem 1rem;
-  }
-  
-  .linkIcon {
-    color: #666;
-    margin-right: 0.5rem;
-  }
-  
-  .urlInput {
-    border: none;
-    outline: none;
-    width: 100%;
-    color: #666;
-    background: transparent;
-    font-size: 0.9rem;
-  }
-  
-  .shareButton {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: #87A2FF;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.25rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.5s ease;
-  }
-  
-  .shareButton:hover {
-    background: #6C8AE5;
-  }
-  
-  .shareIcon {
-    display: flex;
-    align-items: center;
-  }
-  
-  .tabsContainer {
-    border-bottom: 1px solid #eaeaea;
-    margin-top: 2rem;
-  }
-  
-  .tabs {
-    display: flex;
-    padding: 0 2rem;
-  }
-  
-  .tab {
-    padding: 1rem 2rem;
-    border: none;
-    background: none;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all 0.5s ease;
-  }
+.profileBanner {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
 
-  .tab:hover{
-    border-bottom-color: #87A2FF;
-    color: #87A2FF;
-  }
-  
-  .tab.active {
-    border-bottom-color: #87A2FF;
-    color: #87A2FF;
-  }
+.profileImage {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 4px solid white;
+  overflow: hidden;
+  background: white;
+}
 
-  .tabContent {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    min-height: 500px;
+.profileImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profileInfo {
+  padding: 2rem;
+}
+
+.linkSection {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.linkBox {
+  background: #fafafa;
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+.linkHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.linkHeader span {
+  font-weight: 500;
+  color: #333;
+}
+
+.customizeLink {
+  color: #87a2ff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.5s ease;
+}
+
+.customizeLink:hover {
+  color: #6c8ae5;
+}
+
+.linkContent {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.urlWrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+}
+
+.linkIcon {
+  color: #666;
+  margin-right: 0.5rem;
+}
+
+.urlInput {
+  border: none;
+  outline: none;
+  width: 100%;
+  color: #666;
+  background: transparent;
+  font-size: 0.9rem;
+}
+
+.shareButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #87a2ff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.5s ease;
+}
+
+.shareButton:hover {
+  background: #6c8ae5;
+}
+
+.shareIcon {
+  display: flex;
+  align-items: center;
+}
+
+.tabsContainer {
+  border-bottom: 1px solid #eaeaea;
+  margin-top: 2rem;
+}
+
+.tabs {
+  display: flex;
+  padding: 0 2rem;
+}
+
+.tab {
+  padding: 1rem 2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.5s ease;
+}
+
+.tab:hover {
+  border-bottom-color: #87a2ff;
+  color: #87a2ff;
+}
+
+.tab.active {
+  border-bottom-color: #87a2ff;
+  color: #87a2ff;
+}
+
+.tabContent {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  min-height: 500px;
+}
+
+.tabPanel {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+}
+
+/* Panel yang sedang aktif */
+.tabPanel.entering {
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+}
+
+/* Panel yang sedang keluar */
+.tabPanel.leaving {
+  opacity: 0;
+  visibility: visible;
+  position: absolute;
+  top: 0;
+}
+
+/* Arah transisi dari kanan */
+.tabPanel.entering.right {
+  transform: translateX(0);
+  animation: slideFromRight 0.8s forwards;
+}
+
+.tabPanel.leaving.right {
+  transform: translateX(0);
+  animation: slideToLeft 0.8s forwards;
+}
+
+/* Arah transisi dari kiri */
+.tabPanel.entering.left {
+  transform: translateX(0);
+  animation: slideFromLeft 0.8s forwards;
+}
+
+.tabPanel.leaving.left {
+  transform: translateX(0);
+  animation: slideToRight 0.8s forwards;
+}
+
+@keyframes slideFromRight {
+  from {
+    transform: translateX(100%);
   }
-  
-  .tabPanel {
-    position: absolute;
-    width: 100%;
-    left: 0;
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideToLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slideFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideToRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.contentArea {
+  padding: 2rem;
+}
+
+.pages {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0 2rem;
+}
+
+.pageButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid #87a2ff;
+  color: #87a2ff;
+  border-radius: 9999px;
+  background: white;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.pageButton:hover {
+  background: #87a2ff;
+  color: white;
+  border-color: #87a2ff;
+}
+
+.pageButton.active {
+  background: #87a2ff;
+  color: white;
+  border-color: #87a2ff;
+}
+
+.pageButton.active:hover {
+  background: #6c8ae5;
+  color: white;
+  border-color: #6c8ae5;
+}
+
+.addBlock {
+  width: 100%;
+  padding: 1rem;
+  background: #87a2ff;
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  margin-bottom: 0.7rem;
+  transition: background-color 0.5s ease;
+}
+
+.addBlock:hover {
+  background: #6c8ae5;
+}
+
+.block {
+  background: white;
+  border: 1px solid #eaeaea;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+
+.blockHeader {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.dragButton {
+  color: #adb5bd;
+  cursor: move;
+}
+
+.blockIcon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+}
+
+.blockActions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.blockActions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+/* ======================================== MODAL ========================================*/
+@keyframes fadeIn {
+  from {
     opacity: 0;
-    visibility: hidden;
-    transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+    /* transform: scale(0.9); */
   }
-  
-  /* Panel yang sedang aktif */
-  .tabPanel.entering {
+  to {
     opacity: 1;
-    visibility: visible;
-    position: relative;
+    /* transform: scale(1); */
   }
-  
-  /* Panel yang sedang keluar */
-  .tabPanel.leaving {
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    /* transform: scale(1); */
+  }
+  to {
     opacity: 0;
-    visibility: visible;
-    position: absolute;
-    top: 0;
+    /* transform: scale(0.9); */
   }
-  
-  /* Arah transisi dari kanan */
-  .tabPanel.entering.right {
-    transform: translateX(0);
-    animation: slideFromRight 0.8s forwards;
-  }
-  
-  .tabPanel.leaving.right {
-    transform: translateX(0);
-    animation: slideToLeft 0.8s forwards;
-  }
-  
-  /* Arah transisi dari kiri */
-  .tabPanel.entering.left {
-    transform: translateX(0);
-    animation: slideFromLeft 0.8s forwards;
-  }
-  
-  .tabPanel.leaving.left {
-    transform: translateX(0);
-    animation: slideToRight 0.8s forwards;
-  }
-  
-  @keyframes slideFromRight {
-    from {
-      transform: translateX(100%);
-    }
-    to {
-      transform: translateX(0);
-    }
-  }
-  
-  @keyframes slideToLeft {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-100%);
-    }
-  }
-  
-  @keyframes slideFromLeft {
-    from {
-      transform: translateX(-100%);
-    }
-    to {
-      transform: translateX(0);
-    }
-  }
-  
-  @keyframes slideToRight {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(100%);
-    }
-  }
-  
-  .contentArea {
-    padding: 2rem;
-  }
-  
-  .pages {
-    display: flex;
-    gap: 1rem;
-    margin: 1rem 0 2rem;
-  }
-  
-  .pageButton {
-    padding: 0.5rem 1rem;
-    border: 1px solid #87A2FF;
-    color: #87A2FF;
-    border-radius: 9999px;
-    background: white;
-    cursor: pointer;
-    transition: background-color 0.5s ease;
-  }
+}
 
-  .pageButton:hover {
-    background: #87A2FF;
-    color: white;
-    border-color: #87A2FF;
-  }
-  
-  .pageButton.active {
-    background: #87A2FF;
-    color: white;
-    border-color: #87A2FF;
-  }
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
 
-  .pageButton.active:hover {
-    background: #6C8AE5;
-    color: white;
-    border-color: #6C8AE5;
-  }
-  
-  .addBlock {
-    width: 100%;
-    padding: 1rem;
-    background: #87A2FF;
-    color: white;
-    border: none;
-    border-radius: 9999px;
-    cursor: pointer;
-    margin-bottom: 0.7rem;
-    transition: background-color 0.5s ease;
-  }
+.modalOverlay.fadeOut {
+  animation: fadeOut 0.5s forwards;
+}
 
-  .addBlock:hover {
-      background: #6C8AE5;
-  }
-  
-  .block {
-    background: white;
-    border: 1px solid #eaeaea;
-    border-radius: 0.5rem;
-    margin: 1rem 0;
-  }
-  
-  .blockHeader {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    gap: 1rem;
-  }
-  
-  .dragButton {
-    color: #adb5bd;
-    cursor: move;
-  }
-  
-  .blockIcon {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.5rem;
-  }
-  
-  .blockActions {
-    margin-left: auto;
-    display: flex;
-    gap: 0.5rem;
-  }
-  
-  .blockActions button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.25rem;
-  }
+.modal {
+  background: white;
+  border-radius: 0.5rem;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
 
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eaeaea;
+}
 
-  /* ======================================== MODAL ========================================*/
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      /* transform: scale(0.9); */
-    }
-    to {
-      opacity: 1;
-      /* transform: scale(1); */
-    }
-  }
-  
-  @keyframes fadeOut {
-    from {
-      opacity: 1;
-      /* transform: scale(1); */
-    }
-    to {
-      opacity: 0;
-      /* transform: scale(0.9); */
-    }
-  }
-  
-  .modalOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    animation: fadeIn 0.5s forwards;
-  }
+.modalHeader h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
 
-  .modalOverlay.fadeOut {
-    animation: fadeOut 0.5s forwards;
-  }
-  
-  .modal {
-    background: white;
-    border-radius: 0.5rem;
-    width: 90%;
-    max-width: 600px;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-  
-  .modalHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    border-bottom: 1px solid #eaeaea;
-  }
-  
-  .modalHeader h2 {
-    margin: 0;
-    font-size: 1.25rem;
-  }
-  
-  .closeButton {
-    background: none;
-    border: none;
-    font-size: 1.25rem;
-    cursor: pointer;
-    padding: 0.5rem;
-  }
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
 
-  .closeButton:hover{
-    color: #6C8AE5;
-  }
-  
-  .modalForm {
-    padding: 1.5rem;
-  }
-  
-  .formGroup {
-    margin-bottom: 1.5rem;
-  }
-  
-  .formGroup label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-  }
-  
-  .formGroup input[type="text"],
-  .formGroup input[type="url"],
-  .formGroup textarea,
-  .formGroup select {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.375rem;
-    font-size: 0.875rem;
-    appearance: none; 
-  }
-  
-  .radioGroup {
-    display: flex;
-    gap: 1.5rem;
-  }
-  
-  .radioGroup label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: normal;
-  }
-  
-  .mediaUpload {
-    border: 2px dashed #e5e7eb;
-    padding: 1rem;
-    border-radius: 0.375rem;
-    text-align: center;
-  }
-  
-  .mediaPreview {
-    max-width: 100%;
-    max-height: 200px;
-    margin-top: 1rem;
-    border-radius: 0.375rem;
-  }
-  
-  .modalActions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-  
-  .cancelButton {
-    padding: 0.75rem 1.5rem;
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.375rem;
-    cursor: pointer;
-    transition: background-color 0.5s ease;
-  }
+.closeButton:hover {
+  color: #6c8ae5;
+}
 
-  .cancelButton:hover{
-    color: #6C8AE5;
-    border: 1px solid #6C8AE5;
-  }
-  
-  .submitButton {
-    padding: 0.75rem 1.5rem;
-    background: #87A2FF;
-    color: white;
-    border: none;
-    border-radius: 0.375rem;
-    cursor: pointer;
-    transition: background-color 0.5s ease;
-  }
-  
-  .submitButton:hover {
-    background: #6C8AE5;
-  }
-  /* ======================================== MODAL ========================================*/
+.modalForm {
+  padding: 1.5rem;
+}
 
+.formGroup {
+  margin-bottom: 1.5rem;
+}
 
-  .linkInputSection {
-    width: 100%;
-    margin: 0 auto;
-  }
-  
-  .linkInputContainer {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .linkInput {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 9999px;
-    padding: 0.5rem 1rem;
-  }
-  
-  .linkIcon {
-    margin-right: 0.5rem;
-    color: #718096;
-  }
-  
-  .urlInput {
-    flex: 1;
-    border: none;
-    outline: none;
-    padding: 0.5rem;
-  }
-  
-  .addLinkButton {
-    background: #87A2FF;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 9999px;
-    border: none;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.5s;
-  }
-  
-  .addLinkButton:hover {
-    background: #6C8AE5;
-  }
-  
-  .advancedLinksWrapper {
-    display: flex;
-    justify-content: center;
-    margin: 1.5rem 0;
-  }
-  
-  .advancedLinksButton {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: #EFF6FF;
-    color: #87A2FF;
-    padding: 0.5rem 1rem;
-    border: 1px solid #BFDBFE;
-    border-radius: 9999px;
-    cursor: pointer;
-    font-weight: 500;
-  }
-  
-  .linkTypes {
-    display: flex;
-    gap: 0.25rem;
-  }
-  
-  .linkType {
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    color: white;
-    font-size: 0.875rem;
-  }
-  
-  .linkItem {
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem;
-  }
-  
-  .linkItemLeft {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .menuIcon {
-    color: #718096;
-    cursor: move;
-  }
-  
-  .linkTypeIcon {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-  }
-  
-  .linkDetails {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .linkTitle {
-    font-weight: 300;
-  }
-  
-  .linkUrl {
-    color: #718096;
-    font-size: 0.875rem;
-  }
-  
-  /* Toggle Switch Styles */
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 48px;
-    height: 24px;
-  }
-  
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #cbd5e0;
-    transition: .4s;
-    border-radius: 34px;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    left: 2px;
-    bottom: 2px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-  }
-  
-  input:checked + .slider {
-    background-color: #87A2FF;
-  }
-  
-  input:checked + .slider:before {
-    transform: translateX(24px);
-  }
-  
-  .searchContainer {
-    display: flex;
-    width: 100%;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    margin-top: 1rem;
-  }
-  
-  .search {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 9999px;
-    padding: 0.5rem 1rem;
-  }
-  
-  .searchIcon {
-    margin-right: 0.5rem;
-  }
-  
-  .urlInput {
-    flex: 1;
-    border: none;
-    outline: none;
-    padding: 0.5rem;
-  }
-  
-  .searchButton {
-    background: white;
-    color: #87A2FF;
-    padding: 0.75rem 1.5rem;
-    border-radius: 9999px;
-    border: 1px solid #87A2FF;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.5s;
-  }
-  
-  .searchButton:hover {
-    color: white;
-    background: #87A2FF;
-  }
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
 
+.formGroup input[type="text"],
+.formGroup input[type="url"],
+.formGroup textarea,
+.formGroup select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  appearance: none;
+}
 
-  /* ======================================== PREVIEW ========================================*/
+.radioGroup {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.radioGroup label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: normal;
+}
+
+.mediaUpload {
+  border: 2px dashed #e5e7eb;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  text-align: center;
+}
+
+.mediaPreview {
+  max-width: 100%;
+  max-height: 200px;
+  margin-top: 1rem;
+  border-radius: 0.375rem;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.cancelButton {
+  padding: 0.75rem 1.5rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.cancelButton:hover {
+  color: #6c8ae5;
+  border: 1px solid #6c8ae5;
+}
+
+.submitButton {
+  padding: 0.75rem 1.5rem;
+  background: #87a2ff;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.submitButton:hover {
+  background: #6c8ae5;
+}
+/* ======================================== MODAL ========================================*/
+
+.linkInputSection {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.linkInputContainer {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.linkInput {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  padding: 0.5rem 1rem;
+}
+
+.linkIcon {
+  margin-right: 0.5rem;
+  color: #718096;
+}
+
+.urlInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0.5rem;
+}
+
+.addLinkButton {
+  background: #87a2ff;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.5s;
+}
+
+.addLinkButton:hover {
+  background: #6c8ae5;
+}
+
+.advancedLinksWrapper {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+.advancedLinksButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #eff6ff;
+  color: #87a2ff;
+  padding: 0.5rem 1rem;
+  border: 1px solid #bfdbfe;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.linkTypes {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.linkType {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: white;
+  font-size: 0.875rem;
+}
+
+.linkItem {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.linkItemLeft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menuIcon {
+  color: #718096;
+  cursor: move;
+}
+
+.linkTypeIcon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.linkDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.linkTitle {
+  font-weight: 300;
+}
+
+.linkUrl {
+  color: #718096;
+  font-size: 0.875rem;
+}
+
+/* Toggle Switch Styles */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #cbd5e0;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #87a2ff;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+.searchContainer {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  padding: 0.5rem 1rem;
+}
+
+.searchIcon {
+  margin-right: 0.5rem;
+}
+
+.urlInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0.5rem;
+}
+
+.searchButton {
+  background: white;
+  color: #87a2ff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  border: 1px solid #87a2ff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.5s;
+}
+
+.searchButton:hover {
+  color: white;
+  background: #87a2ff;
+}
+
+/* ======================================== PREVIEW ========================================*/
+.mainContent {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  max-height: 800px;
+}
+
+.editorSection {
+  flex: 1;
+  min-width: 0;
+}
+
+.previewSection {
+  width: 400px;
+  flex-shrink: 0;
+}
+
+.previewWrapper {
+  position: sticky;
+  top: 2rem;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.previewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.previewOptionsButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.phoneWrapper {
+  padding: 1.2rem;
+  background: #f5f5f5;
+  border-radius: 0.5rem;
+}
+
+.phone {
+  width: 100%;
+  height: 600px;
+  background: white;
+  border-radius: 2rem;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.phoneContent {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.previewBanner {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: white;
+}
+
+.previewAvatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  position: absolute;
+  border: 4px solid white;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.previewProfile {
+  margin-top: -10px;
+  margin-bottom: 15px;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.previewProfile h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.previewProfile p {
+  margin: 0.5rem 0;
+  color: #666;
+  font-size: 9px;
+}
+
+.previewLinks {
+  padding: 1rem;
+  font-size: 11px;
+}
+
+.previewLink {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: #f8f8f8;
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.previewLink:hover {
+  transform: translateY(-2px);
+}
+
+.previewLinkIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+.previewArrow {
+  margin-left: auto;
+  color: #666;
+}
+
+.searchContainerPreview {
+  display: flex;
+  max-width: 100%;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.selectContainer {
+  display: flex;
+  max-width: 100%;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.previewButton {
+  display: flex;
+  align-items: center;
+  background: white;
+  color: #87a2ff;
+  border: 1px solid #87a2ff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.5s ease;
+}
+
+.previewButton:hover {
+  background: #87a2ff;
+  color: white;
+}
+
+.fixedLoginButton {
+  position: absolute;
+  bottom: 20px;
+  right: 30%;
+  z-index: 10;
+}
+
+.loginButton {
+  font-size: 7px;
+  background-color: white;
+  color: #87a2ff;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  border: 1px solid #87a2ff;
+  transition: all 0.5s ease;
+}
+
+.loginButton:hover {
+  background-color: #87a2ff;
+  color: white;
+}
+
+/* ======================================== PREVIEW ========================================*/
+
+/* ======================================== BANNERS ========================================*/
+.clickStats {
+  color: #666;
+  margin-left: 1.3rem;
+  font-size: 12px;
+}
+
+.editButton,
+.deleteButton {
+  margin: 0 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.linkItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.linkItemLeft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.bannerSlider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  max-width: 90%; /* Pastikan tidak lebih dari 90% dari parent container */
+  aspect-ratio: 16 / 9;
+  margin: 20px auto;
+  overflow: hidden;
+  border-radius: 12px;
+  background: white;
+}
+
+.bannerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.bannerImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.sliderButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 2;
+  transition: background 0.3s ease;
+}
+
+.sliderButton:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+/* ======================================== BANNERS ========================================*/
+
+/* ======================================== PROFILE TAB ========================================*/
+.profileContainer {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+}
+
+.profilePhotoSection {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.profilePhoto {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.photoInfo {
+  flex: 1;
+}
+
+.photoHelperText {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.uploadButton {
+  padding: 0.5rem 1rem;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.uploadButton:hover {
+  background: #f2f2f2;
+}
+
+.deleteButton {
+  padding: 0.5rem 1rem;
+  background: #f77a7a;
+  border: 1px solid #f77a7a;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.5s ease;
+}
+
+.deleteButton:hover {
+  background: #fa6161;
+  border-color: #fa6161;
+  color: white;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+
+.helperText {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+/* ======================================== PROFILE TAB ========================================*/
+
+@media (max-width: 768px) {
   .mainContent {
-    display: flex;
-    gap: 2rem;
-    width: 100%;
-    max-height: 800px;
-  }
-  
-  .editorSection {
-    flex: 1;
-    min-width: 0;
-  }
-  
-  .previewSection {
-    width: 400px;
-    flex-shrink: 0;
-  }
-  
-  .previewWrapper {
-    position: sticky;
-    top: 2rem;
-    background: white;
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-  }
-  
-  .previewHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .previewOptionsButton {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-  
-  .phoneWrapper {
-    padding: 1.2rem;
-    background: #f5f5f5;
-    border-radius: 0.5rem;
-  }
-  
-  .phone {
-    width: 100%;
-    height: 600px;
-    background: white;
-    border-radius: 2rem;
+    flex-direction: column;
+    height: 100vh;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
-  
-  .phoneContent {
+
+  .previewSection {
+    width: 100%;
     height: 100%;
     overflow-y: auto;
   }
-  
-  .previewBanner {
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+
+  .editorSection {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background: white;
-  }
-  
-  .previewAvatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    position: absolute;
-    border: 4px solid white;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  
-  .previewProfile {
-    margin-top: -10px;
-    margin-bottom: 15px;
-    text-align: center;
-    padding: 0.5rem;
-  }
-  
-  .previewProfile h3 {
-    margin: 0;
-    font-size: 1.25rem;
-  }
-  
-  .previewProfile p {
-    margin: 0.5rem 0;
-    color: #666;
-    font-size: 9px;
-  }
-  
-  .previewLinks {
-    padding: 1rem;
-    font-size: 11px;
-  }
-  
-  .previewLink {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    background: #f8f8f8;
-    border-radius: 0.5rem;
-    margin-bottom: 0.75rem;
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-  
-  .previewLink:hover {
-    transform: translateY(-2px);
-  }
-  
-  .previewLinkIcon {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 1rem;
-  }
-  
-  .previewArrow {
-    margin-left: auto;
-    color: #666;
+    height: 115vh; /* Tinggi maksimal editor */
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    transform: translateY(calc(100% - 60px)); /* Default posisi (collapsed) */
+    z-index: 100;
   }
 
-  .searchContainerPreview {
-    display: flex;
-    max-width: 100%;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    margin-top: 1rem;
+  .editorSection.expanded {
+    transform: translateY(20%); /* Posisi expanded */
   }
 
-  .selectContainer {
-    display: flex;
-    max-width: 100%;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .previewButton {
-    display: flex;
-    align-items: center;
-    background: white;
-    color: #87A2FF;
-    border: 1px solid #87A2FF;
-    padding: 0.75rem 1.25rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.5s ease;
-  }
-  
-  .previewButton:hover {
-    background: #87A2FF;
-    color: white;
-  }
-
-  .fixedLoginButton {
-    position: absolute;
-    bottom: 20px;
-    right: 30%;
-    z-index: 10;
-  }
-
-  .loginButton {
-    font-size: 7px;
-    background-color: white;
-    color: #87A2FF;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    cursor: pointer;
-    border: 1px solid #87A2FF;
-    transition: all 0.5s ease;
-  }
-
-  .loginButton:hover {
-    background-color: #87A2FF;
-    color: white;
-  }
-  
-  /* ======================================== PREVIEW ========================================*/
-
-
-  /* ======================================== BANNERS ========================================*/
-  .clickStats {
-    color: #666;
-    margin-left: 1.3rem;
-    font-size: 12px;
-  }
-  
-  .editButton, .deleteButton {
-    margin: 0 0.5rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .linkItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .linkItemLeft {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .bannerSlider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    width: 100%;
-    max-width: 90%; /* Pastikan tidak lebih dari 90% dari parent container */
-    aspect-ratio: 16 / 9;
-    margin: 20px auto;
-    overflow: hidden;
-    border-radius: 12px;
-    background: white;
-  }
-  
-  .bannerContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-  
-  .bannerImage {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 12px;
-  }
-  
-  .sliderButton {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
+  .dragHandle {
     width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 20px;
-    z-index: 2;
-    transition: background 0.3s ease;
+    height: 4px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    margin: 12px auto;
+    cursor: grab;
   }
-  
-  .sliderButton:hover {
-    background: rgba(0, 0, 0, 0.7);
-  }
-  /* ======================================== BANNERS ========================================*/
-
-
-  /* ======================================== PROFILE TAB ========================================*/
-  .profileContainer {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .sectionTitle {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-  }
-  
-  .card {
-    background: white;
-    border-radius: 8px;
-    border: 1px solid #e5e7eb;
-    margin-bottom: 1.5rem;
-    padding: 1.5rem;
-  }
-  
-  .profilePhotoSection {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.5rem;
-  }
-  
-  .profilePhoto {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  .photoInfo {
-    flex: 1;
-  }
-  
-  .photoHelperText {
-    color: #6b7280;
-    font-size: 0.875rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .uploadButton {
-    padding: 0.5rem 1rem;
-    background: white;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: background-color 0.5s ease;
-  }
-  
-  .uploadButton:hover {
-    background: #f2f2f2;
-  }
-
   .delete_button {
     padding: 0.5rem 1rem;
     background: #f77a7a;
@@ -1109,60 +1195,35 @@
     margin-top: 2rem;
   }
   /* ======================================== PROFILE TAB ========================================*/
-
-  @media (max-width: 768px) {
-    .mainContent {
-      flex-direction: column;
-      height: 100vh;
-      overflow: hidden;
-      position: relative;
-    }
-  
-    .previewSection {
-      width: 100%;
-      height: 100%;
-      overflow-y: auto;
-    }
-  
-    .editorSection {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: white;
-      height: 115vh; /* Tinggi maksimal editor */
-      border-radius: 20px 20px 0 0;
-      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-      transform: translateY(calc(100% - 60px)); /* Default posisi (collapsed) */
-      z-index: 100;
-    }
-  
-    .editorSection.expanded {
-      transform: translateY(20%); /* Posisi expanded */
-    }
-  
-    .dragHandle {
-      width: 40px;
-      height: 4px;
-      background: #e0e0e0;
-      border-radius: 2px;
-      margin: 12px auto;
-      cursor: grab;
-    }
-
-    .dragHandle:hover {
-      background: #bdbdbd;
-    }
-    
-    .dragHandle:active {
-      cursor: grabbing;
-      background: #9e9e9e;
-    }
-  
-    .tabsContainer {
-      padding: 0 16px;
-      overflow-x: auto;
-    }
+  .dragHandle:hover {
+    background: #bdbdbd;
   }
-  
+
+  .dragHandle:active {
+    cursor: grabbing;
+    background: #9e9e9e;
+  }
+
+  .tabsContainer {
+    padding: 0 16px;
+    overflow-x: auto;
+  }
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  /* border: 3px solid #ccc;
+  border-top-color: #333; */
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

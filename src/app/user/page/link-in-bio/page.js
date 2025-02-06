@@ -10,6 +10,8 @@ import EditBannerModal from '../../components/modal/EditBannerModal'
 import CustomizeUrl from '../../components/modal/CustomizeUrl'
 import Swal from 'sweetalert2';
 
+import { FaSpinner } from "react-icons/fa";
+
 import { fetchCategories, addCategory, editCategory, deleteCategory } from "../../../api/category/Category";
 import { getProfile, updateProfile } from "../../../api/profile/Profile";
 import { getLinks, addLink, updateLink, updateLinkStatus, deleteLink } from '../../../api/links/Links';
@@ -246,7 +248,7 @@ export default function Page() {
   // =========================================================== AFFILIATE URL MODAL =========================================================== //
   const [isCustomizeOpen, setIsCustomizeOpen] = useState(false);
   const [customize, setCustomize] = useState([]);
-  const [loadingAffiliate, setLoadingAffiliate] = useState(false);  // Untuk handle loading
+  const [loadingAffiliate, setLoadingAffiliate] = useState(true);  // Untuk handle loading
 
 
   const [affiliateData, setAffiliateData] = useState({
@@ -725,7 +727,8 @@ export default function Page() {
               </div>
 
               {loading ? (
-                <p>Loading...</p>
+                // <p>Loading...</p>
+                <FaSpinner className={styles.spinner} />
               ) : error ? (
                 <p style={{ color: "red", marginTop: "20px" }}>{error}</p>
               ) : (
@@ -1073,12 +1076,17 @@ export default function Page() {
               <div className={styles.linkContent}>
                 <div className={styles.urlWrapper}>
                   <span className={styles.linkIcon}>🔗</span>
-                  <input
-                    type="text"
-                    readOnly
-                    value={affiliateData.affiliate_url}
-                    className={styles.urlInput}
-                  />
+                  {loadingAffiliate ? (
+                    // <span className={styles.loadingText}>Loading...</span> // 🌀 Teks loading
+                    <FaSpinner className={styles.spinner} />
+                  ) : (
+                    <input
+                      type="text"
+                      readOnly
+                      value={affiliateData.affiliate_url}
+                      className={styles.urlInput}
+                    />
+                  )}
                 </div>
                 <button className={styles.shareButton}>
                   <span className={styles.shareIcon}>
