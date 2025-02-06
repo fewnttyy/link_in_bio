@@ -368,14 +368,30 @@ export default function Page() {
   const handleDelete = async (id) => {
     await deleteLink(id);
     fetchLinks();
+    fetchLinksActive();
   };
 
   const handleSearch = () => {
-    const filteredLinks = allLinks.filter(link =>
-      link.title.toLowerCase().includes(formData.search.toLowerCase())
-    );
+    let filteredLinks = allLinks;
+  
+    if (formData.category) {
+      filteredLinks = filteredLinks.filter(link =>
+        link.id_category === parseInt(formData.category)
+      );
+    }
+  
+    if (formData.search) {
+      filteredLinks = filteredLinks.filter(link =>
+        link.title.toLowerCase().includes(formData.search.toLowerCase())
+      );
+    }
+  
     setLinks(filteredLinks);
   };  
+
+  useEffect(() => {
+    handleSearch();
+  }, [formData.category, formData.search]);
 
   const handleToggleActive = async (id, currentStatus) => {
     try {
@@ -384,6 +400,7 @@ export default function Page() {
   
       // Refresh data setelah status diperbarui
       fetchLinks();
+      fetchLinksActive();
     } catch (error) {
       console.error("Failed to toggle status:", error);
     }
@@ -403,12 +420,27 @@ export default function Page() {
   const [editFormData, setEditFormData] = useState({});
 
   const openEditModal = (link) => {
-    setEditFormData(link);
+    setEditFormData({
+      id: link.id,
+      id_affiliate: link.id_affiliate,
+      title: link.title,
+      category: link.id_category,
+      mediaType: link.media?.video_url ? 'video' : 
+                link.media?.image_url ? 'image' : 
+                link.media?.video_yt_url ? 'youtube' : 'noMedia',
+      image_url: link.media?.image_url || '',
+      video_url: link.media?.video_url || '',
+      video_yt_url: link.media?.video_yt_url || '',
+      links_url: link.links_url,
+      description: link.description,
+      click_count: link.click_count,
+    });    
     setIsEditModalOpen(true);
   };
 
   const closeEditModal = () => {
     setIsEditModalOpen(false);
+    setEditFormData(null);
   };
   // =========================================================== LINKS =========================================================== //
 
@@ -511,20 +543,13 @@ export default function Page() {
                     value={formData.category}
                     className={styles.urlInput}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    required
                   >
-                    <option value="">Select a category</option>
-                    {loadingLinks ? (
-                      <option disabled>Loading...</option>
-                    ) : errorLinks ? (
-                      <option disabled>{errorLinks}</option>
-                    ) : (
-                      categories.map((category) => (
-                        <option key={category.id} value={category.category_name}>
-                          {category.category_name}
-                        </option>
-                      ))
-                    )}
+                    <option value="">All Categories</option>
+                    {categories.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.category_name}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -540,9 +565,9 @@ export default function Page() {
                     onChange={(e) => setFormData({ ...formData, search: e.target.value })}
                   />
                 </div>
-                <button onClick={handleSearch} className={styles.searchButton}>
+                {/* <button onClick={handleSearch} className={styles.searchButton}>
                   Search
-                </button>
+                </button> */}
               </div>
 
               <div className={styles.block}>
@@ -880,6 +905,50 @@ export default function Page() {
 
 
   // =========================================================== PREVIEW CONTENT =========================================================== //
+  const [linksActive, setLinksActive] = useState([]);
+  const [filteredLinksActive, setFilteredLinksActive] = useState([]); // Data hasil filter
+  const [formDataActiveLinks, setFormDataActiveLinks] = useState({ category: '', search: '' });
+
+  useEffect(() => {
+    fetchLinksActive();
+  }, []);
+  
+  const fetchLinksActive = async () => {
+    setLoadingLinks(true);
+    try {
+      const data = await getLinks();
+      const activeLinks = data.filter(link => link.is_active === "active");
+      setLinksActive(activeLinks);
+      setFilteredLinksActive(activeLinks);
+    } catch (err) {
+      setErrorLinks('Failed to load active links');
+    } finally {
+      setLoadingLinks(false);
+    }
+  };
+  
+  const filterLinksActive = () => {
+    let filtered = linksActive;
+  
+    if (formDataActiveLinks.category) {
+      filtered = filtered.filter(link =>
+        link.id_category === parseInt(formDataActiveLinks.category)
+      );
+    }
+  
+    if (formDataActiveLinks.search) {
+      filtered = filtered.filter(link =>
+        link.title.toLowerCase().includes(formDataActiveLinks.search.toLowerCase())
+      );
+    }
+  
+    setFilteredLinksActive(filtered);
+  };
+  
+  useEffect(() => {
+    filterLinksActive();
+  }, [formDataActiveLinks.category, formDataActiveLinks.search]);
+  
   const PreviewContent = () => (
     <div className={styles.previewWrapper}>
       <div className={styles.previewHeader}>
@@ -930,19 +999,19 @@ export default function Page() {
                   <span className={styles.searchIcon}>📦</span>
                   <select
                     id="category"
-                    value={formData.category}
+                    value={formDataActiveLinks.category}
                     className={styles.urlInput}
-                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                    onChange={(e) => setFormDataActiveLinks({ ...formDataActiveLinks, category: e.target.value })}
                     required
                   >
-                    <option value="">Select a category</option>
+                    <option value="">All category</option>
                     {loading ? (
                       <option disabled>Loading...</option>
                     ) : error ? (
                       <option disabled>{error}</option>
                     ) : (
                       categories.map((category) => (
-                        <option key={category.id} value={category.category_name}>
+                        <option key={category.id} value={category.id}>
                           {category.category_name}
                         </option>
                       ))
@@ -955,26 +1024,28 @@ export default function Page() {
                   <span className={styles.searchIcon}>🔍</span>
                   <input
                     type="text"
-                    placeholder="Search"
+                    placeholder="Search links"
                     className={styles.urlInput}
+                    value={formDataActiveLinks.search}
+                    onChange={(e) => setFormDataActiveLinks({ ...formDataActiveLinks, search: e.target.value })}
                   />
                 </div>
               </div>
-              <div className={styles.previewLink}>
-                <div className={styles.previewLinkIcon} style={{ backgroundColor: '#FFB800' }}>🔗</div>
-                <span>My website</span>
-                <span className={styles.previewArrow}>→</span>
-              </div>
-              <div className={styles.previewLink}>
-                <div className={styles.previewLinkIcon} style={{ backgroundColor: '#86A788' }}>🔗</div>
-                <span>My Instagram</span>
-                <span className={styles.previewArrow}>→</span>
-              </div>
-              <div className={styles.previewLink}>
-                <div className={styles.previewLinkIcon} style={{ backgroundColor: '#FFB800' }}>🔗</div>
-                <span>My Twitter</span>
-                <span className={styles.previewArrow}>→</span>
-              </div>
+              {loading ? (
+                <p style={{textAlign: "center", marginTop: "20px"}}>Loading links...</p>
+              ) : errorLinks ? (
+                <p style={{ textAlign: "center", marginTop: "20px", color: 'red' }}>{errorLinks}</p>
+              ) : filteredLinksActive.length === 0 ? (
+                <p style={{textAlign: "center", marginTop: "20px"}}>No links available.</p>
+              ) : (
+                filteredLinksActive.map((link) => (
+                  <div key={link.id} className={styles.previewLink}>
+                    <div className={styles.previewLinkIcon} style={{ backgroundColor: '#FFB800' }}>🔗</div>
+                    <span>{link.title}</span>
+                    <span className={styles.previewArrow}>→</span>
+                  </div>
+                ))
+              )}
             </div>
             <div className={styles.fixedLoginButton}>
               <button className={styles.loginButton}>baralynk.is/yourpage →</button>
@@ -1066,6 +1137,7 @@ export default function Page() {
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         refreshLinks={fetchLinks}
+        refreshLinksActive={fetchLinksActive}
       />
 
       <AddBannersModal
@@ -1079,7 +1151,8 @@ export default function Page() {
           onClose={closeEditModal}
           formData={editFormData}
           setFormData={setEditFormData}
-        // onSave={saveEdit}
+          refreshLinks={fetchLinks}
+          refreshLinksActive={fetchLinksActive}
         />
       )}
 

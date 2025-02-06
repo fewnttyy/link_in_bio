@@ -5,7 +5,7 @@ import { addLink } from "../../../api/links/Links";
 import { fetchCategories } from "../../../api/category/Category";
 import swal from "sweetalert2";
 
-const AddLinksModal = ({ isModalOpen, closeModal, refreshLinks }) => {
+const AddLinksModal = ({ isModalOpen, closeModal, refreshLinks, refreshLinksActive }) => {
   if (!isModalOpen) return null;
 
   const [categories, setCategories] = useState([]);
@@ -22,33 +22,24 @@ const AddLinksModal = ({ isModalOpen, closeModal, refreshLinks }) => {
   });
 
   // Mengatur preview file yang diunggah
-  const handleFileChange = useCallback((e) => {
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
-
-    if (!file) return;
-
-    // Validasi jenis file
-    if (
-      (formData.mediaType === "image" && !file.type.startsWith("image/")) ||
-      (formData.mediaType === "video" && !file.type.startsWith("video/"))
-    ) {
-      swal.fire("Invalid File", "Please upload a valid media file", "error");
-      e.target.value = "";
-      return;
+  
+    if (file) {
+      if (formData.mediaType === "video" && file.type.startsWith("video/")) {
+        const url = URL.createObjectURL(file);
+        setPreview(url); // Untuk video preview
+        setFormData({ ...formData, mediaFile: file });
+      } else if (formData.mediaType === "image" && file.type.startsWith("image/")) {
+        const url = URL.createObjectURL(file);
+        setPreview(url); // Untuk image preview
+        setFormData({ ...formData, mediaFile: file });
+      } else {
+        alert("Please upload the correct file type!");
+        e.target.value = ""; // Clear input jika file tidak sesuai
+      }
     }
-
-    setFormData((prev) => ({ ...prev, mediaFile: file }));
-
-    // Hapus preview sebelumnya untuk menghindari memory leak
-    if (preview) URL.revokeObjectURL(preview);
-    
-    // Tampilkan preview hanya jika media adalah gambar
-    if (formData.mediaType === "image") {
-      setPreview(URL.createObjectURL(file));
-    } else {
-      setPreview(null);
-    }
-  }, [formData.mediaType, preview]);
+  };  
 
   // Mengubah jenis media
   const handleMediaTypeChange = (e) => {
@@ -91,6 +82,7 @@ const AddLinksModal = ({ isModalOpen, closeModal, refreshLinks }) => {
       await addLink(linkData);
       closeModal(); // Tutup modal setelah berhasil
       refreshLinks(); // Refresh daftar link
+      refreshLinksActive();
     } catch (error) {
       console.error("Failed to add link:", error);
     }
@@ -154,35 +146,79 @@ const AddLinksModal = ({ isModalOpen, closeModal, refreshLinks }) => {
           <div className={styles.formGroup}>
             <label>Media Type</label>
             <div className={styles.radioGroup}>
-              {["image", "video", "noMedia"].map((type) => (
-                <label key={type}>
-                  <input
-                    type="radio"
-                    name="mediaType"
-                    value={type}
-                    checked={formData.mediaType === type}
-                    onChange={handleMediaTypeChange}
-                  />
-                  {type.charAt(0).toUpperCase() + type.slice(1)}
-                </label>
-              ))}
+              <label>
+                <input
+                  type="radio"
+                  name="mediaType"
+                  value="image"
+                  checked={formData.mediaType === 'image'}
+                  onChange={handleMediaTypeChange}
+                />
+                Image
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="mediaType"
+                  value="video"
+                  checked={formData.mediaType === 'video'}
+                  onChange={handleMediaTypeChange}
+                />
+                Video
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="mediaType"
+                  value="noMedia"
+                  checked={formData.mediaType === 'noMedia'}
+                  onChange={handleMediaTypeChange}
+                />
+                No Media
+              </label>
             </div>
           </div>
 
           {formData.mediaType !== "noMedia" && (
             <div className={styles.formGroup}>
-              <label>Upload Media</label>
-              <div className={styles.mediaUpload}>
-                <input
-                  type="file"
-                  accept={formData.mediaType === "image" ? "image/*" : "video/*"}
-                  onChange={handleFileChange}
-                />
-                {preview && formData.mediaType === "image" && (
-                  <img src={preview} alt="Preview" className={styles.mediaPreview} />
-                )}
-              </div>
+            <label>Upload Media</label>
+            <div
+              className={styles.mediaUpload}
+              onClick={() => document.getElementById("mediaUploadInput").click()} // Trigger klik input file saat div diklik
+            >
+              <input
+                type="file"
+                accept={formData.mediaType === "image" ? "image/*" : "video/*"}
+                onChange={handleFileChange}
+                style={{ display: "none" }} // Sembunyikan input file
+                id="mediaUploadInput"
+              />
+          
+              {/* Preview Gambar */}
+              {preview && formData.mediaType === "image" && (
+                <img src={preview} alt="Preview" className={styles.mediaPreview} />
+              )}
+          
+              {/* Preview Video */}
+              {preview && formData.mediaType === "video" && (
+                <video
+                  src={preview}
+                  controls
+                  className={styles.mediaPreview}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  Your browser does not support the video tag.
+                </video>
+              )}
+          
+              {/* Placeholder Jika Belum Ada Media */}
+              {!preview && (
+                <div className={styles.placeholder}>
+                  Click to upload media
+                </div>
+              )}
             </div>
+          </div>                   
           )}
 
         <div className={styles.formGroup}>

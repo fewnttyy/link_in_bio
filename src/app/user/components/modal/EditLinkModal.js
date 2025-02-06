@@ -1,9 +1,19 @@
-import React, { useState, useEffect } from 'react';
+"use client";
+import { useState, useEffect } from "react";
 import styles from '../../styles/EditLinkModal.module.css';
+import { fetchCategories } from "../../../api/category/Category";
+import { updateLink } from '../../../api/links/Links'; // Sesuaikan path dengan struktur folder Anda
 
-const EditLinkModal = ({ isOpen, onClose, formData, setFormData, onSave }) => {
+const EditLinkModal = ({ isOpen, onClose, formData, setFormData, refreshLinks, refreshLinksActive }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [preview, setPreview] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetchCategories(setCategories, setLoading, setError);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -16,37 +26,13 @@ const EditLinkModal = ({ isOpen, onClose, formData, setFormData, onSave }) => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    
+  
     if (file) {
-      // Check if media type is video and file is a video
-      if (formData.mediaType === 'video') {
-        if (!file.type.startsWith('video/')) {
-          alert('Please upload a video file');
-          e.target.value = ''; // Clear the file input
-          return;
-        }
-      }
-      
-      // Check if media type is image and file is an image
-      if (formData.mediaType === 'image') {
-        if (!file.type.startsWith('image/')) {
-          alert('Please upload an image file');
-          e.target.value = ''; // Clear the file input
-          return;
-        }
-      }
-      
+      const url = URL.createObjectURL(file);
       setFormData({ ...formData, mediaFile: file });
-      
-      // Only create preview for images
-      if (formData.mediaType === 'image') {
-        const url = URL.createObjectURL(file);
-        setPreview(url);
-      } else {
-        setPreview(null);
-      }
+      setPreview(url); // ✅ Preview untuk semua media (gambar/video)
     }
-  };
+  };  
 
   const handleMediaTypeChange = (e) => {
     const newMediaType = e.target.value
@@ -71,56 +57,43 @@ const EditLinkModal = ({ isOpen, onClose, formData, setFormData, onSave }) => {
     }
   }
   
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log(formData)
-    setIsModalOpen(false)
-    setFormData({
-      title: '',
-      mediaType: 'image',
-      mediaFile: null,
-      link: '',
-      description: ''
-    })
-    // Clean up preview URL when form is submitted
-    if (preview) {
-      URL.revokeObjectURL(preview)
-      setPreview(null)
-    }
-  }
-
-  // const saveEdit = async () => {
-  //   try {
-  //     // Kirim data yang telah diedit ke server melalui API
-  //     await fetch(`/api/links/${editFormData.id}`, {
-  //       method: 'PUT', // Gunakan PUT atau PATCH sesuai kebutuhan
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify(editFormData),
-  //     });
-
-  //     // Perbarui daftar link di UI setelah berhasil disimpan
-  //     fetchLinks();
-  //     closeEditModal();
-  //   } catch (error) {
-  //     console.error('Error saving link:', error);
-  //   }
-  // };
+  const saveEdit = async (e) => {
+    e.preventDefault(); // Mencegah reload halaman saat submit form
   
-  // Ambil data link dari API saat komponen dimuat
-  // useEffect(() => {
-  //   fetchLinks();
-  // }, []);
-
-  // const fetchLinks = async () => {
-  //   try {
-  //     const response = await fetch('/api/links'); // Ganti endpoint sesuai API Anda
-  //     const data = await response.json();
-  //     setLinks(data); // Data yang diterima harus berupa array
-  //   } catch (error) {
-  //     console.error('Error fetching links:', error);
-  //   }
-  // };
-
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('id_affiliate', formData.id_affiliate);
+      formDataToSend.append('title', formData.title);
+  
+      // Hanya append id_category kalau ada isinya
+      if (formData.category) {
+        formDataToSend.append('id_category', formData.category);
+      }
+      
+      formDataToSend.append('links_url', formData.links_url);
+      formDataToSend.append('description', formData.description);
+      formDataToSend.append('mediaType', formData.mediaType);
+  
+      // Jika mediaType adalah image atau video dan ada file yang diupload, append file-nya
+      if (formData.mediaType === 'image' && formData.mediaFile) {
+        formDataToSend.append('image_url', formData.mediaFile);
+      } else if (formData.mediaType === 'video' && formData.mediaFile) {
+        formDataToSend.append('video_url', formData.mediaFile);
+      }
+      // Jangan append field image_url dan video_url untuk "noMedia"
+  
+      console.log('FormData to be sent:', [...formDataToSend.entries()]);
+      await updateLink(formData.id, formDataToSend);
+  
+      onClose(); // Tutup modal setelah berhasil update
+      refreshLinks();
+      refreshLinksActive();
+    } catch (error) {
+      console.error('Error saving link:', error);
+      // Pesan error sudah di-handle di fungsi updateLink
+    }
+  };    
+  
   if (!isVisible) return null;
 
   return (
@@ -130,7 +103,7 @@ const EditLinkModal = ({ isOpen, onClose, formData, setFormData, onSave }) => {
           <h2>Edit Link</h2>
           <button onClick={onClose} className={styles.closeButton}>×</button>
         </div>
-        <form onSubmit={handleSubmit} className={styles.modalForm}>
+        <form onSubmit={saveEdit} className={styles.modalForm}>
           {/* Title Input */}
           <div className={styles.formGroup}>
             <label htmlFor="title">Title</label>
@@ -148,15 +121,22 @@ const EditLinkModal = ({ isOpen, onClose, formData, setFormData, onSave }) => {
             <label htmlFor="category">Category</label>
             <select
               id="category"
-              value={formData.category}
+              value={formData.category || ''}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              required
+              
             >
-              <option value="">Select a category</option>
-              <option value="Education">Education</option>
-              <option value="Technology">Technology</option>
-              <option value="Entertainment">Entertainment</option>
-              <option value="Health">Health</option>
+              <option value="">No Category</option>
+              {loading ? (
+                <option disabled>Loading...</option>
+              ) : error ? (
+                <option disabled>{error}</option>
+              ) : (
+                categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.category_name}
+                  </option>
+                ))
+              )}
             </select>
           </div>
 
@@ -192,7 +172,7 @@ const EditLinkModal = ({ isOpen, onClose, formData, setFormData, onSave }) => {
                   checked={formData.mediaType === 'noMedia'}
                   onChange={handleMediaTypeChange}
                 />
-                Delete Media
+                No Media
               </label>
             </div>
           </div>
@@ -201,22 +181,67 @@ const EditLinkModal = ({ isOpen, onClose, formData, setFormData, onSave }) => {
             <div className={styles.formGroup}>
               <label>Upload Media</label>
               <div className={styles.mediaUpload}>
+                {/* Input file tersembunyi */}
                 <input
                   type="file"
                   accept={formData.mediaType === 'image' ? 'image/*' : 'video/*'}
                   onChange={handleFileChange}
+                  style={{ display: 'none' }} // Sembunyikan input file
+                  id="mediaUploadInput"
                 />
-                {preview && formData.mediaType === 'image' && (
-                  <img src={preview} alt="Preview" className={styles.mediaPreview} />
+            
+                {/* Tampilkan media yang bisa diklik untuk upload */}
+                {formData.image_url && !preview && formData.mediaType === 'image' && (
+                  <img
+                    src={`http://127.0.0.1:8000/storage/${formData.image_url}`}
+                    alt="Existing Media"
+                    className={styles.mediaPreview}
+                    onClick={() => document.getElementById('mediaUploadInput').click()} // Trigger klik input file
+                  />
                 )}
-                {formData.mediaType === 'video' && formData.mediaFile && (
-                  <div className={styles.videoInfo}>
-                    <p>Video selected: {formData.mediaFile.name}</p>
-                    <p>Size: {(formData.mediaFile.size / (1024 * 1024)).toFixed(2)} MB</p>
+            
+                {formData.video_url && !preview && formData.mediaType === 'video' && (
+                  <video
+                    controls
+                    className={styles.mediaPreview}
+                    onClick={() => document.getElementById('mediaUploadInput').click()}
+                  >
+                    <source src={`http://127.0.0.1:8000/storage/${formData.video_url}`} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                )}
+            
+                {/* Preview untuk media baru yang diunggah */}
+                {preview && formData.mediaType === 'image' && (
+                  <img
+                    src={preview}
+                    alt="New Preview"
+                    className={styles.mediaPreview}
+                    onClick={() => document.getElementById('mediaUploadInput').click()}
+                  />
+                )}
+            
+                {preview && formData.mediaType === 'video' && (
+                  <video
+                    controls
+                    className={styles.mediaPreview}
+                    onClick={() => document.getElementById('mediaUploadInput').click()}
+                  >
+                    <source src={preview} type="video/mp4" />
+                  </video>
+                )}
+            
+                {/* Placeholder jika tidak ada media */}
+                {!formData.mediaUrl && !preview && (
+                  <div
+                    className={styles.placeholder}
+                    onClick={() => document.getElementById('mediaUploadInput').click()}
+                  >
+                    Click to upload media
                   </div>
                 )}
               </div>
-            </div>
+            </div>        
           )}
 
           {/* Link Input */}
@@ -224,10 +249,10 @@ const EditLinkModal = ({ isOpen, onClose, formData, setFormData, onSave }) => {
             <label htmlFor="link">Link</label>
             <input
               type="url"
-              id="link"
+              id="links_url"
               placeholder="Enter full URL (e.g., https://website.com)"
-              value={formData.link}
-              onChange={(e) => setFormData({ ...formData, link: e.target.value })}
+              value={formData.links_url}
+              onChange={(e) => setFormData({ ...formData, links_url: e.target.value })}
               required
             />
           </div>
@@ -241,6 +266,18 @@ const EditLinkModal = ({ isOpen, onClose, formData, setFormData, onSave }) => {
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               rows={4}
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="click_count">Click Count</label>
+            <input
+              type="text"
+              id="click_count"
+              value={formData.click_count}
+              onChange={(e) => setFormData({ ...formData, click_count: e.target.value })}
+              required
+              readOnly
             />
           </div>
 

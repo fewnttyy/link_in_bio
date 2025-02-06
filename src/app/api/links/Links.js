@@ -60,12 +60,15 @@ export const addLink = async (linkData) => {
 // ✅ Update an existing link
 export const updateLink = async (id, linkData) => {
   try {
-    const response = await apiClient.post(`/links/update/${id}`, linkData);
+    const response = await apiClient.post(`/links/update/${id}`, linkData, {
+        headers: {
+            'Content-Type': 'multipart/form-data', // ✅ Override untuk FormData
+        },
+    });  
     showSuccess('Link updated successfully!');
-    return response.data.links;
+    return response.data.data;
   } catch (error) {
-    console.error('Failed to update link:', error);
-    showError('Failed to update the link!');
+    showError(error.response?.data?.message || 'Failed to update the link!');
     throw error;
   }
 };
@@ -73,9 +76,25 @@ export const updateLink = async (id, linkData) => {
 // ✅ Delete a link
 export const deleteLink = async (id) => {
   try {
-    await apiClient.delete(`/links/delete/${id}`);
-    showSuccess('Link deleted successfully!');
-    return true;
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you really want to delete this link? This action cannot be undone!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    });
+
+    if (result.isConfirmed) {
+      await apiClient.delete(`/links/delete/${id}`);
+      showSuccess('Link deleted successfully!');
+      return true;
+    } else {
+      // User membatalkan penghapusan
+      return false;
+    }
   } catch (error) {
     console.error('Failed to delete link:', error);
     showError('Failed to delete the link!');

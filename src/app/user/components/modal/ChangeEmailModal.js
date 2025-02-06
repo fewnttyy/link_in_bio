@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from '../../styles/EditLinkModal.module.css';
+import styles from '../../styles/ModalSettings.module.css';
 import VerificationCodeModal from '../modal/VerificationModal';
 
 export default function ChangeEmailModal({ onClose, currentEmail }) {
